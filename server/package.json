@@ -1,22 +1,23 @@
 {
   "name": "server",
   "version": "1.0.0",
-  "description": "backend server for GharBikri",
-  "main": "index.js",
+  "description": "server for GharBikri",
+  "main": "server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon index.js"
+    "dev": "nodemon server.js",
+    "start": "node server.js"
   },
+  "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "bcrypt": "^5.1.0",
     "cors": "^2.8.5",
     "dotenv": "^16.0.3",
     "express": "^4.18.2",
-    "pg": "^8.10.0",
-    "sequelize": "^6.30.0"
-  },
-  "devDependencies": {
-    "nodemon": "^2.0.22"
+    "express-validator": "^6.15.0",
+    "jsonwebtoken": "^9.0.0",
+    "nodemon": "^2.0.22",
+    "pg": "^8.10.0"
   }
 }
