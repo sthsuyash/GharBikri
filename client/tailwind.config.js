@@ -7,5 +7,8 @@ module.exports = {
   theme: {
     extend: {},
   },
-  plugins: [],
+  plugins: [require("daisyui", "@tailwindcss/forms")],
+  daisyui: {
+    themes: ["night"]
+  }
 }
