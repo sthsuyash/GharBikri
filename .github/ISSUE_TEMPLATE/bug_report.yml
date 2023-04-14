@@ -2,17 +2,7 @@ name: Bug Report
 description: File a bug report
 title: '[Bug]: '
 labels: ['bug', 'triage']
-assignees:
-  - type: dropdown
-    id: assignees
-    attributes:
-      label: Assignees
-      description: Who should work on this issue?
-      multiple: true
-      options:
-        - sthsuyash
-        - prashannastha7
-        - AmishB7
+assignees: sthsuyash, prashannastha7, AmishB7
 body:
   - type: markdown
     attributes:
