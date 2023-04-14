@@ -8,13 +8,13 @@ GharBikri is a full stack web application that allows users to buy and sell prop
 
 ## Running the Application
 
-_change into each client and server directory and run the following commands:_<br/>
-
 - Clone the repository
 
 ```bash
 git clone https://github.com/sthsuyash/GharBikri.git
 ```
+
+_change into each client and server directory and run the following commands:_<br/>
 
 - Install dependencies
 
