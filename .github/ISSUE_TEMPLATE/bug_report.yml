@@ -1,16 +1,8 @@
----
-name: Bug report
-about: Create a report to help us improve
-title: "[Bug]"
-labels: ''
-assignees: sthsuyash, prashannastha7, AmishB7
-
----
-
 name: Bug Report
 description: File a bug report
 title: "[Bug]: "
 labels: ["bug", "triage"]
+assignees: sthsuyash, prashannastha7, AmishB7
 body:
   - type: markdown
     attributes:
