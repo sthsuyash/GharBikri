@@ -1,14 +1,13 @@
 /** @type {import('tailwindcss').Config} */
-module.exports = {
-  content: [
-    "./index.html",
-    "./src/**/*.{js,ts,jsx,tsx}",
-  ],
-  theme: {
-    extend: {},
-  },
-  plugins: [require("daisyui", "@tailwindcss/forms")],
-  daisyui: {
-    themes: ["night"]
-  }
-}
+export const content = [
+  "./index.html",
+  "./src/**/*.{js,ts,jsx,tsx}",
+];
+export const theme = {
+  extend: {},
+};
+// eslint-disable-next-line no-undef
+export const plugins = [require("daisyui", "@tailwindcss/forms")];
+export const daisyui = {
+  themes: ["night"]
+};

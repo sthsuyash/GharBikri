@@ -1,4 +1,5 @@
-import { Fragment, useState, useEffect } from 'react'
+import React, { Fragment, useState, useEffect } from 'react'
+import axios from 'axios';
 import './App.scss'
 
 import { ToastContainer } from 'react-toastify'
@@ -12,11 +13,16 @@ import Home from './Pages/Home'
 import Footer from './Layouts/Footer/Footer'
 
 // pages
-import Login from './Pages/LoginPage'
-import Register from './Pages/RegisterPage'
+import LoginPage from './Pages/LoginPage'
+import RegisterPage from './Pages/RegisterPage'
+import DashBoard from './Pages/DashBoard'
+
+// error page
+import Error404 from './Routes/Error404'
+
+import { SERVER_URL } from './Config';
 
 function App() {
-
   const [isAuthenticated, setIsAuthenticated] = useState(false);
 
   const setAuth = (boolean) => {
@@ -25,12 +31,11 @@ function App() {
 
   const isAuth = async () => {
     try {
-      const response = await fetch("https://localhost:3000/api/auth/is-verify", {
-        method: "GET",
+      const response = await axios.get(`${SERVER_URL}/api/auth/is-verify`, {
         headers: { token: localStorage.token }
       });
 
-      const parseRes = await response.json();
+      const parseRes = response.data;
       parseRes === true ? setIsAuthenticated(true) : setIsAuthenticated(false);
 
     } catch (err) {
@@ -44,9 +49,9 @@ function App() {
 
   return (
     <>
-      <ToastContainer />
       <Header />
 
+      <ToastContainer />
       <Fragment>
         <Routes>
 
@@ -60,19 +65,33 @@ function App() {
           <Route
             path="/login"
             element={
-              !isAuthenticated ? (<Login setAuth={setAuth} />
+              !isAuthenticated ? (<LoginPage setAuth={setAuth} />
               ) : (
-                <Navigate replace to="/" />
+                <Navigate replace to="/dashboard" />
               )}
           />
 
           <Route
             path="/register"
             element={
-              !isAuthenticated ? (<Register setAuth={setAuth} />
+              !isAuthenticated ? (<RegisterPage setAuth={setAuth} />
+              ) : (
+                <Navigate replace to="/dashboard" />
+              )}
+          />
+
+          <Route
+            path="/dashboard"
+            element={
+              isAuthenticated ? (<DashBoard setAuth={setAuth} />
               ) : (
                 <Navigate replace to="/login" />
               )}
+          />
+
+          <Route
+            path='*'
+            element={<Error404 />}
           />
         </Routes>
 

@@ -1,3 +1,5 @@
+import React from "react";
+
 const stats = [
     { id: 1, name: 'Transactions every 24 hours', value: '44 million' },
     { id: 2, name: 'Assets under holding', value: '$119 trillion' },

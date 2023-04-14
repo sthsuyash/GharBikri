@@ -1,6 +1,6 @@
 import React from "react"
 
-export default Testimonials = () => {
+function Testimonials () {
 
     const testimonials = [
         {
@@ -68,3 +68,5 @@ export default Testimonials = () => {
         </section>
     )
 }
+
+export default Testimonials;

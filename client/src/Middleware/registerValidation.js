@@ -1,14 +1,15 @@
-export function validate(inputs) {
+export function registerValidate(inputs) {
     let errors = {};
-
-    if (!inputs.username.trim()) {
-        errors.name = "Username required";
-    }
 
     if (!inputs.user_email) {
         errors.user_email = "Email required";
-    } else if (!/\S+@\S+.\S+/.test(inputs.email)) {
-        errors.email = "Email address is invalid";
+    }
+    else if (/^([a-zA-Z0-9._%+-]+)@([a-zA-Z0-9.-]+\.[a-zA-Z]{2,})$/.test(inputs.email)) {
+        errors.user_email = "Email address is invalid";
+    }
+
+    if (!inputs.username) {
+        errors.username = "Username required";
     }
 
     if (!inputs.password) {
@@ -18,4 +19,4 @@ export function validate(inputs) {
     }
 
     return errors;
-};
+}

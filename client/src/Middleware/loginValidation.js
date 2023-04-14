@@ -10,4 +10,4 @@ export function loginValidate(inputs) {
     }
 
     return error;
-};
+}
