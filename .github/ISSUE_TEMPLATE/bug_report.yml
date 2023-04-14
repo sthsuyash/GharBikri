@@ -1,8 +1,18 @@
 name: Bug Report
 description: File a bug report
-title: "[Bug]: "
-labels: ["bug", "triage"]
-assignees: sthsuyash, prashannastha7, AmishB7
+title: '[Bug]: '
+labels: ['bug', 'triage']
+assignees:
+  - type: dropdown
+    id: assignees
+    attributes:
+      label: Assignees
+      description: Who should work on this issue?
+      multiple: true
+      options:
+        - sthsuyash
+        - prashannastha7
+        - AmishB7
 body:
   - type: markdown
     attributes:
@@ -22,7 +32,7 @@ body:
       label: What happened?
       description: Also tell us, what did you expect to happen?
       placeholder: Tell us what you see!
-      value: "A bug happened!"
+      value: 'A bug happened!'
     validations:
       required: true
   - type: dropdown
