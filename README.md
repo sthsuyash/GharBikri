@@ -1,7 +1,6 @@
 # GharBikri
 
 <img src="./client/src/assets/Images/GharBikri-logos_white.png" height=100/>
-<br/><br/><br/>
 
 ## Description
 
