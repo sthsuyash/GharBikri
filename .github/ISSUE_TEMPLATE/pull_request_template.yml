@@ -17,6 +17,7 @@ body:
     attributes:
       label: Title
       description: A short summary of the changes made.
+    validations:
       required: true
 
   - type: input
@@ -25,6 +26,7 @@ body:
       label: Description
       description: |
         A detailed description of the changes made, including any relevant context or background information.
+    validations:
       required: true
 
   - type: markdown
@@ -40,7 +42,8 @@ body:
       label: Migration Script
       description: |
         Provide a migration script or instructions on how to update the database.
-      required: true
+    validations:
+      required: false
 
   - type: markdown
     attributes:
@@ -55,6 +58,7 @@ body:
       label: Test Plan
       description: |
         Describe the testing that has been done to ensure the changes work as expected.
+    validations:
       required: true
 
   - type: markdown
@@ -63,14 +67,6 @@ body:
         ## Review
 
         Explain what kind of feedback you are looking for.
-
-  - type: input
-    id: reviewer
-    attributes:
-      label: Reviewer
-      description: |
-        Identify a specific person or team that should review the changes.
-      required: true
 
   - type: input
     id: additional_feedback
