@@ -1,0 +1,45 @@
+name: Pull Request Template
+
+description: |
+  This template provides a structure for creating pull requests related to a PERN stack app for real estate.
+
+# Define the sections of the pull request template
+sections:
+  - name: Changes
+    description: |
+      Describe the changes you are proposing in this pull request.
+    inputs:
+      - name: Title
+        description: A short summary of the changes made.
+        required: true
+      - name: Description
+        description: |
+          A detailed description of the changes made, including any relevant context or background information.
+        required: true
+  - name: Database Changes
+    description: |
+      If you made changes to the database schema or data, describe them here.
+    inputs:
+      - name: Migration Script
+        description: |
+          Provide a migration script or instructions on how to update the database.
+        required: false
+  - name: Testing
+    description: |
+      Explain how the changes have been tested.
+    inputs:
+      - name: Test Plan
+        description: |
+          Describe the testing that has been done to ensure the changes work as expected.
+        required: true
+  - name: Review
+    description: |
+      Explain what kind of feedback you are looking for.
+    inputs:
+      - name: Reviewer
+        description: |
+          Identify a specific person or team that should review the changes.
+        required: false
+      - name: Additional Feedback
+        description: |
+          Provide any additional information that would be helpful to the reviewer(s).
