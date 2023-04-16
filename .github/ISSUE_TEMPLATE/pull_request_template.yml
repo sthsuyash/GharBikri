@@ -5,41 +5,76 @@ description: |
 
 # Define the sections of the pull request template
 body:
-  - name: Changes
-    description: |
-      Describe the changes you are proposing in this pull request.
-    inputs:
-      - name: Title
-        description: A short summary of the changes made.
-        required: true
-      - name: Description
-        description: |
-          A detailed description of the changes made, including any relevant context or background information.
-        required: true
-  - name: Database Changes
-    description: |
-      If you made changes to the database schema or data, describe them here.
-    inputs:
-      - name: Migration Script
-        description: |
-          Provide a migration script or instructions on how to update the database.
-        required: false
-  - name: Testing
-    description: |
-      Explain how the changes have been tested.
-    inputs:
-      - name: Test Plan
-        description: |
-          Describe the testing that has been done to ensure the changes work as expected.
-        required: true
-  - name: Review
-    description: |
-      Explain what kind of feedback you are looking for.
-    inputs:
-      - name: Reviewer
-        description: |
-          Identify a specific person or team that should review the changes.
-        required: false
-      - name: Additional Feedback
-        description: |
-          Provide any additional information that would be helpful to the reviewer(s).
+  - type: markdown
+    attributes:
+      value: |
+        ## Changes
+
+        Describe the changes you are proposing in this pull request.
+
+  - type: input
+    id: title
+    attributes:
+      label: Title
+      description: A short summary of the changes made.
+      required: true
+
+  - type: input
+    id: description
+    attributes:
+      label: Description
+      description: |
+        A detailed description of the changes made, including any relevant context or background information.
+      required: true
+
+  - type: markdown
+    attributes:
+      value: |
+        ## Database Changes
+
+        If you made changes to the database schema or data, describe them here.
+
+  - type: input
+    id: migration_script
+    attributes:
+      label: Migration Script
+      description: |
+        Provide a migration script or instructions on how to update the database.
+      required: true
+
+  - type: markdown
+    attributes:
+      value: |
+        ## Testing
+
+        Explain how the changes have been tested.
+
+  - type: input
+    id: test_plan
+    attributes:
+      label: Test Plan
+      description: |
+        Describe the testing that has been done to ensure the changes work as expected.
+      required: true
+
+  - type: markdown
+    attributes:
+      value: |
+        ## Review
+
+        Explain what kind of feedback you are looking for.
+
+  - type: input
+    id: reviewer
+    attributes:
+      label: Reviewer
+      description: |
+        Identify a specific person or team that should review the changes.
+      required: true
+
+  - type: input
+    id: additional_feedback
+    attributes:
+      label: Additional Feedback
+      description: |
+        Provide any additional information that would be helpful to the reviewer(s).
