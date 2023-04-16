@@ -4,7 +4,7 @@ description: |
   This template provides a structure for creating pull requests related to a PERN stack app for real estate.
 
 # Define the sections of the pull request template
-sections:
+body:
   - name: Changes
     description: |
       Describe the changes you are proposing in this pull request.
