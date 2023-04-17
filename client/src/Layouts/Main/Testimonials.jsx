@@ -1,37 +1,35 @@
 import React from "react"
 
-function Testimonials () {
+function Testimonials() {
 
+    // TODO: Replace with real testimonials from server
     const testimonials = [
         {
-            avatar: "https://api.uifaces.co/our-content/donated/xZ4wg2Xj.jpg",
-            name: "Martin escobar",
-            title: "Founder of meta",
-            quote: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc et est hendrerit, porta nunc vitae."
+            avatar: "https://randomuser.me/api/portraits/women/40.jpg",
+            name: "Samantha Ray",
+            quote: "I had a fantastic experience working with the GharBikri team! They were knowledgeable, professional, and went above and beyond to find me the perfect home. I highly recommend them!"
         },
         {
             avatar: "https://randomuser.me/api/portraits/men/46.jpg",
             name: "Simon andrew",
-            title: "Software engineer",
-            quote: "Neque porro quisquam est qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit."
+            quote: "I was impressed with the level of expertise and personalized service I received from this real estate agency. They made the home buying process a breeze and I couldn't be happier with my new home!"
         },
         {
-            avatar: "https://randomuser.me/api/portraits/men/86.jpg",
-            name: "Micheal worin",
-            title: "Product designer",
-            quote: "There is no one who loves pain itself, who seeks after it and wants to have it, simply because it is pain."
+            avatar: "https://randomuser.me/api/portraits/women/86.jpg",
+            name: "Lisa M. Smith",
+            quote: "Working with this team was an absolute pleasure! Their commitment to finding me the perfect property was unmatched. I highly recommend them to anyone looking for a top-notch real estate experience."
         },
     ]
 
     return (
         <section className="relative py-14">
             <div className="relative z-10 max-w-screen-xl mx-auto px-4 md:px-8">
-                <div className="max-w-xl sm:text-center md:mx-auto">
+                <div className="max-w-2xl sm:text-center md:mx-auto">
                     <h3 className="text-gray-800 text-3xl font-semibold sm:text-4xl">
                         Hear from our customers
                     </h3>
-                    <p className="mt-3 text-gray-600">
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc et est hendrerit, porta nunc vitae, gravida justo. Nunc fermentum magna lorem, euismod volutpat arcu volutpat et.
+                    <p className="mt-3 text-gray-600 text-justify">
+                        Don&apos;t just take our word for it - see what our clients have to say about their experience working with us! Our real estate agency is proud to have helped countless individuals and families buy and sell homes throughout the years. We&apos;re honored that so many of them have taken the time to share their positive feedback and success stories with us. Take a look at some of our recent testimonials to see how we&apos;ve helped others achieve their real estate goals.
                     </p>
                 </div>
                 <div className="mt-12">
@@ -64,7 +62,7 @@ function Testimonials () {
                     </ul>
                 </div>
             </div>
-            <div className="absolute top-0 w-full h-[350px]" style={{ background: "linear-gradient(152.92deg, rgba(192, 132, 252, 0.2) 4.54%, rgba(232, 121, 249, 0.17) 34.2%, rgba(192, 132, 252, 0.1) 77.55%)" }}></div>
+            <div className="absolute top-0 w-full h-[350px]" style={{ background: "linear-gradient(152.92deg, rgba(202, 132, 252, 0.5) 4.54%, rgba(129, 121, 249, 0.2) 34.2%, rgba(004, 132, 252, 0.2) 77.55%)" }}></div>
         </section>
     )
 }

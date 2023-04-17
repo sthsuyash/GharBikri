@@ -8,7 +8,9 @@ const cors = require('cors');
 app.use(express.json()) // req.body
 app.use(express.urlencoded({ extended: true })) // req.body
 
-app.use(cors());
+app.use(cors({
+    origin: 'http://localhost:5173',
+}));
 
 // routes
 const routes = require('./routes');
