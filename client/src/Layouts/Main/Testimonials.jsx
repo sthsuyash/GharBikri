@@ -29,7 +29,7 @@ function Testimonials() {
                         Hear from our customers
                     </h3>
                     <p className="mt-3 text-gray-600 text-justify">
-                        Don&apos;t just take our word for it - see what our clients have to say about their experience working with us! Our real estate agency is proud to have helped countless individuals and families buy and sell homes throughout the years. We&apos;re honored that so many of them have taken the time to share their positive feedback and success stories with us. Take a look at some of our recent testimonials to see how we&apos;ve helped others achieve their real estate goals.
+                        Don&apos;t just take our word for it - see what our clients have to say about their experience working with us! Our real estate agency is proud to have helped countless individuals and families buy and sell homes throughout the years. Take a look at some of our recent testimonials to see how we&apos;ve helped others achieve their real estate goals.
                     </p>
                 </div>
                 <div className="mt-12">
