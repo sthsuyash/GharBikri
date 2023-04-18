@@ -25,7 +25,7 @@ function Testimonials() {
         <section className="relative py-14">
             <div className="relative z-10 max-w-screen-xl mx-auto px-4 md:px-8">
                 <div className="max-w-2xl sm:text-center md:mx-auto">
-                    <h3 className="text-gray-800 text-3xl font-semibold sm:text-4xl">
+                    <h3 className="sm:text-4xl mb-4 text-4xl font-extrabold tracking-tight leading-none text-gray-900 md:text4xl lg:text-5xl">
                         Hear from our customers
                     </h3>
                     <p className="mt-3 text-gray-600 text-justify">

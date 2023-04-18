@@ -8,7 +8,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import { Navigate, Route, Routes } from 'react-router-dom'
 
 // components
-import Header from './Layouts/Header/Header'
+import Nav from './Layouts/Header/Nav'
 import Home from './Pages/Home'
 import Footer from './Layouts/Footer/Footer'
 
@@ -49,7 +49,7 @@ function App() {
 
   return (
     <>
-      <Header />
+      <Nav />
 
       <ToastContainer />
       <Fragment>
@@ -96,6 +96,7 @@ function App() {
         </Routes>
 
       </Fragment>
+      
       <Footer />
     </>
   )
