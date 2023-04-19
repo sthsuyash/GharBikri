@@ -19,10 +19,10 @@ const products = [
         name: "Analytics", description: "Get a better understanding of your traffic", href: "/dashboard", icon: ChartPieIcon,
     },
     {
-        name: "Engagement", description: "Speak directly to your customers", href: "#", icon: CursorArrowRaysIcon,
+        name: "Engagement", description: "Speak directly to your seller", href: "#", icon: CursorArrowRaysIcon,
     },
     {
-        name: "Security", description: "Your customers’ data will be safe and secure", href: "#", icon: FingerPrintIcon,
+        name: "Security", description: "Your data will be safe and secure", href: "#", icon: FingerPrintIcon,
     },
     {
         name: "Integrations", description: "Connect with third-party tools", href: "#", icon: SquaresPlusIcon,
@@ -115,16 +115,17 @@ function Nav() {
                         </Transition>
                     </Popover>
 
-                    <Link to="/rent" className="text-lg font-bold leading-6 text-gray-900  hover:underline hover:text-blue-900">
+                    <Link to="/rent" className="transition-all text-lg font-bold leading-6 text-gray-900  hover:underline hover:text-blue-900">
                         Rent
                     </Link>
-                    <Link to="/buy" className="text-lg font-bold leading-6 text-gray-900  hover:underline  hover:text-blue-900">
+                    <Link to="/buy" className="transition-all text-lg font-bold leading-6 text-gray-900  hover:underline  hover:text-blue-900">
                         Buy
                     </Link>
-                    <Link to="/sell" className="text-lg font-bold leading-6 text-gray-900  hover:underline  hover:text-blue-900">
+                    <Link to="/sell" className="transition-all text-lg font-bold leading-6 text-gray-900  hover:underline  hover:text-blue-900">
                         Sell
                     </Link>
                 </Popover.Group>
+
                 <div className="hidden lg:flex lg:flex-1 lg:justify-end ">
                     {/* button for register */}
 
@@ -132,7 +133,7 @@ function Nav() {
                         <Link to="/register">
                             <button
                                 type="button"
-                                className="inline-flex justify-center w-full border border-gray-300 shadow-sm px-4 py-3 text-md font-medium text-gray-50 hover:bg-gray-50 hover:text-gray-950  bg-blue-600 hover:font-bold"
+                                className="transition-all inline-flex justify-center w-full border border-gray-300 shadow-sm px-4 py-3 text-md font-medium text-gray-50 hover:bg-gray-50 hover:text-gray-950  bg-blue-600 hover:font-bold"
                                 id="options-menu"
                                 aria-haspopup="true"
                                 aria-expanded="true"
