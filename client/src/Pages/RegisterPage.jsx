@@ -6,6 +6,7 @@ import { Link } from "react-router-dom";
 import { toastSuccess, toastError } from '../components/Toast'
 import { registerValidate } from '../Middleware/registerValidation';
 import { SERVER_URL } from '../Config';
+import registerImage from '../assets/Images/register/registerHome.jpg';
 
 const RegisterPage = ({ setAuth }) => {
     // Create a state variable called inputs and a function called setInputs
@@ -71,14 +72,14 @@ const RegisterPage = ({ setAuth }) => {
     };
 
     return (
-        <main className="w-full flex p-10">
-            <div className="relative flex-1 hidden items-center justify-center h-screen bg-gray-900 lg:flex">
+        <main className="w-full flex px-10">
+            <div className="relative flex-1 hidden items-center justify-center bg-white lg:flex h-screen">
                 <div className="relative z-10 w-full max-w-md">
                     <div className=" mt-16 space-y-3">
-                        <h3 className="text-white text-3xl font-bold text-center">Start your search for new home today</h3>
-                        <h3 className="text-white text-3xl font-bold text-center">or</h3>
-                        <h3 className="text-white text-3xl font-bold text-center">add your houses</h3>
-                        <p className="text-gray-300">
+                        <h3 className="text-3xl font-bold text-center text-transparent bg-clip-text bg-gradient-to-r from-red-700 to-amber-200">Start your search for new home today</h3>
+                        <h3 className="text-5xl font-bold text-center text-transparent bg-clip-text bg-gradient-to-r from-yellow-500  to-red-500">or</h3>
+                        <h3 className="text-3xl font-bold text-center text-transparent bg-clip-text bg-gradient-to-r from-blue-100  to-red-700">add your houses</h3>
+                        <p className="text-white">
                             Create an account and get access to all features for free.
                         </p>
                         <div className="flex items-center -space-x-2 overflow-hidden">
@@ -87,23 +88,27 @@ const RegisterPage = ({ setAuth }) => {
                             <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-0.3.5&q=80&fm=jpg&crop=faces&fit=crop&h=200&w=200&s=a72ca28288878f8404a795f39642a46f" className="w-10 h-10 rounded-full border-2 border-white" />
                             <img src="https://randomuser.me/api/portraits/men/86.jpg" className="w-10 h-10 rounded-full border-2 border-white" />
                             <img src="https://images.unsplash.com/photo-1510227272981-87123e259b17?ixlib=rb-0.3.5&q=80&fm=jpg&crop=faces&fit=crop&h=200&w=200&s=3759e09a5b9fbe53088b23c615b6312e" className="w-10 h-10 rounded-full border-2 border-white" />
-                            <p className="text-sm text-gray-400 font-medium translate-x-5">
+                            <p className="text-sm text-white font-medium translate-x-5">
                                 Join 5.000+ users
                             </p>
                         </div>
                     </div>
                 </div>
                 <div
-                    className="absolute inset-0 my-auto h-[500px]"
+                    className="absolute inset-0 my-auto rounded-2xl"
                     style={{
-                        background: "linear-gradient(152.92deg, rgba(192, 132, 252, 0.2) 4.54%, rgba(232, 121, 249, 0.26) 34.2%, rgba(192, 132, 252, 0.1) 77.55%)", filter: "blur(118px)"
+                        backgroundImage: `url(${registerImage})`,
+                        backgroundSize: "cover",
+                        backgroundPosition: "center",
+                        backgroundRepeat: "no-repeat",
+                        filter: "blur(2px)",
                     }}
                 >
 
                 </div>
             </div>
 
-            <div className="flex-1 flex items-center justify-center h-screen bg-white rounded-lg">
+            <div className="flex-1 flex items-center justify-center bg-white rounded-lg">
                 <div className="w-full max-w-md space-y-8 px-4 bg-white text-gray-600 sm:px-0">
                     <div className="mt-5 space-y-2">
                         <h3 className="text-gray-800 text-2xl font-bold sm:text-3xl">Create an account</h3>
