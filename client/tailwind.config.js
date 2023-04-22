@@ -9,5 +9,5 @@ export const theme = {
 // eslint-disable-next-line no-undef
 export const plugins = [require("daisyui", "@tailwindcss/forms")];
 export const daisyui = {
-  themes: ["night"]
+  themes: [""]
 };

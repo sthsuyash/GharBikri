@@ -6,6 +6,7 @@ import { Link } from "react-router-dom";
 import { toastSuccess, toastError } from "../components/Toast";
 import { loginValidate } from "../Middleware/loginValidation";
 import { SERVER_URL } from "../Config";
+import loginImage from "../assets/Images/login/homelogin.jpg";
 
 function LoginPage({ setAuth }) {
     // inputs state
@@ -54,7 +55,12 @@ function LoginPage({ setAuth }) {
             } catch (err) {
                 console.error(err.message);
                 if (err.response.status === 422) {
-                    toastError("Invalid credentials!");
+                    let errors = (err.response.data.errors[0].msg)
+                    console.log(errors)
+                    toastError(errors);
+                } else {
+                    toastError("Server error!");
+
                 }
             }
         } else {
@@ -63,12 +69,12 @@ function LoginPage({ setAuth }) {
     };
 
     return (
-        <main className="w-full flex p-10">
-            <div className="relative flex-1 hidden items-center justify-center h-screen bg-gray-900 lg:flex">
+        <main className="w-full flex px-10">
+            <div className="relative flex-1 hidden items-center justify-center bg-white lg:flex h-screen">
                 <div className="relative z-10 w-full max-w-md">
                     <div className=" mt-16 space-y-3">
-                        <h3 className="text-white text-3xl font-bold">Welcome Back!</h3>
-                        <p className="text-gray-300">
+                        <h3 className="text-5xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-teal-500 to-gray-900">Welcome Back!</h3>
+                        <p className="text-lg text-transparent bg-clip-text bg-gradient-to-r from-white to-amber-950">
                             Login to your account to continue your house hunt.
                         </p>
                         <div className="flex items-center -space-x-2 overflow-hidden">
@@ -77,27 +83,31 @@ function LoginPage({ setAuth }) {
                             <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-0.3.5&q=80&fm=jpg&crop=faces&fit=crop&h=200&w=200&s=a72ca28288878f8404a795f39642a46f" className="w-10 h-10 rounded-full border-2 border-white" />
                             <img src="https://randomuser.me/api/portraits/men/86.jpg" className="w-10 h-10 rounded-full border-2 border-white" />
                             <img src="https://images.unsplash.com/photo-1510227272981-87123e259b17?ixlib=rb-0.3.5&q=80&fm=jpg&crop=faces&fit=crop&h=200&w=200&s=3759e09a5b9fbe53088b23c615b6312e" className="w-10 h-10 rounded-full border-2 border-white" />
-                            <p className="text-sm text-gray-400 font-medium translate-x-5">
+                            <p className="text-md font-semibold text-transparent bg-clip-text bg-gradient-to-r from-blue-600  to-gray-950 translate-x-5">
                                 Welcome, one of our 5.000+ users
                             </p>
                         </div>
                     </div>
                 </div>
                 <div
-                    className="absolute inset-0 my-auto h-[500px]"
+                    className="absolute inset-0 my-auto rounded-2xl"
                     style={{
-                        background: "linear-gradient(152.92deg, rgba(192, 132, 252, 0.2) 4.54%, rgba(232, 121, 249, 0.26) 34.2%, rgba(192, 132, 252, 0.1) 77.55%)", filter: "blur(118px)",
+                        backgroundImage: `url(${loginImage})`,
+                        backgroundSize: "cover",
+                        backgroundPosition: "center",
+                        backgroundRepeat: "no-repeat",
+                        filter: "blur(1.5px)",
                     }}
                 />
             </div>
 
-            <div className="flex-1 flex items-center justify-center h-screen bg-white  rounded-lg">
+            <div className="flex-1 flex items-center justify-center bg-white  rounded-lg">
                 <div className="w-full max-w-md space-y-8 px-4 bg-white text-gray-600 sm:px-0">
                     <div className="mt-5 space-y-2">
                         <h3 className="text-gray-800 text-2xl font-bold sm:text-3xl">Login to your account</h3>
                         <p>
                             Don&apos;t have an account?
-                            <Link to="/register" className="font-medium text-indigo-600 hover:text-indigo-500">Sign Up</Link>
+                            <Link to="/register" className="font-medium text-indigo-600 hover:text-indigo-500"> Sign Up</Link>
                         </p>
                     </div>
 
@@ -176,7 +186,7 @@ function LoginPage({ setAuth }) {
                                 Continue with Google
                             </button>
                         </div>
-                        
+
                     </form>
                 </div>
             </div>

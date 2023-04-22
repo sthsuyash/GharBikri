@@ -1,6 +1,6 @@
 import React, { Fragment, useState } from "react";
 import { Link } from "react-router-dom";
-import { Dialog, Disclosure, Popover, Transition} from "@headlessui/react";
+import { Dialog, Disclosure, Popover, Transition } from "@headlessui/react";
 import {
     ArrowPathIcon,
     Bars3Icon,
@@ -13,15 +13,16 @@ import {
 import { ChevronDownIcon, PhoneIcon, PlayCircleIcon } from "@heroicons/react/20/solid";
 import logo from "../../assets/Images/GharBikri-logo.png";
 
+// data
 const products = [
     {
-        name: "Analytics", description: "Get a better understanding of your traffic", href: "#", icon: ChartPieIcon,
+        name: "Analytics", description: "Get a better understanding of your traffic", href: "/dashboard", icon: ChartPieIcon,
     },
     {
-        name: "Engagement", description: "Speak directly to your customers", href: "#", icon: CursorArrowRaysIcon,
+        name: "Engagement", description: "Speak directly to your seller", href: "#", icon: CursorArrowRaysIcon,
     },
     {
-        name: "Security", description: "Your customers’ data will be safe and secure", href: "#", icon: FingerPrintIcon,
+        name: "Security", description: "Your data will be safe and secure", href: "#", icon: FingerPrintIcon,
     },
     {
         name: "Integrations", description: "Connect with third-party tools", href: "#", icon: SquaresPlusIcon,
@@ -30,6 +31,7 @@ const products = [
         name: "Automations", description: "Build strategic funnels that will convert", href: "#", icon: ArrowPathIcon,
     },
 ];
+
 const callsToAction = [
     { name: "Watch demo", href: "#", icon: PlayCircleIcon },
     { name: "Contact sales", href: "#", icon: PhoneIcon },
@@ -39,16 +41,16 @@ function classNames(...classes) {
     return classes.filter(Boolean).join(" ");
 }
 
-function Header() {
+function Nav() {
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
     return (
         <header className="bg-white">
-            <nav className="mx-auto flex max-w-7xl items-center justify-between p-6 lg:px-8" aria-label="Global">
+            <nav className="mx-auto flex max-w-full items-center justify-between py-6 lg:px-16 px-4 md:px-8" aria-label="Global">
                 <div className="flex lg:flex-1">
                     <Link to="/" className="-m-1.5 p-1.5">
                         <span className="sr-only">GharBikri</span>
-                        <img className="h-8 w-auto" src={logo} alt="GharBikri" />
+                        <img className="h-10 w-auto" src={logo} alt="GharBikri" />
                     </Link>
                 </div>
                 <div className="flex lg:hidden">
@@ -61,9 +63,9 @@ function Header() {
                         <Bars3Icon className="h-6 w-6" aria-hidden="true" />
                     </button>
                 </div>
-                <Popover.Group className="hidden lg:flex lg:gap-x-12">
-                    <Popover className="relative">
-                        <Popover.Button className="flex items-center gap-x-1 text-sm font-semibold leading-6 text-gray-900">
+                <Popover.Group className="hidden lg:flex lg:gap-x-12 ">
+                    <Popover className="relative ">
+                        <Popover.Button className=" flex items-center gap-x-1 leading-6 text-gray-900 text-lg font-bold  hover:underline hover:text-blue-900">
                             Product
                             <ChevronDownIcon className="h-5 w-5 flex-none text-gray-400" aria-hidden="true" />
                         </Popover.Button>
@@ -113,27 +115,34 @@ function Header() {
                         </Transition>
                     </Popover>
 
-                    <a href="#" className="text-sm font-semibold leading-6 text-gray-900">
-                        Features
-                    </a>
-                    <Link to="/buy" className="text-sm font-semibold leading-6 text-gray-900">
+                    <Link to="/rent" className="transition-all text-lg font-bold leading-6 text-gray-900  hover:underline hover:text-blue-900">
+                        Rent
+                    </Link>
+                    <Link to="/buy" className="transition-all text-lg font-bold leading-6 text-gray-900  hover:underline  hover:text-blue-900">
                         Buy
                     </Link>
-                    <Link to="/sell" className="text-sm font-semibold leading-6 text-gray-900">
+                    <Link to="/sell" className="transition-all text-lg font-bold leading-6 text-gray-900  hover:underline  hover:text-blue-900">
                         Sell
                     </Link>
                 </Popover.Group>
-                <div className="hidden lg:flex lg:flex-1 lg:justify-end dropdown dropdown-hover">
-                    <label className="text-sm font-semibold leading-6 text-gray-500">
-                        Profile
-                        {" "}
-                        <span aria-hidden="true">&rarr;</span>
-                    </label>
-                    <ul tabIndex={0} className="dropdown-content menu p-2 shadow bg-base-100 rounded-box w-42">
-                        <li><Link to="/login">Login</Link></li>
-                        <li><Link to="/register">Register</Link></li>
-                        <li><Link to="/dashboard">Dashboard</Link></li>
-                    </ul>
+
+                <div className="hidden lg:flex lg:flex-1 lg:justify-end ">
+                    {/* button for register */}
+
+                    <div className="relative inline-block text-left ">
+                        <Link to="/register">
+                            <button
+                                type="button"
+                                className="transition-all inline-flex justify-center w-full border border-gray-300 shadow-sm px-4 py-3 text-md font-medium text-gray-50 hover:bg-gray-50 hover:text-gray-950  bg-blue-600 hover:font-bold"
+                                id="options-menu"
+                                aria-haspopup="true"
+                                aria-expanded="true"
+                            >
+                                Register Now
+                            </button>
+                        </Link>
+
+                    </div>
 
                 </div>
             </nav>
@@ -226,4 +235,4 @@ function Header() {
     );
 }
 
-export default Header;
+export default Nav;
