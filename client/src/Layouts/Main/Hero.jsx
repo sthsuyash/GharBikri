@@ -1,6 +1,6 @@
 import React from "react";
 import HeroCard from "../../components/Card/heroCard";
-import backgroundImage from "../../assets/images/home.jpg";
+import backgroundImage from "../../assets/Images/home.jpg";
 
 const Hero = () => {
     return (
