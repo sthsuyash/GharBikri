@@ -1,4 +1,7 @@
 import React from "react";
+import { HiOutlineLocationMarker } from "react-icons/hi";
+import { ImPriceTags } from "react-icons/im";
+import { BsHousesFill } from "react-icons/bs";
 
 const HeroCard = () => {
 
@@ -9,7 +12,7 @@ const HeroCard = () => {
                     <div className="bg-white p-10">
                         <div className="grid content-center md:grid-cols-2 xl:grid-cols-4 md:gap-5 ">
                             <div>
-                                <label className="text-gray-500">Preferred Location</label>
+                                <label className="text-gray-500"><span className="inline-flex"><HiOutlineLocationMarker /></span> Preferred Location</label>
                                 <input
                                     type="text"
                                     placeholder="Kathmandu"
@@ -18,7 +21,7 @@ const HeroCard = () => {
                             </div>
 
                             <div>
-                                <label className="text-gray-500">Avg Price</label>
+                                <label className="text-gray-500"><span className="inline-flex"><ImPriceTags /></span> Avg Price</label>
                                 <input
                                     type="number"
                                     placeholder="$500-$1000"
@@ -27,7 +30,7 @@ const HeroCard = () => {
                             </div>
 
                             <div className="flex flex-col">
-                                <label className=" text-gray-500">Property type</label>
+                                <label className=" text-gray-500"><span className="inline-flex"><BsHousesFill /></span> Property type</label>
                                 <select
                                     id="hs-select-label"
                                     className="w-full text-gray-500 border-2 border-gray-300 bg-white p-2"

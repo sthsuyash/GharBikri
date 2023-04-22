@@ -11,25 +11,27 @@ const stats = [
 
 const Stats = () => {
     return (
-        <div className="overflow-hidden bg-white py-28 sm:py-32 mb-14">
+        <div className="overflow-hidden bg-white py-28 sm:py-32 mb-20">
             <div className="max-w-full mx-10 lg:px-8">
-                <div className="mx-auto grid max-w-2xl grid-cols-1 gap-x-8 gap-y-16 sm:gap-y-20 lg:mx-0 lg:max-w-none lg:grid-cols-2 relative">
+                <div className="mx-auto grid max-w-2xl grid-cols-1 gap-x-8 gap-y-16 sm:gap-y-20 lg:mx-0 lg:max-w-none lg:grid-cols-2">
+                    <div className="relative">
 
-                    <img
-                        src={home2}
-                        alt="House2"
-                        className="shadow-xl ring-4 ring-gray-400/50 h-96 rounded-lg"
-                    />
-                    <img
-                        src={home1}
-                        alt="House1"
-                        className="absolute top-20 left-32 shadow-xl ring-4 ring-gray-400/50 z-10 rounded-lg"
-                    />
-                    <img
-                        src={home3}
-                        alt="House3"
-                        className="absolute top-12 left-96 shadow-2xl ring-4 ring-gray-400/50 z-0 rounded-lg"
-                    />
+                        <img
+                            src={home2}
+                            alt="House2"
+                            className="shadow-xl ring-4 ring-gray-400/50 h-96 rounded-lg  transition-all hover:scale-105 hidden lg:block"
+                        />
+                        <img
+                            src={home1}
+                            alt="House1"
+                            className="absolute top-20 left-32 shadow-xl ring-4 ring-gray-400/50 z-10 rounded-lg  transition-all hover:scale-105 hidden lg:block"
+                        />
+                        <img
+                            src={home3}
+                            alt="House3"
+                            className="absolute top-12 left-96 shadow-2xl ring-4 ring-gray-400/50 z-0 rounded-lg  transition-all hover:scale-105 hidden lg:block"
+                        />
+                    </div>
 
                     <div className="lg:pr-8 lg:pt-4 lg:mr-10">
                         <div className="lg:w-2xl w-lg">

@@ -7,7 +7,7 @@ import Featured from '../Layouts/Main/Featured'
 import Newsletter from '../Layouts/Main/Newsletter'
 import Testimonials from '../Layouts/Main/Testimonials'
 import Hero from "../Layouts/Main/Hero";
-import HouseCard from "../components/Card/houseCard";
+import FeaturedProperty from "../Layouts/Main/FeaturedProperty";
 
 function Home() {
     return (
@@ -15,7 +15,7 @@ function Home() {
             <Header />
             <Hero />
             <Stats />
-            <HouseCard />
+            <FeaturedProperty />
             <Team />
             <Testimonials />
             <Featured />

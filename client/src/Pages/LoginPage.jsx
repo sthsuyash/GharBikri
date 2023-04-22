@@ -55,7 +55,12 @@ function LoginPage({ setAuth }) {
             } catch (err) {
                 console.error(err.message);
                 if (err.response.status === 422) {
-                    toastError("Invalid credentials!");
+                    let errors = (err.response.data.errors[0].msg)
+                    console.log(errors)
+                    toastError(errors);
+                } else {
+                    toastError("Server error!");
+
                 }
             }
         } else {
