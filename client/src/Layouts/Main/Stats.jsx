@@ -1,7 +1,7 @@
 import React from "react";
-import home1 from "../../assets/images/home1.jpg";
-import home2 from "../../assets/images/home2.jpg";
-import home3 from "../../assets/images/home3.jpg";
+import home1 from "../../assets/Images/home1.jpg";
+import home2 from "../../assets/Images/home2.jpg";
+import home3 from "../../assets/Images/home3.jpg";
 
 const stats = [
     { id: 1, name: 'Apartment Sale', value: '400+' },
