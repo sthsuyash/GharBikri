@@ -9,7 +9,7 @@ function Header() {
 
                 {/* left div */}
                 <div className="lg:w-2/4 md:w-2/4">
-                    <h1 className="text-6xl font-extrabold tracking-tight leading-none text-gray-900 md:text-6xl lg:text-8xl sm:mb-5">Let&apos;s Find Your Comfort <span className="text-blue-500">House!</span></h1>
+                    <h1 className="text-6xl font-extrabold tracking-tight leading-none text-gray-900 md:text-6xl lg:text-8xl sm:mb-5 pr-20">Let&apos;s Find Your Comfort <span className="text-blue-500">House!</span></h1>
                 </div>
 
                 {/* right div */}

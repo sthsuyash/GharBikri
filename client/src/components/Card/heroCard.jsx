@@ -2,6 +2,7 @@ import React from "react";
 import { HiOutlineLocationMarker } from "react-icons/hi";
 import { ImPriceTags } from "react-icons/im";
 import { BsHousesFill } from "react-icons/bs";
+import { ImSearch } from "react-icons/im";
 
 const HeroCard = () => {
 
@@ -44,7 +45,7 @@ const HeroCard = () => {
                             <div className="flex flex-col sm:pt-[5]">
 
                                 <button className="bg-blue-700 px-10 py-4 text-white w-fit h-fit lg:self-end self-start lg:my-auto">
-                                    Search
+                                    Search <span className="inline-flex "><ImSearch /></span>
                                 </button>
                             </div>
                         </div>
