@@ -17,6 +17,10 @@ import LoginPage from './Pages/LoginPage'
 import RegisterPage from './Pages/RegisterPage'
 import DashBoard from './Pages/DashBoard'
 
+import Rent from './Pages/Rent'
+import Buy from './Pages/Buy'
+import Sell from './Pages/Sell'
+
 // error page
 import Error404 from './Routes/Error404'
 
@@ -52,51 +56,71 @@ function App() {
       <Nav />
 
       <ToastContainer />
-      <Fragment>
-        <Routes>
+      <Routes>
+        <Route
+          path="/"
+          element={
+            <Home isAuthenticated={isAuthenticated} />
+          }
+        />
 
-          <Route
-            path="/"
-            element={
-              <Home />
-            }
-          />
+        <Route
+          path="/login"
+          element={
+            !isAuthenticated ? (<LoginPage setAuth={setAuth} />
+            ) : (
+              <Navigate replace to="/dashboard" />
+            )}
+        />
 
-          <Route
-            path="/login"
-            element={
-              !isAuthenticated ? (<LoginPage setAuth={setAuth} />
-              ) : (
-                <Navigate replace to="/dashboard" />
-              )}
-          />
+        <Route
+          path="/register"
+          element={
+            !isAuthenticated ? (<RegisterPage setAuth={setAuth} />
+            ) : (
+              <Navigate replace to="/dashboard" />
+            )}
+        />
 
-          <Route
-            path="/register"
-            element={
-              !isAuthenticated ? (<RegisterPage setAuth={setAuth} />
-              ) : (
-                <Navigate replace to="/dashboard" />
-              )}
-          />
+        <Route
+          path="/dashboard"
+          element={
+            isAuthenticated ? (<DashBoard setAuth={setAuth} />
+            ) : (
+              <Navigate replace to="/login" />
+            )}
+        />
 
-          <Route
-            path="/dashboard"
-            element={
-              isAuthenticated ? (<DashBoard setAuth={setAuth} />
-              ) : (
-                <Navigate replace to="/login" />
-              )}
-          />
+        <Route
+          path='/rent'
+          element={
+            <Rent />
+          }
+        />
 
-          <Route
-            path='*'
-            element={<Error404 />}
-          />
-        </Routes>
+        <Route
+          path='/buy'
+          element={
+            <Buy />
+          }
+        />
 
-      </Fragment>
-      
+        <Route
+          path='/sell'
+          element={
+            isAuthenticated ? (<Sell />
+            ) : (
+              <Navigate replace to="/login" />
+            )}
+        />
+
+        <Route
+          path='*'
+          element={<Error404 />}
+        />
+
+      </Routes>
+
       <Footer />
     </>
   )

@@ -121,6 +121,49 @@ const RegisterPage = ({ setAuth }) => {
                         onSubmit={onSubmitForm}
                         className="space-y-5"
                     >
+                        <div className='flex flex-row gap-5'>
+
+                            {/* first_name */}
+                            <div>
+                                <label className="font-medium">
+                                    First Name
+                                </label>
+                                <input
+                                    name="first_name"
+                                    type="text"
+                                    className="w-full mt-2 px-3 py-2 text-gray-500 bg-transparent outline-none border focus:border-indigo-600 shadow-sm rounded-lg"
+                                    placeholder="Sam"
+                                    value={first_name}
+                                    onChange={(e) => onChange(e)}
+                                />
+                                {error.first_name && (
+                                    <p className="text-red-500 text-xs italic">
+                                        {error.first_name}
+                                    </p>
+                                )}
+                            </div>
+
+                            {/* last_name */}
+                            <div>
+                                <label className="font-medium">
+                                    Last Name
+                                </label>
+                                <input
+                                    name="last_name"
+                                    type="text"
+                                    className="w-full mt-2 px-3 py-2 text-gray-500 bg-transparent outline-none border focus:border-indigo-600 shadow-sm rounded-lg"
+                                    placeholder="Smith"
+                                    value={last_name}
+                                    onChange={(e) => onChange(e)}
+                                />
+                                {error.last_name && (
+                                    <p className="text-red-500 text-xs italic">
+                                        {error.last_name}
+                                    </p>
+                                )}
+                            </div>
+                        </div>
+
                         {/* email */}
                         <div>
                             <label className="font-medium">
@@ -142,45 +185,6 @@ const RegisterPage = ({ setAuth }) => {
                             )}
                         </div>
 
-                        {/* first_name */}
-                        <div>
-                            <label className="font-medium">
-                                First Name
-                            </label>
-                            <input
-                                name="first_name"
-                                type="text"
-                                className="w-full mt-2 px-3 py-2 text-gray-500 bg-transparent outline-none border focus:border-indigo-600 shadow-sm rounded-lg"
-                                placeholder="sammy12"
-                                value={first_name}
-                                onChange={(e) => onChange(e)}
-                            />
-                            {error.first_name && (
-                                <p className="text-red-500 text-xs italic">
-                                    {error.first_name}
-                                </p>
-                            )}
-                        </div>
-
-                        {/* last_name */}
-                        <div>
-                            <label className="font-medium">
-                                Last Name
-                            </label>
-                            <input
-                                name="last_name"
-                                type="text"
-                                className="w-full mt-2 px-3 py-2 text-gray-500 bg-transparent outline-none border focus:border-indigo-600 shadow-sm rounded-lg"
-                                placeholder="sammy12"
-                                value={last_name}
-                                onChange={(e) => onChange(e)}
-                            />
-                            {error.last_name && (
-                                <p className="text-red-500 text-xs italic">
-                                    {error.last_name}
-                                </p>
-                            )}
-                        </div>
 
                         {/* password */}
                         <div>
