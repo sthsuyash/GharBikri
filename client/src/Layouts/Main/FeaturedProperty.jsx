@@ -11,11 +11,6 @@ import frontal4 from "../../../../Houses Dataset/4_frontal.jpg"
 
 function FeaturedProperty() {
 
-    function PowerOfTwo({ exponent }) {
-        const exponentString = '²';
-        return <p>{exponent}<span className="superscript">{exponentString}</span></p>;
-    }
-
     const [properties, setProperties] = useState([
         {
             id: 1,
@@ -31,7 +26,7 @@ function FeaturedProperty() {
             bhk: '2',
             bedrooms: 2,
             bathrooms: 2,
-            area: <PowerOfTwo exponent={'2x10'} />,
+            area: '10x10',
             rentBuy: 'Buy'
         },
         {
@@ -46,7 +41,7 @@ function FeaturedProperty() {
             bhk: '3',
             bedrooms: 3,
             bathrooms: 3,
-            area: <PowerOfTwo exponent={'6x9'} />,
+            area: '6x9',
             rentBuy: 'Buy'
         },
         {
@@ -61,7 +56,7 @@ function FeaturedProperty() {
             bhk: '1',
             bedrooms: 1,
             bathrooms: 1,
-            area: <PowerOfTwo exponent={'3x8'} />,
+            area: '3x8',
             rentBuy: 'Buy'
         },
         {
@@ -76,7 +71,7 @@ function FeaturedProperty() {
             bhk: '1',
             bedrooms: 1,
             bathrooms: 1,
-            area: <PowerOfTwo exponent={'3x5'} />,
+            area: '3x5',
             rentBuy: 'Rent'
         }
     ]);

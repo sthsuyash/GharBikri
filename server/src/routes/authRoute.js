@@ -1,5 +1,5 @@
 const { Router } = require('express');
-const { register, login, isVerify } = require('../controllers/authController');
+const { register, login, isVerify, getUsers } = require('../controllers/authController');
 const { registerValidation, loginValidation } = require('../validators/authValidator');
 const { validationMiddleware } = require('../middlewares/validations-middleware');
 const authMiddleware = require('../middlewares/authMiddleware');
@@ -12,7 +12,7 @@ router.post('/login', loginValidation, validationMiddleware, login);
 router.post('/register', registerValidation, validationMiddleware, register);
 
 // get users
-// router.get('/get-users', getUsers);
+router.get('/get-users', getUsers);
 
 // get route to test if verified
 router.get('/is-verify', authMiddleware, isVerify);

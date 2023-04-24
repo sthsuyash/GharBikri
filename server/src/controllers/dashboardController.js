@@ -4,7 +4,7 @@ const bcrypt = require('bcrypt');
 // get user with matching id if authorized, if exists in database
 exports.getUser = async (req, res) => {
     try {
-        const user = await db.query("SELECT user_id, username, user_email FROM users WHERE user_id = $1", [req.user]);
+        const user = await db.query("SELECT user_id, first_name, last_name, user_email FROM users WHERE user_id = $1", [req.user]);
         res.json(user.rows[0]);
 
     } catch (error) {
@@ -19,8 +19,8 @@ exports.getUser = async (req, res) => {
 // edit user with matching id if authorized
 exports.editUser = async (req, res) => {
     try {
-        const { username, user_email } = req.body;
-        const user = await db.query("UPDATE users SET username = $1, user_email = $2 WHERE user_id = $3 RETURNING user_id, username, user_email", [username, user_email, req.user]);
+        const { first_name, last_name, user_email } = req.body;
+        const user = await db.query("UPDATE users SET first_name = $1, last_name = $2, user_email = $3 WHERE user_id = $4 RETURNING user_id, first_name, last_name, user_email", [first_name, last_name, user_email, req.user]);
         res.send(user.rows[0]);
 
     } catch (error) {

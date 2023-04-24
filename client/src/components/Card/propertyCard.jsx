@@ -58,18 +58,19 @@ const propertyCard = ({ property, favourites, setFavourites, buyRent }) => {
                         <div className="text-gray-400 text-md font-semibold">{property.location.street_number} {property.location.street_name}, {property.location.city}, {property.location.state}</div>
                     </div>
                     <hr className="mb-4" />
-                    <div className="flex items-center justify-between">
+
+                    <div className="flex justify-between">
                         <span className="flex items-center">
                             <span><MdOutlineBed /></span>
-                            <span className="text-gray-500">&nbsp;{property.bedrooms}&nbsp;Beds</span>
+                            <span className="text-indigo-700">&nbsp;{property.bedrooms}&nbsp;Beds</span>
                         </span>
                         <div className="flex items-center">
                             <span><BiBath /></span>
-                            <span className="text-gray-500">&nbsp;{property.bathrooms}&nbsp;Bathrooms</span>
+                            <span className="text-indigo-700">&nbsp;{property.bathrooms}&nbsp;Bathrooms</span>
                         </div>
                         <div className="flex items-center">
                             <span><BiArea /></span>
-                            <span className="text-gray-500 w-fit">&nbsp;{property.area}&nbsp;</span>
+                            <span className="text-indigo-500 w-fit">&nbsp;{property.area} sq.ft</span>
                         </div>
                     </div>
                 </div>
