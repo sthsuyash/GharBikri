@@ -3,10 +3,10 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import PropertyCard from "../../components/Card/propertyCard";
-import frontal1 from "../../../../Houses Dataset/1_frontal.jpg"
-import frontal2 from "../../../../Houses Dataset/2_frontal.jpg"
-import frontal3 from "../../../../Houses Dataset/3_frontal.jpg"
-import frontal4 from "../../../../Houses Dataset/4_frontal.jpg"
+import frontal1 from "../../assets/Images/mockData/1_frontal.jpg"
+import frontal2 from "../../assets/Images/mockData/2_frontal.jpg"
+import frontal3 from "../../assets/Images/mockData/3_frontal.jpg"
+import frontal4 from "../../assets/Images/mockData/4_frontal.jpg"
 
 
 function FeaturedProperty() {
