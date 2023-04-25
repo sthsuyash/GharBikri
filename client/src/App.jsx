@@ -25,6 +25,7 @@ import Sell from './Pages/Sell'
 import Error404 from './Routes/Error404'
 
 import { SERVER_URL } from './Config';
+import PropertyDetails from './Pages/PageDetails';
 
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -106,6 +107,13 @@ function App() {
         />
 
         <Route
+          path='/propertyDetails'
+          element={
+            <PropertyDetails />
+          }
+        />
+
+        <Route
           path='/sell'
           element={
             isAuthenticated ? (<Sell />
@@ -113,6 +121,7 @@ function App() {
               <Navigate replace to="/login" />
             )}
         />
+        
 
         <Route
           path='*'
