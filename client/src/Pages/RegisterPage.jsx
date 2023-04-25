@@ -12,14 +12,15 @@ const RegisterPage = ({ setAuth }) => {
     // Create a state variable called inputs and a function called setInputs
     const [inputs, setInputs] = useState({
         user_email: "",
-        username: "",
+        first_name: "",
+        last_name: "",
         password: ""
     });
 
     const [error, setError] = useState({}); // error state
 
     // Destructure the inputs object
-    const { user_email, username, password } = inputs;
+    const { user_email, first_name, last_name, password } = inputs;
 
     // e is an event object
     const onChange = (e) => {
@@ -46,7 +47,7 @@ const RegisterPage = ({ setAuth }) => {
 
         if (Object.keys(error).length === 0) {
             try {
-                const body = { user_email, username, password };
+                const body = { user_email, first_name, last_name, password };
                 const response = await axios.post(`${SERVER_URL}/api/auth/register`, body);
                 const parseRes = response.data;
 
@@ -120,6 +121,49 @@ const RegisterPage = ({ setAuth }) => {
                         onSubmit={onSubmitForm}
                         className="space-y-5"
                     >
+                        <div className='flex flex-row gap-5'>
+
+                            {/* first_name */}
+                            <div>
+                                <label className="font-medium">
+                                    First Name
+                                </label>
+                                <input
+                                    name="first_name"
+                                    type="text"
+                                    className="w-full mt-2 px-3 py-2 text-gray-500 bg-transparent outline-none border focus:border-indigo-600 shadow-sm rounded-lg"
+                                    placeholder="Sam"
+                                    value={first_name}
+                                    onChange={(e) => onChange(e)}
+                                />
+                                {error.first_name && (
+                                    <p className="text-red-500 text-xs italic">
+                                        {error.first_name}
+                                    </p>
+                                )}
+                            </div>
+
+                            {/* last_name */}
+                            <div>
+                                <label className="font-medium">
+                                    Last Name
+                                </label>
+                                <input
+                                    name="last_name"
+                                    type="text"
+                                    className="w-full mt-2 px-3 py-2 text-gray-500 bg-transparent outline-none border focus:border-indigo-600 shadow-sm rounded-lg"
+                                    placeholder="Smith"
+                                    value={last_name}
+                                    onChange={(e) => onChange(e)}
+                                />
+                                {error.last_name && (
+                                    <p className="text-red-500 text-xs italic">
+                                        {error.last_name}
+                                    </p>
+                                )}
+                            </div>
+                        </div>
+
                         {/* email */}
                         <div>
                             <label className="font-medium">
@@ -141,25 +185,6 @@ const RegisterPage = ({ setAuth }) => {
                             )}
                         </div>
 
-                        {/* username */}
-                        <div>
-                            <label className="font-medium">
-                                Username
-                            </label>
-                            <input
-                                name="username"
-                                type="text"
-                                className="w-full mt-2 px-3 py-2 text-gray-500 bg-transparent outline-none border focus:border-indigo-600 shadow-sm rounded-lg"
-                                placeholder="sammy12"
-                                value={username}
-                                onChange={(e) => onChange(e)}
-                            />
-                            {error.username && (
-                                <p className="text-red-500 text-xs italic">
-                                    {error.username}
-                                </p>
-                            )}
-                        </div>
 
                         {/* password */}
                         <div>

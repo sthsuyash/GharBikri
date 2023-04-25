@@ -18,3 +18,9 @@ $font-family-lato: 'Lato', sans-serif;
 .font-josefin {
   font-family: $font-family-josefin;
 }
+
+.superscript {
+  font-size: 0.8em;
+  position: relative;
+  top: -0.5em;
+}

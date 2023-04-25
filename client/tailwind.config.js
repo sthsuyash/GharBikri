@@ -11,3 +11,11 @@ export const plugins = [require("daisyui", "@tailwindcss/forms")];
 export const daisyui = {
   themes: [""]
 };
+
+import { defineConfig } from 'vite';
+
+export default defineConfig({
+  optimizeDeps: {
+    exclude: ['react-icons']
+  }
+});

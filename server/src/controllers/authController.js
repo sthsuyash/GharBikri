@@ -5,7 +5,7 @@ const jwtGenerator = require('../utils/jwtGenerator')
 // method to get all the users in db
 exports.getUsers = async (req, res) => {
     try {
-        const { rows } = await db.query("SELECT user_id, username, user_email FROM users");
+        const { rows } = await db.query("SELECT user_id, first_name, last_name, user_email FROM users");
         // res.send(rows);
         return res.status(200).json({
             success: true,
@@ -23,7 +23,7 @@ exports.getUsers = async (req, res) => {
 // register controller
 exports.register = async (req, res) => {
     // desctructure the req.body
-    const { username, user_email, password } = req.body;
+    const { first_name, last_name, user_email, password } = req.body;
     try {
         // check if user exists (if user exists then throw error)
         // done by validator in '../validators/authValidation.js'
@@ -35,7 +35,7 @@ exports.register = async (req, res) => {
         const bcryptPassword = await bcrypt.hash(password, salt); // hash the password
 
         // Enter the new user inside our db
-        const newUser = await db.query("INSERT INTO users (username, user_email, password) VALUES ($1, $2, $3) RETURNING *", [username, user_email, bcryptPassword]);
+        const newUser = await db.query("INSERT INTO users (first_name, last_name, user_email, password) VALUES ($1, $2, $3, $4) RETURNING *", [first_name, last_name, user_email, bcryptPassword]);
 
         // generate jwt token
         const token = jwtGenerator(newUser.rows[0].user_id);

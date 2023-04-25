@@ -1,7 +1,7 @@
 import React from "react";
-import home1 from "../../assets/images/home1.jpg";
-import home2 from "../../assets/images/home2.jpg";
-import home3 from "../../assets/images/home3.jpg";
+import home1 from "../../assets/Images/home1.jpg";
+import home2 from "../../assets/Images/home2.jpg";
+import home3 from "../../assets/Images/home3.jpg";
 
 const stats = [
     { id: 1, name: 'Apartment Sale', value: '400+' },
@@ -11,30 +11,38 @@ const stats = [
 
 const Stats = () => {
     return (
-        <div className="overflow-hidden bg-white py-28 sm:py-32 mb-20">
-            <div className="max-w-full mx-10 lg:px-8">
+        <div className="overflow-hidden bg-white py-28 sm:py-32 mb-20 sm:mx-6">
+            <div className="max-w-full mx-6 lg:mx-10 lg:px-8">
                 <div className="mx-auto grid max-w-2xl grid-cols-1 gap-x-8 gap-y-16 sm:gap-y-20 lg:mx-0 lg:max-w-none lg:grid-cols-2">
                     <div className="relative">
 
-                        <img
-                            src={home2}
-                            alt="House2"
-                            className="shadow-xl ring-4 ring-gray-400/50 h-96 rounded-lg  transition-all hover:scale-105 hidden lg:block"
-                        />
-                        <img
-                            src={home1}
-                            alt="House1"
-                            className="absolute top-20 left-32 shadow-xl ring-4 ring-gray-400/50 z-10 rounded-lg  transition-all hover:scale-105 hidden lg:block"
-                        />
-                        <img
-                            src={home3}
-                            alt="House3"
-                            className="absolute top-12 left-96 shadow-2xl ring-4 ring-gray-400/50 z-0 rounded-lg  transition-all hover:scale-105 hidden lg:block"
-                        />
+                        <div className="shadow-xl ring-4 ring-gray-400/50 rounded-lg  hidden lg:inline-block overflow-hidden">
+                            <img
+                                src={home2}
+                                alt="House2"
+                                className="h-72 transition-all hover:scale-105"
+                            />
+                        </div>
+
+                        <div className="absolute top-20 left-32 shadow-xl ring-4 ring-gray-400/50 rounded-lg hidden lg:inline-block overflow-hidden z-10">
+                            <img
+                                src={home1}
+                                alt="House1"
+                                className="h-96 transition-all hover:scale-105"
+                            />
+                        </div>
+
+                        <div className="absolute top-12 left-72 shadow-2xl ring-4 h-80 ring-gray-400/50 z-0 rounded-lg hidden lg:inline-block overflow-hidden">
+                            <img
+                                src={home3}
+                                alt="House3"
+                                className="transition-all hover:scale-105 "
+                            />
+                        </div>
                     </div>
 
-                    <div className="lg:pr-8 lg:pt-4 lg:mr-10">
-                        <div className="lg:w-2xl w-lg">
+                    <div className="">
+                        <div className="lg:w-2xl w-lg ">
                             <h2 className="text-6xl font-bold  text-gray-800">Get to Know Us More</h2>
                             <p className="mt-10 text-lg  text-gray-400 mb-4 text-justify lg:mr-28">
                                 We are a company that provides a variety of services in the field of real estate, we are ready to help you find a house that suits your needs.
