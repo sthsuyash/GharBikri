@@ -3,13 +3,14 @@ import { HiOutlineLocationMarker } from "react-icons/hi";
 import { ImPriceTags } from "react-icons/im";
 import { BsHousesFill } from "react-icons/bs";
 import { ImSearch } from "react-icons/im";
+import { Link } from "react-router-dom";
 
 const HeroCard = () => {
 
     const [location, setLocation] = React.useState("");
     const [minPrice, setMinPrice] = React.useState();
     const [maxPrice, setMaxPrice] = React.useState();
-    const [propertyType, setPropertyType] = React.useState("")
+    const [propertyType, setPropertyType] = React.useState("1")
 
     // on submitting the form, the page is routed to rent page filtered by the user's input
     const handleSubmit = (e) => {
@@ -20,7 +21,7 @@ const HeroCard = () => {
         // else the user's input is used
 
         if (location === "" && minPrice === "" && maxPrice === "" && propertyType === "") {
-            window.location = `/rent`;
+            <Link to="/rent" />
         }
         else {
             window.location = `/rent?location=${location}&minPrice=${minPrice}&maxPrice=${maxPrice}&propertyType=${propertyType}`;

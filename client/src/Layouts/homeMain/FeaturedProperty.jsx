@@ -163,7 +163,7 @@ function FeaturedProperty({ isAuthenticated }) {
 
     return (
         <>
-            <div className="mx-auto max-w-full px-4 lg:px-8 md:px-8 md:flex-row flex-col flex lg:flex-row flex-wrap  my-0 justify-normal">
+            <div className="mx-auto max-w-full px-4 lg:px-8 md:px-8 md:flex-row flex lg:flex-row flex-wrap my-0 justify-normal">
                 <h2 className="text-6xl font-extrabold tracking-tight leading-none text-gray-900 md:text-5xl lg:text-7xl sm:mb-5 sm:mx-6">
                     Featured Properties
                 </h2>
@@ -172,11 +172,11 @@ function FeaturedProperty({ isAuthenticated }) {
             <div className=" bg-slate-100 flex flex-col gap-20 py-14">
                 {/* return rent */}
                 <div>
-                    <div className="flex flex-row justify-between mx-16 mb-5">
+                    <div className="flex flex-row justify-between lg:mx-16 mb-5 mx-4">
                         <h2 className="text-5xl font-bold ">Rent</h2>
                         <span><Link to="/rent" className="transition-all hover:underline hover:text-blue-700">Explore all Rents</Link> &rarr;</span>
                     </div>
-                    <div className="grid grid-cols-1 gap-x-4 gap-y-16 lg:grid-cols-4 justify-start px-8 sm:grid-cols-2 md:grid-cols-3 md:px-2">
+                    <div className="grid grid-cols-1 gap-x-4 gap-y-16 lg:grid-cols-3 justify-start px-8 sm:grid-cols-2 md:grid-cols-3 md:px-2">
                         {properties.map((property) => (
                             property.rentBuy === "Rent" && <PropertyCard key={property.id} property={property} favourites={favorites} setFavourites={setFavorites} isAuthenticated={isAuthenticated} />
                         ))}

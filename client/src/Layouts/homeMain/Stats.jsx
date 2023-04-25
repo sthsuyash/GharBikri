@@ -11,7 +11,7 @@ const stats = [
 
 const Stats = () => {
     return (
-        <div className="overflow-hidden bg-white py-28 sm:py-32 mb-20 sm:mx-6">
+        <div className="overflow-hidden bg-white sm:py-32 sm:mx-6 lg:mb-0 mb-10">
             <div className="max-w-full mx-6 lg:mx-10 lg:px-8">
                 <div className="mx-auto grid max-w-2xl grid-cols-1 gap-x-8 gap-y-16 sm:gap-y-20 lg:mx-0 lg:max-w-none lg:grid-cols-2">
                     <div className="relative">
@@ -41,10 +41,10 @@ const Stats = () => {
                         </div>
                     </div>
 
-                    <div className="">
+                    <div>
                         <div className="lg:w-2xl w-lg ">
                             <h2 className="text-6xl font-bold  text-gray-800">Get to Know Us More</h2>
-                            <p className="mt-10 text-lg  text-gray-400 mb-4 text-justify lg:mr-28">
+                            <p className="mt-10 text-lg  text-gray-400 mb-4 text-justify w-full lg:w-3/4">
                                 We are a company that provides a variety of services in the field of real estate, we are ready to help you find a house that suits your needs.
                             </p>
                             <button type="button"

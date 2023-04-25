@@ -23,11 +23,11 @@ const propertyCard = ({ property, favourites, setFavourites, buyRent, isAuthenti
 
     return (
         // if buy then link to buy page else link to rent page
-        <div className="mx-10 overflow-hidden shadow-lg rounded-lg">
+        <div className="mx-auto overflow-hidden shadow-lg rounded-lg max-w-fit">
             <div className="max-w-md mx-auto bg-white overflow-hidden md:max-w-2xl relative">
                 {/* image div */}
                 <Link
-                    to={buyRent === true ? `/property/buy/${property.id}` : `/property/rent/${property.id}`} className="relative">
+                    to={buyRent === true ? `/property/buy/${property.id}` : `/property/${property.id}`} className="relative">
                     <img className="h-56 w-full object-cover" src={property.image} alt="property image" />
                     <div className="absolute inset-0 bg-black opacity-25"></div>
                 </Link>
