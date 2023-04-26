@@ -24,16 +24,15 @@ const email = check('user_email')
         }
     });
 
-// check if username is entered or not and if it is already in use
-const username = check('username')
+// check if first name is entered or not and if it is already in use
+const first_name = check('first_name')
     .isLength({ min: 3 })
-    .withMessage('Please enter a valid username')
-    .custom(async (value) => {
-        const { rows } = await db.query("SELECT * FROM users WHERE username = $1", [value]);
-        if (rows.length > 0) {
-            throw new Error('Username already in use');
-        }
-    });
+    .withMessage('Please enter a valid first name.');
+
+// check if last name is entered or not
+const last_name = check('last_name')
+    .isLength({ min: 3 })
+    .withMessage('Please enter a valid last name.');
 
 // login validation
 const loginFieldCheck = check('user_email')
@@ -53,6 +52,6 @@ const loginFieldCheck = check('user_email')
 
 
 module.exports = {
-    registerValidation: [password, email, username],
+    registerValidation: [password, email, first_name, last_name],
     loginValidation: [loginFieldCheck],
 }

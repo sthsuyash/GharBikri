@@ -8,8 +8,12 @@ export function registerValidate(inputs) {
         errors.user_email = "Email address is invalid";
     }
 
-    if (!inputs.username) {
-        errors.username = "Username required";
+    if (!inputs.first_name) {
+        errors.first_name = "First Name required";
+    }
+
+    if (!inputs.last_name) {
+        errors.last_name = "Last Name required";
     }
 
     if (!inputs.password) {

@@ -40,8 +40,8 @@ const Footer = () => {
                 </div>
                 <div>
                     <span className="footer-title">Office</span>
-                    <a className="link link-hover">Kathmandu 44600</a>
-                    <a className="link link-hover">Bagmati, Nepal</a>
+                    <a className="link link-hover" href='https://www.google.com/maps/place/Kathmandu'>Kathmandu 44600</a>
+                    <a className="link link-hover" href='https://www.google.com/maps/place/Bagmati'>Bagmati, Nepal</a>
                 </div>
             </footer>
             <footer className="footer px-10 py-4 border-t bg-white text-slate-500">
