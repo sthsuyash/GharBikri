@@ -7,7 +7,7 @@ import Additional from "../Layouts/sellForm/Additional";
 import Docs from "../Layouts/sellForm/Docs";
 import Confirm from "../Layouts/sellForm/Confirm";
 
-import { SERVER_URL } from "../config";
+import { SERVER_URL } from "../Config";
 
 export default function Sell() {
 
