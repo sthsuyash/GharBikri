@@ -1,5 +1,8 @@
+-- used postgresql
+
 CREATE DATABASE gharbikri;
 
+-- connect to the database
 -- set extension
 CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
 
@@ -19,7 +22,7 @@ CREATE TABLE users (
 CREATE TABLE property (
     p_id uuid PRIMARY KEY DEFAULT uuid_generate_v4(),
     p_name varchar(255) NOT NULL,
-    p_address_street_num integer, NOT NULL
+    p_address_street_num integer NOT NULL,
     p_address_street_name varchar(255),
     p__address_city varchar(255) NOT NULL,
     p_address_state varchar(255) NOT NULL,
