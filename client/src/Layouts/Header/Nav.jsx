@@ -1,5 +1,5 @@
 import React, { Fragment, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
 import { Dialog, Disclosure, Popover, Transition } from "@headlessui/react";
 import {
     ArrowPathIcon,
@@ -64,7 +64,7 @@ function Nav() {
                     </button>
                 </div>
                 <Popover.Group className="hidden lg:flex lg:gap-x-12 ">
-                    <Popover className="relative ">
+                    {/* <Popover className="relative ">
                         <Popover.Button className=" flex items-center gap-x-1 leading-6 text-gray-900 text-lg font-bold  hover:underline hover:text-blue-900">
                             Product
                             <ChevronDownIcon className="h-5 w-5 flex-none text-gray-400" aria-hidden="true" />
@@ -113,7 +113,7 @@ function Nav() {
                                 </div>
                             </Popover.Panel>
                         </Transition>
-                    </Popover>
+                    </Popover> */}
 
                     <Link to="/rent" className="transition-all text-lg font-bold leading-6 text-gray-900  hover:underline hover:text-blue-900">
                         Rent
@@ -126,25 +126,64 @@ function Nav() {
                     </Link>
                 </Popover.Group>
 
-                <div className="hidden lg:flex lg:flex-1 lg:justify-end ">
-                    {/* button for register */}
+                {/* check if logged in or not, if logged in then render logout button, else render login and register  */}
+                {localStorage.getItem("token") ? (
+                    <div className="hidden lg:flex lg:flex-1 lg:justify-end ">
 
-                    <div className="relative inline-block text-left ">
-                        <Link to="/register">
-                            <button
-                                type="button"
-                                className="transition-all inline-flex justify-center w-full border border-gray-300 shadow-sm px-4 py-3 text-md font-medium text-gray-50 hover:bg-gray-50 hover:text-gray-950  bg-blue-600 hover:font-bold"
-                                id="options-menu"
-                                aria-haspopup="true"
-                                aria-expanded="true"
-                            >
-                                Register Now
-                            </button>
-                        </Link>
+                        <div className="relative inline-block text-left pr-5">
+                            <Link to="/profile"
+                                className="text-gray-700 font-bold inline-flex justify-center w-full px-4 py-3 text-md hover:text-gray-950 hover:font-bold hover:underline">
+                                Profile
+                            </Link>
+                        </div>
+
+                        <div className="relative inline-block text-left ">
+                            <Link to="/">
+                                <button
+                                    type="button"
+                                    className="transition-all inline-flex justify-center w-full border border-gray-300 shadow-sm px-4 py-3 text-md font-medium text-gray-50 hover:bg-gray-50 hover:text-red-500  bg-red-500 hover:font-bold"
+                                    id="options-menu"
+                                    aria-haspopup="true"
+                                    aria-expanded="true"
+                                    onClick={() => {
+                                        localStorage.removeItem("token");
+                                        localStorage.removeItem("user");
+                                        history.push("/");
+                                        window.location.reload();
+                                    }}
+                                >
+                                    Logout
+                                </button>
+                            </Link>
+                        </div>
+                    </div>
+                ) : (
+                    <div className="hidden lg:flex lg:flex-1 lg:justify-end ">
+
+                        <div className="relative inline-block text-left pr-5">
+                            <Link to="/login"
+                                className="text-blue-600 inline-flex justify-center w-full px-4 py-3 text-md font-medium hover:text-gray-950 hover:font-bold hover:underline">
+                                Login
+                            </Link>
+                        </div>
+
+                        <div className="relative inline-block text-left ">
+                            <Link to="/register">
+                                <button
+                                    type="button"
+                                    className="transition-all inline-flex justify-center w-full border border-gray-300 shadow-sm px-4 py-3 text-md font-medium text-gray-50 hover:bg-gray-50 hover:text-blue-600  bg-blue-600 hover:font-bold"
+                                    id="options-menu"
+                                    aria-haspopup="true"
+                                    aria-expanded="true"
+                                >
+                                    Register Now
+                                </button>
+                            </Link>
+
+                        </div>
 
                     </div>
-
-                </div>
+                )}
             </nav>
 
             {/* for small screen */}
@@ -158,7 +197,7 @@ function Nav() {
                             <img
                                 className="h-8 w-auto"
                                 src={logo}
-                                alt=""
+                                alt="logo"
                             />
                         </Link>
 
@@ -175,7 +214,7 @@ function Nav() {
                     <div className="mt-6 flow-root">
                         <div className="-my-6 divide-y divide-gray-500/10">
                             <div className="space-y-2 py-6">
-                                <Disclosure as="div" className="-mx-3">
+                                {/* <Disclosure as="div" className="-mx-3">
                                     {({ open }) => (
                                         <>
                                             <Disclosure.Button className="flex w-full items-center justify-between rounded-lg py-2 pl-3 pr-3.5 text-base font-semibold leading-7 hover:bg-gray-50">
@@ -199,39 +238,61 @@ function Nav() {
                                             </Disclosure.Panel>
                                         </>
                                     )}
-                                </Disclosure>
+                                </Disclosure> */}
                                 <a
-                                    href="#"
+                                    href="/rent"
                                     className="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
                                 >
-                                    Features
+                                    Rent
                                 </a>
                                 <a
-                                    href="#"
+                                    href="/buy"
                                     className="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
                                 >
-                                    Marketplace
+                                    Buy
                                 </a>
                                 <a
-                                    href="#"
+                                    href="/sell"
                                     className="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
                                 >
-                                    Company
+                                    Sell
+                                </a>
+
+                            </div>
+                            <div className="py-6">
+                                <a
+                                    href="/dashboard"
+                                    className="-mx-3 block rounded-lg px-3 py-2.5 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
+                                >
+                                    Dashboard
+                                </a>
+                                <a
+                                    href="/settings"
+                                    className="-mx-3 block rounded-lg px-3 py-2.5 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
+                                >
+                                    Settings
                                 </a>
                             </div>
                             <div className="py-6">
                                 <a
-                                    href="#"
+                                    href="/login"
                                     className="-mx-3 block rounded-lg px-3 py-2.5 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
                                 >
-                                    Profile
+                                    Login
                                 </a>
+                                <a
+                                    href="/register"
+                                    className="-mx-3 block rounded-lg px-3 py-2.5 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
+                                >
+                                    Register
+                                </a>
+
                             </div>
                         </div>
                     </div>
                 </Dialog.Panel>
             </Dialog>
-        </header>
+        </header >
     );
 }
 

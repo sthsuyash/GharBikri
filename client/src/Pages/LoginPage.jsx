@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import axios from "axios";
-import { Link } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
 import { toastSuccess, toastError } from "../components/Toast";
 import { loginValidate } from "../Middleware/loginValidation";
 import { SERVER_URL } from "../Config";
@@ -64,7 +64,8 @@ function LoginPage({ setAuth }) {
                 }
             }
         } else {
-            toastError("Fill all the fields!");
+            const errorMessages = Object.values(error).filter(errors => errors !== null && errors !== undefined);
+            errorMessages.forEach(error => toastError(error));
         }
     };
 

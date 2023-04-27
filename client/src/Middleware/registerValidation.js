@@ -22,5 +22,17 @@ export function registerValidate(inputs) {
         errors.password = "Password needs to be 6 characters or more";
     }
 
+    if (!/^[0-9]{10}$/.test(inputs.phone_number)) {
+        errors.phone_number = "Phone Number is invalid";
+    }
+
+    if (!inputs.address_city) {
+        errors.address_city = "City is required";
+    }
+
+    if (!inputs.address_state) {
+        errors.address_state = "State is required";
+    }
+
     return errors;
 }

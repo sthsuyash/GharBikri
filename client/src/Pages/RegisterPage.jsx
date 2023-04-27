@@ -14,13 +14,27 @@ const RegisterPage = ({ setAuth }) => {
         user_email: "",
         first_name: "",
         last_name: "",
-        password: ""
+        password: "",
+        phone_number: "",
+        address_city: "",
+        address_state: ""
     });
 
-    const [error, setError] = useState({}); // error state
+    // error state
+    const [error, setError] = useState(
+        {
+            user_email: "",
+            first_name: "",
+            last_name: "",
+            password: "",
+            phone_number: "",
+            address_city: "",
+            address_state: ""
+        }
+    );
 
     // Destructure the inputs object
-    const { user_email, first_name, last_name, password } = inputs;
+    const { user_email, first_name, last_name, password, phone_number, address_city, address_state } = inputs;
 
     // e is an event object
     const onChange = (e) => {
@@ -36,18 +50,24 @@ const RegisterPage = ({ setAuth }) => {
     const onSubmitForm = async (e) => {
         e.preventDefault(); // Prevents the default behavior of the browser
 
-        const error = registerValidate(inputs);
+        const errors = registerValidate(inputs);
+        setError(
+            {
+                user_email: errors.user_email,
+                first_name: errors.first_name,
+                last_name: errors.last_name,
+                password: errors.password,
+                phone_number: errors.phone_number,
+                address_city: errors.address_city,
+                address_state: errors.address_state
+            }
+        );
 
-        if (error) {
-            setError(error);
-        }
-
-        toastError(error);
         // console.log(Object.keys(error).length);
 
-        if (Object.keys(error).length === 0) {
+        if (Object.keys(errors).length === 0) {
             try {
-                const body = { user_email, first_name, last_name, password };
+                const body = { user_email, first_name, last_name, password, phone_number, address_city, address_state };
                 const response = await axios.post(`${SERVER_URL}/api/auth/register`, body);
                 const parseRes = response.data;
 
@@ -59,16 +79,24 @@ const RegisterPage = ({ setAuth }) => {
                 } else {
                     setAuth(false);
                 }
-
             } catch (err) {
-                console.error(err.message);
                 if (err.response.status === 422) {
                     const errors = err.response.data.errors;
-                    toastError(errors[0].msg);
+                    const errorMessage = errors.map((error) => error.msg).join(" & ");
+                    console.log(errorMessage)
+                    toastError(errorMessage);
                 }
             }
-        } else {
-            toastError("Fill in all fields correctly!");
+        }
+        else {
+            // if all fields are empty, display error message
+            if (!user_email && !first_name && !last_name && !password && !phone_number && !address_city && !address_state) {
+                toastError('All fields are required!');
+            }
+            else {
+                const errorMessages = Object.values(errors).filter(error => error !== null && error !== undefined);
+                errorMessages.forEach(error => toastError(error));
+            }
         }
     };
 
@@ -77,9 +105,9 @@ const RegisterPage = ({ setAuth }) => {
             <div className="relative flex-1 hidden items-center justify-center bg-white lg:flex h-screen">
                 <div className="relative z-10 w-full max-w-md">
                     <div className=" mt-16 space-y-3">
-                        <h3 className="text-3xl font-bold text-center text-transparent bg-clip-text bg-gradient-to-r from-red-700 to-amber-200">Start your search for new home today</h3>
-                        <h3 className="text-5xl font-bold text-center text-transparent bg-clip-text bg-gradient-to-r from-yellow-500  to-red-500">or</h3>
-                        <h3 className="text-3xl font-bold text-center text-transparent bg-clip-text bg-gradient-to-r from-blue-100  to-red-700">add your houses</h3>
+                        <h3 className="text-3xl font-bold text-center text-white">Start your search for new home today</h3>
+                        <h3 className="text-5xl font-bold text-center">or</h3>
+                        <h3 className="text-3xl font-bold text-center text-white">add your houses</h3>
                         <p className="text-white">
                             Create an account and get access to all features for free.
                         </p>
@@ -113,7 +141,7 @@ const RegisterPage = ({ setAuth }) => {
                 <div className="w-full max-w-md space-y-8 px-4 bg-white text-gray-600 sm:px-0">
                     <div className="mt-5 space-y-2">
                         <h3 className="text-gray-800 text-2xl font-bold sm:text-3xl">Create an account</h3>
-                        <p>Already have an account? <Link to="/login" className="font-medium text-indigo-600 hover:text-indigo-500">Log in</Link></p>
+                        <p className='lg:text-lg text-sm'>Already have an account? <Link to="/login" className="font-medium text-indigo-600 hover:text-indigo-500">Log in</Link></p>
                     </div>
 
                     {/* main form */}
@@ -121,7 +149,7 @@ const RegisterPage = ({ setAuth }) => {
                         onSubmit={onSubmitForm}
                         className="space-y-5"
                     >
-                        <div className='flex flex-row gap-5'>
+                        <div className='flex lg:flex-row gap-5 flex-col'>
 
                             {/* first_name */}
                             <div>
@@ -203,6 +231,68 @@ const RegisterPage = ({ setAuth }) => {
                                     {error.password}
                                 </p>
                             )}
+                        </div>
+
+                        {/* phone */}
+                        <div>
+                            <label className="font-medium">
+                                Phone Number
+                            </label>
+                            <input
+                                name="phone_number"
+                                type="phone_number"
+                                className="w-full mt-2 px-3 py-2 text-gray-500 bg-transparent outline-none border focus:border-indigo-600 shadow-sm rounded-lg"
+                                value={phone_number}
+                                onChange={(e) => onChange(e)}
+                            />
+                            {error.phone_number && (
+                                <p className=" text-red-500 text-xs italic">
+                                    {error.phone_number}
+                                </p>
+                            )}
+                        </div>
+
+                        {/* address */}
+                        <div className='flex flex-col lg:flex-row gap-x-5'>
+                            {/* address_city */}
+                            <div>
+                                <label className="font-medium">
+                                    City
+                                </label>
+                                <input
+                                    name="address_city"
+                                    type="address_city"
+                                    className="w-full mt-2 px-3 py-2 text-gray-500 bg-transparent outline-none border focus:border-indigo-600 shadow-sm rounded-lg"
+                                    value={address_city}
+                                    onChange={(e) => onChange(e)}
+                                    placeholder='Kathmandu'
+                                />
+                                {error.address_city && (
+                                    <p className=" text-red-500 text-xs italic">
+                                        {error.address_city}
+                                    </p>
+                                )}
+                            </div>
+
+                            {/* address_state */}
+                            <div>
+                                <label className="font-medium">
+                                    State
+                                </label>
+                                <input
+                                    name="address_state"
+                                    type="address_state"
+                                    className="w-full mt-2 px-3 py-2 text-gray-500 bg-transparent outline-none border focus:border-indigo-600 shadow-sm rounded-lg"
+                                    value={address_state}
+                                    onChange={(e) => onChange(e)}
+                                    placeholder='Bagmati'
+                                />
+                                {error.address_state && (
+                                    <p className=" text-red-500 text-xs italic">
+                                        {error.address_state}
+                                    </p>
+                                )}
+                            </div>
                         </div>
 
                         {/* submit the form */}
