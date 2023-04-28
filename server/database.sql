@@ -15,7 +15,9 @@ CREATE TABLE users (
     password varchar(100) NOT NULL,
     created_at timestamp DEFAULT now(),
     updated_at timestamp DEFAULT now(),
-    phone_number varchar NOT NULL
+    phone_number varchar NOT NULL,
+    address_city varchar NOT NULL,
+    address_state varchar NOT NULL
 );
 
 -- property table

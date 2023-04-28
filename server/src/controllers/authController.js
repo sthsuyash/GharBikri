@@ -5,7 +5,7 @@ const jwtGenerator = require('../utils/jwtGenerator')
 // method to get all the users in db
 exports.getUsers = async (req, res) => {
     try {
-        const { rows } = await db.query("SELECT user_id, first_name, last_name, user_email FROM users");
+        const { rows } = await db.query("SELECT first_name, last_name, user_email, phone_number, address_city, address_state FROM users");
         // res.send(rows);
         return res.status(200).json({
             success: true,
@@ -23,7 +23,7 @@ exports.getUsers = async (req, res) => {
 // register controller
 exports.register = async (req, res) => {
     // desctructure the req.body
-    const { first_name, last_name, user_email, password } = req.body;
+    const { first_name, last_name, user_email, password, phone_number, address_city, address_state } = req.body;
     try {
         // check if user exists (if user exists then throw error)
         // done by validator in '../validators/authValidation.js'
@@ -34,8 +34,29 @@ exports.register = async (req, res) => {
 
         const bcryptPassword = await bcrypt.hash(password, salt); // hash the password
 
+        if (!bcryptPassword) {
+            return res.status(401).json({
+                success: false,
+                message: 'Error hashing password',
+            })
+        }
+
         // Enter the new user inside our db
-        const newUser = await db.query("INSERT INTO users (first_name, last_name, user_email, password) VALUES ($1, $2, $3, $4) RETURNING *", [first_name, last_name, user_email, bcryptPassword]);
+        const newUser = await db.query(`INSERT INTO users (
+            first_name, 
+            last_name, 
+            user_email, 
+            password, 
+            created_at, 
+            updated_at, 
+            phone_number, 
+            address_city, 
+            address_state
+            ) VALUES (
+                $1, $2, $3, $4, NOW(), NOW(), $5, $6, $7
+            )
+            RETURNING *`,
+            [first_name, last_name, user_email, bcryptPassword, phone_number, address_city, address_state]);
 
         // generate jwt token
         const token = jwtGenerator(newUser.rows[0].user_id);
@@ -101,6 +122,22 @@ exports.login = async (req, res) => {
 exports.isVerify = async (req, res) => {
     try {
         res.json(true);
+    } catch (error) {
+        console.log(error.message);
+        return res.status(500).json({
+            success: false,
+            message: error.message,
+        })
+    }
+}
+
+// logout token based authentication
+exports.logout = async (req, res) => {
+    try {
+        res.clearCookie('token').json({
+            success: true,
+            message: 'Logged out successfully',
+        })
     } catch (error) {
         console.log(error.message);
         return res.status(500).json({

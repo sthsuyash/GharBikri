@@ -3,8 +3,8 @@ import { Routes, Route, Navigate } from 'react-router-dom';
 import axios from 'axios';
 // components
 import Home from '../Pages/Home';
-// import About from '../Pages/About'
-// import Contact from '../Pages/Contact'
+import About from '../Pages/About'
+import Contact from '../Pages/Contact'
 
 // pages
 import LoginPage from '../Pages/LoginPage'
@@ -117,6 +117,19 @@ function AppRoutes() {
                 }
             />
 
+            <Route
+                path="/about"
+                element={
+                    <About />
+                }
+            />
+
+            <Route
+                path="/contact"
+                element={
+                    <Contact />
+                }
+            />
 
         </Routes>
     );
