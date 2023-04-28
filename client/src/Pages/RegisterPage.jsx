@@ -102,6 +102,12 @@ const RegisterPage = ({ setAuth }) => {
 
     return (
         <main className="w-full flex px-10">
+            <style
+                dangerouslySetInnerHTML={{
+                    __html:
+                        "@import url('https://cdnjs.cloudflare.com/ajax/libs/MaterialDesign-Webfont/5.3.45/css/materialdesignicons.min.css')"
+                }}
+            />
             <div className="relative flex-1 hidden items-center justify-center bg-white lg:flex h-screen">
                 <div className="relative z-10 w-full max-w-md">
                     <div className=" mt-16 space-y-3">
@@ -156,14 +162,17 @@ const RegisterPage = ({ setAuth }) => {
                                 <label className="font-medium">
                                     First Name
                                 </label>
-                                <input
-                                    name="first_name"
-                                    type="text"
-                                    className="w-full mt-2 px-3 py-2 text-gray-500 bg-transparent outline-none border focus:border-indigo-600 shadow-sm rounded-lg"
-                                    placeholder="Sam"
-                                    value={first_name}
-                                    onChange={(e) => onChange(e)}
-                                />
+                                <div className="flex">
+                                    <div className="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center pt-2"><i className="mdi mdi-account-outline text-gray-400 text-lg"></i></div>
+                                    <input
+                                        name="first_name"
+                                        type="text"
+                                        className="w-full mt-2 px-3 py-2 text-gray-500 bg-transparent outline-none focus:border-indigo-600 shadow-sm -ml-10 pl-10 pr-3 rounded-lg border-2 border-gray-200"
+                                        placeholder="John"
+                                        value={first_name}
+                                        onChange={(e) => onChange(e)}
+                                    />
+                                </div>
                                 {error.first_name && (
                                     <p className="text-red-500 text-xs italic">
                                         {error.first_name}
@@ -176,14 +185,17 @@ const RegisterPage = ({ setAuth }) => {
                                 <label className="font-medium">
                                     Last Name
                                 </label>
-                                <input
-                                    name="last_name"
-                                    type="text"
-                                    className="w-full mt-2 px-3 py-2 text-gray-500 bg-transparent outline-none border focus:border-indigo-600 shadow-sm rounded-lg"
-                                    placeholder="Smith"
-                                    value={last_name}
-                                    onChange={(e) => onChange(e)}
-                                />
+                                <div className="flex">
+                                    <div className="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center pt-2"><i className="mdi mdi-account-outline text-gray-400 text-lg"></i></div>
+                                    <input
+                                        name="last_name"
+                                        type="text"
+                                        className="w-full mt-2 px-3 py-2 text-gray-500 bg-transparent outline-none focus:border-indigo-600 shadow-sm -ml-10 pl-10 pr-3 rounded-lg border-2 border-gray-200"
+                                        placeholder="Smith"
+                                        value={last_name}
+                                        onChange={(e) => onChange(e)}
+                                    />
+                                </div>
                                 {error.last_name && (
                                     <p className="text-red-500 text-xs italic">
                                         {error.last_name}
@@ -197,14 +209,17 @@ const RegisterPage = ({ setAuth }) => {
                             <label className="font-medium">
                                 Email
                             </label>
-                            <input
-                                name="user_email"
-                                type="email"
-                                className="w-full mt-2 px-3 py-2 text-gray-500 bg-transparent outline-none border focus:border-indigo-600 shadow-sm rounded-lg"
-                                placeholder="sammy12@gmail.com"
-                                value={user_email}
-                                onChange={(e) => onChange(e)}
-                            />
+                            <div className="flex">
+                                <div className="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center pt-2"><i className="mdi mdi-email-outline text-gray-400 text-lg"></i></div>
+                                <input
+                                    name="user_email"
+                                    type="email"
+                                    className="w-full mt-2 px-3 py-2 text-gray-500 bg-transparent outline-none focus:border-indigo-600 shadow-sm -ml-10 pl-10 pr-3 rounded-lg border-2 border-gray-200"
+                                    placeholder="sammy12@gmail.com"
+                                    value={user_email}
+                                    onChange={(e) => onChange(e)}
+                                />
+                            </div>
                             {/* text that shows up when validation error */}
                             {error.user_email && (
                                 <p className="text-red-500 text-xs italic">
@@ -219,13 +234,17 @@ const RegisterPage = ({ setAuth }) => {
                             <label className="font-medium">
                                 Password
                             </label>
-                            <input
-                                name="password"
-                                type="password"
-                                className="w-full mt-2 px-3 py-2 text-gray-500 bg-transparent outline-none border focus:border-indigo-600 shadow-sm rounded-lg"
-                                value={password}
-                                onChange={(e) => onChange(e)}
-                            />
+                            <div className="flex">
+                                <div className="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center pt-2"><i className="mdi mdi-lock-outline text-gray-400 text-lg"></i></div>
+                                <input
+                                    name="password"
+                                    type="password"
+                                    className="w-full mt-2 px-3 py-2 text-gray-500 bg-transparent outline-none focus:border-indigo-600 shadow-sm -ml-10 pl-10 pr-3 rounded-lg border-2 border-gray-200"
+                                    placeholder="************"
+                                    value={password}
+                                    onChange={(e) => onChange(e)}
+                                />
+                            </div>
                             {error.password && (
                                 <p className=" text-red-500 text-xs italic">
                                     {error.password}
@@ -238,13 +257,17 @@ const RegisterPage = ({ setAuth }) => {
                             <label className="font-medium">
                                 Phone Number
                             </label>
-                            <input
-                                name="phone_number"
-                                type="phone_number"
-                                className="w-full mt-2 px-3 py-2 text-gray-500 bg-transparent outline-none border focus:border-indigo-600 shadow-sm rounded-lg"
-                                value={phone_number}
-                                onChange={(e) => onChange(e)}
-                            />
+                            <div className="flex">
+                                <div className="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center pt-2"><i className="mdi mdi-phone-outline text-gray-400 text-lg"></i></div>
+                                <input
+                                    name="phone_number"
+                                    type="phone_number"
+                                    className="w-full mt-2 px-3 py-2 text-gray-500 bg-transparent outline-none focus:border-indigo-600 shadow-sm -ml-10 pl-10 pr-3 rounded-lg border-2 border-gray-200"
+                                    value={phone_number}
+                                    onChange={(e) => onChange(e)}
+                                    placeholder='9841234567'
+                                />
+                            </div>
                             {error.phone_number && (
                                 <p className=" text-red-500 text-xs italic">
                                     {error.phone_number}
@@ -259,14 +282,17 @@ const RegisterPage = ({ setAuth }) => {
                                 <label className="font-medium">
                                     City
                                 </label>
-                                <input
-                                    name="address_city"
-                                    type="address_city"
-                                    className="w-full mt-2 px-3 py-2 text-gray-500 bg-transparent outline-none border focus:border-indigo-600 shadow-sm rounded-lg"
-                                    value={address_city}
-                                    onChange={(e) => onChange(e)}
-                                    placeholder='Kathmandu'
-                                />
+                                <div className="flex">
+                                    <div className="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center pt-2"><i className="mdi mdi-map-marker-outline text-gray-400 text-lg"></i></div>
+                                    <input
+                                        name="address_city"
+                                        type="address_city"
+                                        className="w-full mt-2 px-3 py-2 text-gray-500 bg-transparent outline-none focus:border-indigo-600 shadow-sm -ml-10 pl-10 pr-3 rounded-lg border-2 border-gray-200 "
+                                        value={address_city}
+                                        onChange={(e) => onChange(e)}
+                                        placeholder='Kathmandu'
+                                    />
+                                </div>
                                 {error.address_city && (
                                     <p className=" text-red-500 text-xs italic">
                                         {error.address_city}
@@ -279,14 +305,17 @@ const RegisterPage = ({ setAuth }) => {
                                 <label className="font-medium">
                                     State
                                 </label>
-                                <input
-                                    name="address_state"
-                                    type="address_state"
-                                    className="w-full mt-2 px-3 py-2 text-gray-500 bg-transparent outline-none border focus:border-indigo-600 shadow-sm rounded-lg"
-                                    value={address_state}
-                                    onChange={(e) => onChange(e)}
-                                    placeholder='Bagmati'
-                                />
+                                <div className="flex">
+                                    <div className="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center pt-2"><i className="mdi mdi-map-marker-outline text-gray-400 text-lg"></i></div>
+                                    <input
+                                        name="address_state"
+                                        type="address_state"
+                                        className="w-full mt-2 px-3 py-2 text-gray-500 bg-transparent outline-none focus:border-indigo-600 shadow-sm -ml-10 pl-10 pr-3 rounded-lg border-2 border-gray-200"
+                                        value={address_state}
+                                        onChange={(e) => onChange(e)}
+                                        placeholder='Bagmati'
+                                    />
+                                </div>
                                 {error.address_state && (
                                     <p className=" text-red-500 text-xs italic">
                                         {error.address_state}

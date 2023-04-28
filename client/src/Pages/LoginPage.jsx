@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import axios from "axios";
-import { Link, Navigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { toastSuccess, toastError } from "../components/Toast";
 import { loginValidate } from "../Middleware/loginValidation";
 import { SERVER_URL } from "../Config";
@@ -74,6 +74,12 @@ function LoginPage({ setAuth }) {
 
     return (
         <main className="w-full flex px-10">
+            <style
+                dangerouslySetInnerHTML={{
+                    __html:
+                        "@import url('https://cdnjs.cloudflare.com/ajax/libs/MaterialDesign-Webfont/5.3.45/css/materialdesignicons.min.css')"
+                }}
+            />
             <div className="relative flex-1 hidden items-center justify-center bg-white lg:flex h-screen">
                 <div className="relative z-10 w-full max-w-md">
                     <div className=" mt-16 space-y-3">
@@ -125,14 +131,17 @@ function LoginPage({ setAuth }) {
                             <label className="font-medium">
                                 Email
                             </label>
-                            <input
-                                name="user_email"
-                                type="email"
-                                className="w-full mt-2 px-3 py-2 text-gray-500 bg-transparent outline-none border focus:border-indigo-600 shadow-sm rounded-lg"
-                                placeholder="sammy12@gmail.com"
-                                value={user_email}
-                                onChange={(e) => onChange(e)}
-                            />
+                            <div className="flex">
+                                <div className="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center pt-2"><i className="mdi mdi-email-outline text-gray-400 text-lg"></i></div>
+                                <input
+                                    name="user_email"
+                                    type="email"
+                                    className="w-full mt-2 px-3 py-2 text-gray-500 bg-transparent outline-none focus:border-indigo-600 shadow-sm -ml-10 pl-10 pr-3 rounded-lg border-2 border-gray-200"
+                                    placeholder="sammy12@gmail.com"
+                                    value={user_email}
+                                    onChange={(e) => onChange(e)}
+                                />
+                            </div>
                             {/* text that shows up when validation error */}
                             {error.user_email
                                 && (
@@ -147,13 +156,17 @@ function LoginPage({ setAuth }) {
                             <label className="font-medium">
                                 Password
                             </label>
-                            <input
-                                name="password"
-                                type="password"
-                                className="w-full mt-2 px-3 py-2 text-gray-500 bg-transparent outline-none border focus:border-indigo-600 shadow-sm rounded-lg"
-                                value={password}
-                                onChange={(e) => onChange(e)}
-                            />
+                            <div className="flex">
+                                <div className="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center pt-2"><i className="mdi mdi-lock-outline text-gray-400 text-lg"></i></div>
+                                <input
+                                    name="password"
+                                    type="password"
+                                    className="w-full mt-2 px-3 py-2 text-gray-500 bg-transparent outline-none focus:border-indigo-600 shadow-sm -ml-10 pl-10 pr-3 rounded-lg border-2 border-gray-200"
+                                    placeholder="************"
+                                    value={password}
+                                    onChange={(e) => onChange(e)}
+                                />
+                            </div>
                             {/* text that shows up when validation error */}
                             {error.password && (
                                 <p className=" text-red-500 text-xs italic">
