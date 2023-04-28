@@ -1,5 +1,5 @@
-import React, { Fragment, useState } from "react";
-import { Link, Navigate } from "react-router-dom";
+import React, { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import { Dialog, Disclosure, Popover, Transition } from "@headlessui/react";
 import {
     ArrowPathIcon,
@@ -10,10 +10,12 @@ import {
     SquaresPlusIcon,
     XMarkIcon,
 } from "@heroicons/react/24/outline";
-import { ChevronDownIcon, PhoneIcon, PlayCircleIcon } from "@heroicons/react/20/solid";
+// import { ChevronDownIcon, PhoneIcon, PlayCircleIcon } from "@heroicons/react/20/solid";
 import logo from "../../assets/Images/GharBikri-logo.png";
+import { toastSuccess } from "../../components/Toast";
 
 // data
+/*
 const products = [
     {
         name: "Analytics", description: "Get a better understanding of your traffic", href: "/dashboard", icon: ChartPieIcon,
@@ -40,9 +42,25 @@ const callsToAction = [
 function classNames(...classes) {
     return classes.filter(Boolean).join(" ");
 }
+*/
 
 function Nav() {
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+
+    const navigate = useNavigate();
+    const refreshPage = () => {
+        navigate("/", { replace: true });
+        window.location.reload();
+    };
+
+    const logout = async (e) => {
+        e.preventDefault();
+        await localStorage.removeItem("token");
+        toastSuccess("Logged out Successfully");
+        setTimeout(() => {
+            refreshPage();
+        }, 2000);
+    };
 
     return (
         <header className="bg-white">
@@ -132,7 +150,9 @@ function Nav() {
 
                         <div className="relative inline-block text-left pr-5">
                             <Link to="/profile"
-                                className="text-gray-700 font-bold inline-flex justify-center w-full px-4 py-3 text-md hover:text-gray-950 hover:font-bold hover:underline">
+                                className="text-gray-700 font-bold inline-flex justify-center w-full px-4 py-3 text-md hover:text-gray-950 hover:font-bold hover:underline"
+                                onClick={() => { refreshPage() }}
+                            >
                                 Profile
                             </Link>
                         </div>
@@ -145,12 +165,7 @@ function Nav() {
                                     id="options-menu"
                                     aria-haspopup="true"
                                     aria-expanded="true"
-                                    onClick={() => {
-                                        localStorage.removeItem("token");
-                                        localStorage.removeItem("user");
-                                        history.push("/");
-                                        window.location.reload();
-                                    }}
+                                    onClick={(e) => { logout(e) }}
                                 >
                                     Logout
                                 </button>
@@ -292,7 +307,7 @@ function Nav() {
                     </div>
                 </Dialog.Panel>
             </Dialog>
-        </header >
+        </header>
     );
 }
 
