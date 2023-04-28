@@ -10,7 +10,7 @@ exports.DB = {
 }
 
 exports.SERVER = {
-    SERVER_PORT: process.env.SERVER_PORT
+    SERVER_PORT: process.env.SERVER_PORT || 3000
 }
 
 exports.JWT = {
