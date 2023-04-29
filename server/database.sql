@@ -17,7 +17,8 @@ CREATE TABLE users (
     updated_at timestamp DEFAULT now(),
     phone_number varchar NOT NULL,
     address_city varchar NOT NULL,
-    address_state varchar NOT NULL
+    address_state varchar NOT NULL,
+    property_count integer NOT NULL
 );
 
 -- property table
@@ -26,7 +27,7 @@ CREATE TABLE property (
     p_name varchar(255) NOT NULL,
     p_address_street_num integer NOT NULL,
     p_address_street_name varchar(255),
-    p__address_city varchar(255) NOT NULL,
+    p_address_city varchar(255) NOT NULL,
     p_address_state varchar(255) NOT NULL,
     user_id uuid REFERENCES users(user_id),
     image_id integer REFERENCES image(image_id),
@@ -39,9 +40,10 @@ CREATE TABLE property (
     p_year integer NOT NULL,
     p_price numeric NOT NULL,
     p_listingType varchar(255) NOT NULL,
-    availability_status boolean NOT NULL,
+    p_availability_status boolean NOT NULL,
     created_at timestamp DEFAULT now(),
-    updated_at timestamp DEFAULT now()
+    updated_at timestamp DEFAULT now(),
+    p_count integer NOT NULL 
 );
 
 -- image table
