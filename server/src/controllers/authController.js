@@ -51,12 +51,21 @@ exports.register = async (req, res) => {
             updated_at, 
             phone_number, 
             address_city, 
-            address_state
+            address_state,
+            property_count
             ) VALUES (
-                $1, $2, $3, $4, NOW(), NOW(), $5, $6, $7
+                $1, $2, $3, $4, NOW(), NOW(), $5, $6, $7, 0
             )
             RETURNING *`,
-            [first_name, last_name, user_email, bcryptPassword, phone_number, address_city, address_state]);
+            [
+                first_name,
+                last_name,
+                user_email,
+                bcryptPassword,
+                phone_number,
+                address_city,
+                address_state
+            ]);
 
         // generate jwt token
         const token = jwtGenerator(newUser.rows[0].user_id);

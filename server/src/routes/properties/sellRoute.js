@@ -1,11 +1,10 @@
 const { Router } = require('express');
 const { postProperty } = require('../../controllers/sellController');
-const { registerValidation, loginValidation } = require('../../validators/authValidator');
-const { validationMiddleware } = require('../../middlewares/validations-middleware');
 const authMiddleware = require('../../middlewares/authMiddleware');
+const { propertyValidation } = require('../../validators/propertyValidator');
 const router = Router();
 
 // post property
-router.post('/', authMiddleware, postProperty);
+router.post('/', authMiddleware, propertyValidation, postProperty);
 
 module.exports = router;

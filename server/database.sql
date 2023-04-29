@@ -54,3 +54,28 @@ CREATE TABLE image (
     kitchen varchar(255) NOT NULL,
     living varchar(255) NOT NULL
 );
+
+-- Trigger function to update user property count
+CREATE OR REPLACE FUNCTION update_user_property_count()
+RETURNS TRIGGER AS $$
+BEGIN
+  IF TG_OP = 'INSERT' THEN
+    UPDATE users SET property_count = property_count + 1 WHERE user_id = NEW.user_id;
+  ELSIF TG_OP = 'DELETE' THEN
+    UPDATE users SET property_count = property_count - 1 WHERE user_id = OLD.user_id;
+  END IF;
+  RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
+
+-- Trigger to increment user property count on property insert
+CREATE TRIGGER increment_user_property_count
+AFTER INSERT ON property
+FOR EACH ROW
+EXECUTE FUNCTION update_user_property_count();
+
+-- Trigger to decrement user property count on property delete
+CREATE TRIGGER decrement_user_property_count
+AFTER DELETE ON property
+FOR EACH ROW
+EXECUTE FUNCTION update_user_property_count();

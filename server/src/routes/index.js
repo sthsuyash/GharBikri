@@ -4,6 +4,11 @@ const authRoutes = require('./authRoute')
 const dashBoardRoutes = require('./dashboardRoute')
 const propertiesRoutes = require('./properties')
 
+// check if api is running
+app.get('/', (req, res) => {
+    res.send('Api is running')
+})
+
 // initialize routes
 
 // auth routes
