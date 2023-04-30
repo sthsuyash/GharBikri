@@ -1,5 +1,7 @@
 import React from "react";
 
+// TODO send mail to the mail address
+
 export default function Contact() {
 
     const contactMethods = [
@@ -64,7 +66,7 @@ export default function Contact() {
                             onSubmit={(e) => e.preventDefault()}
                             className="space-y-5"
                         >
-                            
+
                             <div>
                                 <label className="font-medium">
                                     Full name

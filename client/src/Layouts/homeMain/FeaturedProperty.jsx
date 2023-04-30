@@ -9,6 +9,7 @@ import frontal3 from "../../assets/Images/mockData/3_frontal.jpg"
 import frontal4 from "../../assets/Images/mockData/4_frontal.jpg"
 import globe from "../../assets/Images/globe.png"
 import { Link } from "react-router-dom";
+import { SERVER_URL } from "../../Config";
 
 
 function FeaturedProperty() {
@@ -24,9 +25,9 @@ function FeaturedProperty() {
             p_address_state: "CA",
             p_bed: 3,
             p_bath: 2,
-            p_area_sq_ft: "20x20",
-            frontal: frontal1,
-            listingType: "Buy"
+            p_area_sq_ft: 2020,
+            p_frontal_image: frontal1,
+            p_listingType: "Buy"
         },
         {
             p_id: 2,
@@ -38,9 +39,9 @@ function FeaturedProperty() {
             p_address_state: "CA",
             p_bed: 4,
             p_bath: 3,
-            p_area_sq_ft: "20x20",
-            frontal: frontal2,
-            listingType: "Rent",
+            p_area_sq_ft: 2000,
+            p_frontal_image: frontal2,
+            p_listingType: "Rent",
         },
 
 
@@ -48,7 +49,7 @@ function FeaturedProperty() {
 
     // use axios to get data from backend
     // useEffect(() => {
-    //     axios.get("http://localhost:5000/api/properties/buy").then((res) => {
+    //     axios.get(`${SERVER_URL}/api/properties`).then((res) => {
     //         setProperties(res.data);
     //     });
     // }, []);
@@ -70,7 +71,7 @@ function FeaturedProperty() {
                     </div>
                     <div className="grid grid-cols-1 gap-x-16 gap-y-16 lg:grid-cols-3 justify-start md:grid-cols-2">
                         {properties.map((property) => (
-                            property.listingType === "Rent" && <PropertyCard key={property.p_id} property={property} />
+                            property.p_listingType === "Rent" && <PropertyCard key={property.p_id} property={property} />
                         ))}
                     </div>
                 </div>
@@ -83,7 +84,7 @@ function FeaturedProperty() {
                     </div>
                     <div className="grid grid-cols-1 gap-x-16 gap-y-16 lg:grid-cols-3 justify-start md:grid-cols-2">
                         {properties.map((property) => (
-                            property.listingType === "Buy" && <PropertyCard key={property.p_id} property={property} />
+                            property.p_listingType === "Buy" && <PropertyCard key={property.p_id} property={property} />
                         ))}
                     </div>
                 </div>

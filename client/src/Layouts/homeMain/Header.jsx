@@ -1,8 +1,9 @@
-import React, { Fragment } from "react";
+import React from "react";
+import { Link } from "react-router-dom";
 
 function Header() {
     return (
-        <Fragment className="bg-white">
+        <div className="bg-white">
 
             {/* main div */}
             <div className="mx-auto max-w-full px-4 lg:px-16 md:px-8 md:flex-row flex-col flex lg:flex-row flex-wrap lg:my-16 my-10 justify-normal">
@@ -19,13 +20,15 @@ function Header() {
                     <div className="space-y-1">
                         <h2 className="capitalize text-gray-400 text-md lg:text-xl lg:my-2 my-5">Find comfort in the house with us, want to find a home? we are ready to help you wholeheartedly based on what you need</h2>
 
-                        <button type="button"
+                        <Link
+                            to="/about"
+                            type="button"
                             className="transition-all inline-flex justify-center w-fit border border-gray-300 shadow-sm px-4 py-3 text-md font-medium text-gray-50 hover:bg-gray-50 hover:text-gray-950  bg-blue-600 hover:font-bold"
                             id="options-menu"
                             aria-haspopup="true"
                             aria-expanded="true"
                         >Read More &rarr;
-                        </button>
+                        </Link>
                     </div>
 
                     {/* second component of right div */}
@@ -39,8 +42,7 @@ function Header() {
                     </div>
                 </div>
             </div>
-
-        </Fragment>
+        </div>
     );
 
 }

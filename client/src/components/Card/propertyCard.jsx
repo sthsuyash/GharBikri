@@ -2,8 +2,20 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { MdOutlineBed } from "react-icons/md";
 import { BiBath, BiArea } from "react-icons/bi";
+import axios from "axios";
+import { SERVER_URL } from "../../Config";
 
 const propertyCard = ({ property }) => {
+
+    const deleteProperty = async () => {
+        try {
+            await axios.delete(`${SERVER_URL}/api/dashboard/property/${property.p_id}`);
+            // refresh page
+            window.location.reload();
+        } catch (error) {
+            console.log(error);
+        }
+    }
 
     return (
         // if buy then link to buy page else link to rent page
@@ -12,7 +24,7 @@ const propertyCard = ({ property }) => {
                 {/* image div */}
                 <Link
                     to={`/property/${property.p_id}`} className="relative">
-                    <img className="h-56 w-full object-cover" src={property.frontal} alt="property image" />
+                    <img className="h-56 w-full object-cover" src={property.p_frontal_image} alt="property image" />
                     <div className="absolute inset-0 bg-black opacity-25"></div>
                 </Link>
 
@@ -21,7 +33,7 @@ const propertyCard = ({ property }) => {
                         <div className="flex justify-start">
                             <span className="text-blue-700 lg:text-3xl font-bold text-2xl">${property.p_price}</span>
                             {/* if property.listingType is rent then display per month  */}
-                            {property.p_listingType === 'Rent' ? <span className="text-gray-500 text-lg font-semibold">&nbsp;/month</span> : null}
+                            {property.p_listingType === "Rent" ? <span className="text-gray-500 text-lg font-semibold">&nbsp;/month</span> : null}
 
                         </div>
                     </div>
@@ -47,6 +59,24 @@ const propertyCard = ({ property }) => {
                             <span>&nbsp;{property.p_area_sq_ft} sq.ft</span>
                         </div>
                     </div>
+
+                    {/* show edit button only if the window location is /dashboard  */}
+                    {window.location.pathname === '/dashboard' ?
+                        <div className="lg:text-sm flex justify-end space-x-5 mt-5">
+                            <Link
+                                to={`/dashboard/editproperty/${property.p_id}`}
+                                className="bg-blue-700 font-semibold text-white px-3 py-1 text-sm hover:bg-white border hover:text-blue-600"
+                            >
+                                Edit
+                            </Link>
+                            <button
+                                onClick={() => deleteProperty(property.p_id)}
+                                className="bg-red-600 font-semibold text-sm text-white px-3 py-1 hover:bg-white border hover:text-red-600"
+                            >
+                                Delete
+                            </button>
+                        </div>
+                        : null}
                 </div>
             </div>
         </div>

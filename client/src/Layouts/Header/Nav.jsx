@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import { Dialog, Popover } from "@headlessui/react";
 import {
     Bars3Icon,
@@ -8,11 +8,15 @@ import {
 import logo from "../../assets/Images/GharBikri-logo.png";
 import { toastSuccess } from "../../components/Toast";
 import Profile from "../Header/Avatar";
+import axios from "axios";
+import { SERVER_URL } from "../../Config";
 
 function Nav() {
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
     const navigate = useNavigate();
+    const location = useLocation();
+
     const refreshPage = () => {
         navigate("/", { replace: true });
         window.location.reload();
@@ -20,6 +24,7 @@ function Nav() {
 
     const logout = async (e) => {
         e.preventDefault();
+        axios.get(`${SERVER_URL}/api/auth/logout`);
         await localStorage.removeItem("token");
         toastSuccess("Logged out Successfully");
         setTimeout(() => {
@@ -46,14 +51,14 @@ function Nav() {
                         <Bars3Icon className="h-6 w-6" aria-hidden="true" />
                     </button>
                 </div>
-                <Popover.Group className="hidden lg:flex lg:gap-x-12 ">
-                    <Link to="/rent" className="transition-all text-lg font-bold leading-6 text-gray-900  hover:underline hover:text-blue-900">
+                <Popover.Group className="hidden lg:flex lg:gap-x-12">
+                    <Link to="/rent" className={`transition-all text-lg font-bold leading-6 text-gray-900  hover:text-blue-900 ${location.pathname === "/rent" ? "underline" : ""}`}>
                         Rent
                     </Link>
-                    <Link to="/buy" className="transition-all text-lg font-bold leading-6 text-gray-900  hover:underline  hover:text-blue-900">
+                    <Link to="/buy" className={`transition-all text-lg font-bold leading-6 text-gray-900  hover:text-blue-900 ${location.pathname === "/buy" ? "underline" : ""}`}>
                         Buy
                     </Link>
-                    <Link to="/sell" className="transition-all text-lg font-bold leading-6 text-gray-900  hover:underline  hover:text-blue-900">
+                    <Link to="/sell" className={`transition-all text-lg font-bold leading-6 text-gray-900  hover:text-blue-900 ${location.pathname === "/sell" ? "underline" : ""}`}>
                         Sell
                     </Link>
                 </Popover.Group>
@@ -66,7 +71,7 @@ function Nav() {
                                 <label tabIndex={0} className="cursor-pointer">
                                     <Profile textSizeRatio={3} classname={"rounded-full"} size={45} />
                                 </label>
-                                <ul tabIndex={0} className="dropdown-content menu p-2 border shadow-lg rounded-lg w-52 bg-white">
+                                <ul tabIndex={0} className="dropdown-content menu py-2 px-4 border shadow-lg rounded-lg w-fit bg-white">
                                     <li className="hover:underline">
                                         <a href="/dashboard">Profile</a>
                                     </li>

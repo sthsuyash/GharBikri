@@ -40,11 +40,20 @@ function Dashboard() {
     }, []);
 
     const loadProperties = async () => {
-        const result = await axios.get(`${SERVER_URL}/api/dashboard/properties`, {
+        const result = await axios.get(`${SERVER_URL}/api/dashboard/userproperties`, {
             headers: { token: localStorage.token }
         });
-        console.log(result.data);
+        // console.log(result.data);
         setProperties(result.data);
+    };
+
+    const deleteUser = async () => {
+        await axios.delete(`http://localhost:3000/api/dashboard`, {
+            headers: { token: localStorage.token }
+        });
+        // remove the token and redirect to home page
+        localStorage.removeItem("token");
+        window.location = "/";
     };
 
     return (
@@ -168,8 +177,7 @@ function Dashboard() {
                                         </div>
 
                                         <div className="flex flex-col gap-20 py-14">
-                                            {/* return rent */}
-                                            <div className="mx-auto">
+                                            <div className="">
                                                 <div className="grid grid-cols-1 gap-x-16 gap-y-16 lg:grid-cols-3 justify-start md:grid-cols-2">
                                                     {properties.map((property) => (
                                                         <PropertyCard key={property.p_id} property={property} />
@@ -177,6 +185,36 @@ function Dashboard() {
                                                 </div>
                                             </div>
                                         </div>
+                                    </div>
+                                </div>
+
+                                <div className="flex justify-center mb-10 lg:flex-col flex-row gap-x-5">
+                                    {/* edit user button */}
+                                    <div className="flex justify-center">
+                                        <Link
+                                            to={`/dashboard/edituser/${user.user_id}`}
+                                            className="bg-blue-700 text-white active:bg-blue-600 font-bold uppercase text-sm px-6 py-3 shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150 hover:bg-white hover:text-blue-800 border"
+                                        >
+                                            Edit Profile
+                                        </Link>
+                                    </div>
+
+                                    {/* delete user button */}
+                                    <div className="flex justify-center">
+                                        <button
+                                            className="bg-red-600 text-white active:bg-red-800 font-bold uppercase text-sm px-6 py-3 shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150 hover:bg-white hover:text-red-600 border"
+                                            type="button"
+                                            onClick={() => {
+                                                if (
+                                                    window.confirm(
+                                                        "Are you sure you wish to delete your profile? This action cannot be undone."
+                                                    )
+                                                )
+                                                    deleteUser();
+                                            }}
+                                        >
+                                            Delete Profile
+                                        </button>
                                     </div>
                                 </div>
                             </div>
