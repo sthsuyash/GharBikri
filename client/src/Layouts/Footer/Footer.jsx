@@ -4,7 +4,7 @@ import logo from "../../assets/Images/GharBikri-logo.png"
 const Footer = () => {
     return (
         <>
-            <footer className="footer p-10 bg-white text-slate-600 ">
+            <footer className="footer p-10 bg-white text-slate-600 mt-10">
                 <div className="md:place-self-center md:justify-self-center ">
 
                     <div className="grid grid-flow-col gap-4">
@@ -20,23 +20,21 @@ const Footer = () => {
                 </div>
                 <div>
                     <span className="footer-title">Services</span>
-                    <a className="link link-hover">Branding</a>
-                    <a className="link link-hover">Design</a>
-                    <a className="link link-hover">Marketing</a>
-                    <a className="link link-hover">Advertisement</a>
+                    <a className="link link-hover" href='/sell'>Sell</a>
+                    <a className="link link-hover" href='/rent'>Rent</a>
+                    <a className="link link-hover" href='/buy'>Buy</a>
                 </div>
                 <div>
                     <span className="footer-title">Company</span>
-                    <a className="link link-hover">About us</a>
-                    <a className="link link-hover">Contact</a>
+                    <a className="link link-hover" href='/about'>About us</a>
+                    <a className="link link-hover" href='/contact'>Contact</a>
                     <a className="link link-hover">Jobs</a>
-                    <a className="link link-hover">Press kit</a>
                 </div>
                 <div>
                     <span className="footer-title">Legal</span>
-                    <a className="link link-hover">Terms of use</a>
-                    <a className="link link-hover">Privacy policy</a>
-                    <a className="link link-hover">Cookie policy</a>
+                    <a className="link link-hover" href='terms'>Terms of use</a>
+                    <a className="link link-hover" href='privacy-policy'>Privacy policy</a>
+                    <a className="link link-hover" href='cookie'>Cookie policy</a>
                 </div>
                 <div>
                     <span className="footer-title">Office</span>
