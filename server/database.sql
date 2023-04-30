@@ -22,7 +22,7 @@ CREATE TABLE users (
 
 -- property table
 CREATE TABLE property (
-    p_id uuid PRIMARY KEY DEFAULT uuid_generate_v4(),
+    p_id uuid PRIMARY KEY DEFAULT uuid_generate_v4(), --autoincrement
     p_name varchar(255) NOT NULL,
     p_address_street_num integer NOT NULL,
     p_address_street_name varchar(255),
