@@ -9,6 +9,7 @@ import logo from "../../assets/Images/GharBikri-logo.png";
 import { toastSuccess } from "../../components/Toast";
 import Profile from "../Header/Avatar";
 import axios from "axios";
+import { FcUnlock, FcSettings, FcLike } from "react-icons/fc";
 import { SERVER_URL } from "../../Config";
 
 function Nav() {
@@ -33,7 +34,7 @@ function Nav() {
     };
 
     return (
-        <header className="bg-white">
+        <header className="bg-white sticky top-0 z-10 shadow-lg">
             <nav className="mx-auto flex max-w-full items-center justify-between py-6 lg:px-16 px-4 md:px-8" aria-label="Global">
                 <div className="flex lg:flex-1">
                     <Link to="/" className="-m-1.5 p-1.5">
@@ -52,31 +53,35 @@ function Nav() {
                     </button>
                 </div>
                 <Popover.Group className="hidden lg:flex lg:gap-x-12">
-                    <Link to="/rent" className={`transition-all text-lg font-bold leading-6 text-gray-900  hover:text-blue-900 ${location.pathname === "/rent" ? "underline" : ""}`}>
+                    <Link to="/rent" className={`transition-all text-2xl font-extrabold leading-6 text-gray-900  hover:text-blue-600 ${location.pathname === "/rent" ? "underline" : ""}`}>
                         Rent
                     </Link>
-                    <Link to="/buy" className={`transition-all text-lg font-bold leading-6 text-gray-900  hover:text-blue-900 ${location.pathname === "/buy" ? "underline" : ""}`}>
+                    <Link to="/buy" className={`transition-all text-2xl font-bold leading-6 text-gray-900  hover:text-blue-600 ${location.pathname === "/buy" ? "underline" : ""}`}>
                         Buy
                     </Link>
-                    <Link to="/sell" className={`transition-all text-lg font-bold leading-6 text-gray-900  hover:text-blue-900 ${location.pathname === "/sell" ? "underline" : ""}`}>
+                    <Link to="/sell" className={`transition-all text-2xl font-bold leading-6 text-gray-900  hover:text-blue-600 ${location.pathname === "/sell" ? "underline" : ""}`}>
                         Sell
                     </Link>
                 </Popover.Group>
 
                 {/* check if logged in or not, if logged in then render logout button, else render login and register  */}
                 {localStorage.getItem("token") ? (
-                    <div className="hidden lg:flex lg:flex-1 lg:justify-end ">
+                    <div className="hidden lg:flex lg:flex-1 lg:justify-end">
                         <div className="relative inline-block text-left pr-5">
                             <div className="dropdown dropdown-end">
                                 <label tabIndex={0} className="cursor-pointer">
-                                    <Profile textSizeRatio={3} classname={"rounded-full"} size={45} />
+                                    <Profile textSizeRatio={2.5} classname={"rounded-full"} size={45} />
                                 </label>
-                                <ul tabIndex={0} className="dropdown-content menu py-2 px-4 border shadow-lg rounded-lg w-fit bg-white">
-                                    <li className="hover:underline">
-                                        <a href="/dashboard">Profile</a>
+                                <ul tabIndex={0} className="transition-all dropdown-content menu py-2 px-2 border shadow-lg rounded-lg bg-white">
+                                    <li className="hover:underline flex flex-row">
+                                        <a href="/dashboard"><FcSettings />Profile</a>
                                     </li>
                                     <li className="hover:underline">
+                                        <a href="/favourites"><FcLike />Favourites</a>
+                                    </li>
+                                    <li className="hover:underline flex flex-row">
                                         <Link to="/">
+                                            <FcUnlock />
                                             <button
                                                 type="button"
                                                 className="transition-all font-semibold justify-center shadow-sm text-md  text-red-500  hover:text-red-500  hover:font-bold hover:underline"
