@@ -11,6 +11,9 @@ import LoginPage from '../Pages/LoginPage'
 import RegisterPage from '../Pages/RegisterPage'
 import DashBoard from '../Pages/DashBoard'
 
+import EditUser from '../Pages/EditUser'
+import EditProperty from '../Pages/EditProperty'
+
 import Rent from '../Pages/Rent'
 import Buy from '../Pages/Buy'
 import Sell from '../Pages/Sell'
@@ -101,11 +104,10 @@ function AppRoutes() {
             <Route
                 path='/sell'
                 element={
-                    // isAuthenticated ? (<Sell />
-                    // ) : (
-                    //     <Navigate replace to="/login" />
-                    // )}
-                    <Sell />}
+                    isAuthenticated ? (<Sell />
+                    ) : (
+                        <Navigate replace to="/login" />
+                    )}
             />
 
 
@@ -116,6 +118,8 @@ function AppRoutes() {
                     <PropertyDetails />
                 }
             />
+
+            {/* // TODO : add user profile visit page  */}
 
             <Route
                 path="/about"
@@ -129,6 +133,24 @@ function AppRoutes() {
                 element={
                     <Contact />
                 }
+            />
+
+            <Route
+                path="/dashboard/edituser/:id"
+                element={
+                    isAuthenticated ? (<EditUser />
+                    ) : (
+                        <Navigate replace to="/login" />
+                    )}
+            />
+
+            <Route
+                path="/dashboard/editproperty/:id"
+                element={
+                    isAuthenticated ? (<EditProperty setAuth={setAuth} />
+                    ) : (
+                        <Navigate replace to="/login" />
+                    )}
             />
 
         </Routes>

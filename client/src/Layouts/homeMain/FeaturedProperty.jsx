@@ -9,135 +9,50 @@ import frontal3 from "../../assets/Images/mockData/3_frontal.jpg"
 import frontal4 from "../../assets/Images/mockData/4_frontal.jpg"
 import globe from "../../assets/Images/globe.png"
 import { Link } from "react-router-dom";
+import { SERVER_URL } from "../../Config";
 
 
-function FeaturedProperty({ isAuthenticated }) {
+function FeaturedProperty() {
 
     const [properties, setProperties] = useState([
         {
-            id: 1,
-            image: frontal1,
-            rate: '120000',
-            location: {
-                street_number: 420,
-                street_name: 'Beverly',
-                city: 'SpringField',
-                state: 'Beverly',
-            },
-            title: 'Luxury Apartment',
-            bhk: '2',
-            bedrooms: 2,
-            bathrooms: 2,
-            area: '10x10',
-            rentBuy: 'Buy'
+            p_id: 1,
+            p_name: "Property 1",
+            p_price: 1000000,
+            p_address_street_num: 123,
+            p_address_street_name: "Main St",
+            p_address_city: "San Jose",
+            p_address_state: "CA",
+            p_bed: 3,
+            p_bath: 2,
+            p_area_sq_ft: 2020,
+            p_frontal_image: frontal1,
+            p_listingType: "Buy"
         },
         {
-            id: 2,
-            image: frontal2,
-            rate: '180000',
-            location: {
-                street_number: 420,
-                street_name: 'Beverly',
-                city: 'SpringField',
-                state: 'Beverly'
-            },
-            title: 'Beverly SpringField',
-            bhk: '3',
-            bedrooms: 3,
-            bathrooms: 3,
-            area: '6x9',
-            rentBuy: 'Buy'
+            p_id: 2,
+            p_name: "Property 2",
+            p_price: 2000,
+            p_address_street_num: 456,
+            p_address_street_name: "Main St",
+            p_address_city: "San Jose",
+            p_address_state: "CA",
+            p_bed: 4,
+            p_bath: 3,
+            p_area_sq_ft: 2000,
+            p_frontal_image: frontal2,
+            p_listingType: "Rent",
         },
-        {
-            id: 3,
-            image: frontal3,
-            rate: '99000',
-            location: {
-                street_number: 420,
-                street_name: 'Beverly',
-                city: 'SpringField',
-                state: 'Beverly'
-            },
-            title: 'Cozy Apartment',
-            bhk: '1',
-            bedrooms: 1,
-            bathrooms: 1,
-            area: '3x8',
-            rentBuy: 'Buy'
-        },
-        {
-            id: 5,
-            image: frontal1,
-            rate: '200',
-            location: {
-                street_number: 420,
-                street_name: 'Beverly',
-                city: 'SpringField',
-                state: 'Beverly',
-            },
-            title: 'Luxury Apartment',
-            bhk: '2',
-            bedrooms: 2,
-            bathrooms: 2,
-            area: '10x10',
-            rentBuy: 'Rent'
-        },
-        {
-            id: 6,
-            image: frontal2,
-            rate: '180',
-            location: {
-                street_number: 420,
-                street_name: 'Beverly',
-                city: 'SpringField',
-                state: 'Beverly'
-            },
-            title: 'Beverly SpringField',
-            bhk: '3',
-            bedrooms: 3,
-            bathrooms: 3,
-            area: '6x9',
-            rentBuy: 'Rent'
-        },
-        {
-            id: 7,
-            image: frontal3,
-            rate: '1200',
-            location: {
-                street_number: 420,
-                street_name: 'Beverly',
-                city: 'SpringField',
-                state: 'Beverly'
-            },
-            title: 'Cozy Apartment',
-            bhk: '1',
-            bedrooms: 1,
-            bathrooms: 1,
-            area: '3x8',
-            rentBuy: 'Rent'
-        },
-        {
-            id: 8,
-            image: frontal4,
-            rate: '900',
-            location: {
-                street_number: 420,
-                street_name: 'Beverly',
-                city: 'SpringField',
-                state: 'Beverly'
-            },
 
-        }
+
     ]);
 
     // use axios to get data from backend
     // useEffect(() => {
-    //     axios.get("http://localhost:5000/api/properties/buy").then((res) => {
+    //     axios.get(`${SERVER_URL}/api/properties`).then((res) => {
     //         setProperties(res.data);
     //     });
     // }, []);
-
-    const [favorites, setFavorites] = useState([]);
 
     return (
         <>
@@ -156,7 +71,7 @@ function FeaturedProperty({ isAuthenticated }) {
                     </div>
                     <div className="grid grid-cols-1 gap-x-16 gap-y-16 lg:grid-cols-3 justify-start md:grid-cols-2">
                         {properties.map((property) => (
-                            property.rentBuy === "Rent" && <PropertyCard key={property.id} property={property} favourites={favorites} setFavourites={setFavorites} isAuthenticated={isAuthenticated} />
+                            property.p_listingType === "Rent" && <PropertyCard key={property.p_id} property={property} />
                         ))}
                     </div>
                 </div>
@@ -169,7 +84,7 @@ function FeaturedProperty({ isAuthenticated }) {
                     </div>
                     <div className="grid grid-cols-1 gap-x-16 gap-y-16 lg:grid-cols-3 justify-start md:grid-cols-2">
                         {properties.map((property) => (
-                            property.rentBuy === "Buy" && <PropertyCard key={property.id} property={property} favourites={favorites} setFavourites={setFavorites} isAuthenticated={isAuthenticated} />
+                            property.p_listingType === "Buy" && <PropertyCard key={property.p_id} property={property} />
                         ))}
                     </div>
                 </div>

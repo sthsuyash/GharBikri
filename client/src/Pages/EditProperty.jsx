@@ -1,9 +1,29 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
-import PropertyCard from "../components/Card/propertyCard";
 import { SERVER_URL } from "../Config";
+import PropertyCard from "../components/Card/propertyCard";
 
-export default function Sell() {
+export default function EditProperty() {
+
+    const [property, setProperty] = useState({});
+
+    const getProperty = async (req, res) => {
+        try {
+            const response = await axios.get(`${SERVER_URL}/api/dashboard/property/${req.p_id}`, {
+                headers: { token: localStorage.token }
+            });
+
+            const parseRes = response.data;
+            setProperty(parseRes);
+
+        } catch (err) {
+            console.error(err.message);
+        }
+    };
+
+    useEffect(() => {
+        getProperty();
+    }, []);
 
     // property details
     const [propertyName, setPropertyName] = useState("");
@@ -27,6 +47,9 @@ export default function Sell() {
 
     // docs
     const [frontal, setFrontal] = useState(null);
+    const [kitchen, setKitchen] = useState(null);
+    const [bath, setBath] = useState(null);
+    const [living, setLiving] = useState(null);
 
     const changePropertyName = (e) => {
         setPropertyName(e.target.value);
@@ -90,9 +113,31 @@ export default function Sell() {
         setFrontal(name);
     };
 
+    const changeBathroom = (e) => {
+        const file = e.target.files[0];
+        const name = file.name;
+        setBath(name);
+    };
+
+    const changeKitchen = (e) => {
+        const file = e.target.files[0];
+        const name = file.name;
+        setKitchen(name);
+        console.log(file);
+    };
+
+    const changeLivingroom = (e) => {
+        const file = e.target.files[0];
+        const name = file.name;
+        setLiving(name);
+    };
+
     const uploadImages = async () => {
         let formData = new FormData();
         formData.append("frontal");
+        formData.append("bath");
+        formData.append("kitchen");
+        formData.append("livingroom");
 
         const response = axios.post(`${SERVER_URL}/api/properties/upload`, formData, {
             headers: {
@@ -106,7 +151,7 @@ export default function Sell() {
 
         e.preventDefault();
 
-        const propertyData = {
+        const property = {
             propertyName,
             propertyStreetnum,
             propertyStreetname,
@@ -122,19 +167,22 @@ export default function Sell() {
             propertyPrice,
             listingType,
             availabilityStatus,
-            p_frontal_image,
+            frontal,
+            bath,
+            kitchen,
+            living
         }
 
         uploadImages();
 
-        axios.post(`${SERVER_URL}/api/properties/sell`, propertyData)
+        axios.post(`${SERVER_URL}/api/properties/sell`, property)
             .then(res => console.log(res.data))
             .catch(err => console.log(err));
 
         window.location = "/sell";
     }
 
-    const property = {
+    const propertyEdit = {
         p_name: propertyName,
         p_address_street_num: propertyStreetnum,
         p_address_street_name: propertyStreetname,
@@ -145,7 +193,7 @@ export default function Sell() {
         p_bath: propertyBathrooms,
         p_area_sq_ft: propertyArea,
         p_price: propertyPrice,
-        p_frontal_image: frontal,
+        frontal: frontal,
         p_type: propertyType,
     }
 
@@ -157,7 +205,7 @@ export default function Sell() {
                         "@import url('https://cdnjs.cloudflare.com/ajax/libs/MaterialDesign-Webfont/5.3.45/css/materialdesignicons.min.css')"
                 }}
             />
-            <h1 className="text-3xl font-bold text-center my-8 lg:text-5xl">Sell your property</h1>
+            <h1 className="text-3xl font-bold text-center my-8 lg:text-5xl">Edit {property.p_name}</h1>
             <main className="w-full flex mt-10">
                 <div className="flex-1 flex items-center justify-center">
                     <div className="w-full p-6 max-w-full space-y-8 bg-white text-gray-600 sm:p-0">
@@ -537,7 +585,7 @@ export default function Sell() {
                                             </p>
                                         </div>
 
-                                        {/* image form starts */}
+                                        {/* form starts */}
                                         <div
                                             className="space-y-5 border rounded-lg p-5"
                                         >
@@ -548,7 +596,7 @@ export default function Sell() {
                                                 </div>
                                                 <div className="flex items-center justify-center w-full">
                                                     <label
-                                                        htmlFor="p_frontal_image"
+                                                        htmlFor="frontal"
                                                         className="flex flex-col items-center justify-center w-full h-64 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer"
                                                     >
 
@@ -576,8 +624,8 @@ export default function Sell() {
                                                             </p>
                                                         </div>
                                                         <input
-                                                            id="p_frontal_image"
-                                                            name="p_frontal_image"
+                                                            id="frontal"
+                                                            name="frontal"
                                                             type="file"
                                                             className="hidden"
                                                             onChange={(e) => changeFrontal(e)}
@@ -585,8 +633,147 @@ export default function Sell() {
                                                     </label>
                                                 </div>
                                             </div>
+
+                                            {/* Living Room */}
+                                            <div className="flex flex-col w-full">
+                                                <div className="flex flex-col w-full">
+                                                    <label className="text-gray-600 font-semibold">Living Room</label>
+                                                </div>
+                                                <div className="flex items-center justify-center w-full">
+                                                    <label
+                                                        htmlFor="living"
+                                                        className="flex flex-col items-center justify-center w-full h-64 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer"
+                                                    >
+
+                                                        <div className="flex flex-col items-center justify-center pt-5 pb-6">
+                                                            <svg
+                                                                aria-hidden="true"
+                                                                className="w-10 h-10 mb-3 text-gray-400"
+                                                                fill="none"
+                                                                stroke="currentColor"
+                                                                viewBox="0 0 24 24"
+                                                                xmlns="http://www.w3.org/2000/svg"
+                                                            >
+                                                                <path
+                                                                    strokeLinecap="round"
+                                                                    strokeLinejoin="round"
+                                                                    strokeWidth={2}
+                                                                    d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"
+                                                                />
+                                                            </svg>
+                                                            <p className="mb-2 text-sm text-gray-500 dark:text-gray-400">
+                                                                <span className="font-semibold">Click to upload</span> or drag and drop
+                                                            </p>
+                                                            <p className="text-xs text-gray-500 dark:text-gray-400">
+                                                                SVG, PNG, JPG or GIF
+                                                            </p>
+                                                        </div>
+                                                        <input
+                                                            id="living"
+                                                            name="living"
+                                                            type="file"
+                                                            className="hidden"
+                                                            onChange={(e) => changeLivingroom(e)}
+                                                        />
+                                                    </label>
+                                                </div>
+                                            </div>
+
+                                            {/* kitchen bedroom section */}
+                                            <div className="flex flex-col lg:flex-row gap-y-5 gap-x-7">
+
+                                                {/* Kitchen */}
+                                                <div className="flex flex-col w-full">
+                                                    <div className="flex flex-col w-full">
+                                                        <label className="text-gray-600 font-semibold">Kitchen</label>
+                                                    </div>
+                                                    <div className="flex items-center justify-center w-full">
+                                                        <label
+                                                            htmlFor="kitchen"
+                                                            className="flex flex-col items-center justify-center w-full h-52 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer"
+                                                        >
+                                                            <div className="flex flex-col items-center justify-center pt-5 pb-6">
+                                                                <svg
+                                                                    aria-hidden="true"
+                                                                    className="w-10 h-10 mb-3 text-gray-400"
+                                                                    fill="none"
+                                                                    stroke="currentColor"
+                                                                    viewBox="0 0 24 24"
+                                                                    xmlns="http://www.w3.org/2000/svg"
+                                                                >
+                                                                    <path
+                                                                        strokeLinecap="round"
+                                                                        strokeLinejoin="round"
+                                                                        strokeWidth={2}
+                                                                        d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"
+                                                                    />
+                                                                </svg>
+                                                                <p className="mb-2 text-sm text-gray-500 dark:text-gray-400">
+                                                                    <span className="font-semibold">Click to upload</span> or drag and drop
+                                                                </p>
+                                                                <p className="text-xs text-gray-500 dark:text-gray-400">
+                                                                    SVG, PNG, JPG or GIF
+                                                                </p>
+                                                            </div>
+                                                            <input
+                                                                id="kitchen"
+                                                                name="kitchen"
+                                                                type="file"
+                                                                className="hidden"
+                                                                onChange={(e) => changeKitchen(e)}
+                                                            />
+
+                                                        </label>
+                                                    </div>
+                                                </div>
+
+                                                {/* Bedroom */}
+                                                <div className="flex flex-col w-full">
+                                                    <div className="flex flex-col w-full">
+                                                        <label className="text-gray-600 font-semibold">Bath</label>
+                                                    </div>
+                                                    <div className="flex items-center justify-center w-full">
+                                                        <label
+                                                            htmlFor="bath"
+                                                            className="flex flex-col items-center justify-center w-full h-52 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer"
+                                                        >
+                                                            <div className="flex flex-col items-center justify-center pt-5 pb-6">
+                                                                <svg
+                                                                    aria-hidden="true"
+                                                                    className="w-10 h-10 mb-3 text-gray-400"
+                                                                    fill="none"
+                                                                    stroke="currentColor"
+                                                                    viewBox="0 0 24 24"
+                                                                    xmlns="http://www.w3.org/2000/svg"
+                                                                >
+                                                                    <path
+                                                                        strokeLinecap="round"
+                                                                        strokeLinejoin="round"
+                                                                        strokeWidth={2}
+                                                                        d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"
+                                                                    />
+                                                                </svg>
+                                                                <p className="mb-2 text-sm text-gray-500 dark:text-gray-400">
+                                                                    <span className="font-semibold">Click to upload</span> or drag and drop
+                                                                </p>
+                                                                <p className="text-xs text-gray-500 dark:text-gray-400">
+                                                                    SVG, PNG, JPG or GIF
+                                                                </p>
+                                                            </div>
+                                                            <input
+                                                                id="bath"
+                                                                name="bath"
+                                                                type="file"
+                                                                className="hidden"
+                                                                onChange={(e) => changeBathroom(e)}
+                                                            />
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                            </div>
                                         </div>
                                     </>
+
                                 </div>
                                 <button
                                     className="px-4 py-2 mt-5 text-sm font-medium tracking-wide text-white capitalize transition-colors duration-200 transform bg-blue-600 hover:text-blue-600 border hover:bg-white"
@@ -603,7 +790,7 @@ export default function Sell() {
                                             Preview
                                         </h2>
                                         <div className="flex flex-wrap justify-center">
-                                            <PropertyCard property={property} />
+                                            <PropertyCard property={propertyEdit} />
                                         </div>
                                     </div>
                                 </>
