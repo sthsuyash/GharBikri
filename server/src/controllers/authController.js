@@ -5,7 +5,17 @@ const jwtGenerator = require('../utils/jwtGenerator')
 // method to get all the users in db
 exports.getUsers = async (req, res) => {
     try {
-        const { rows } = await db.query("SELECT first_name, last_name, user_email, phone_number, address_city, address_state FROM users");
+        const { rows } = await db.query(`SELECT 
+        first_name, 
+        last_name, 
+        user_email, 
+        phone_number, 
+        address_city, 
+        address_state,
+        property_count,
+        created_at,
+        updated_at
+        FROM users`);
         // res.send(rows);
         return res.status(200).json({
             success: true,
@@ -23,7 +33,15 @@ exports.getUsers = async (req, res) => {
 // register controller
 exports.register = async (req, res) => {
     // desctructure the req.body
-    const { first_name, last_name, user_email, password, phone_number, address_city, address_state } = req.body;
+    const {
+        first_name,
+        last_name,
+        user_email,
+        password,
+        phone_number,
+        address_city,
+        address_state
+    } = req.body;
     try {
         // check if user exists (if user exists then throw error)
         // done by validator in '../validators/authValidation.js'
