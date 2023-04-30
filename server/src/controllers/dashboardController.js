@@ -112,4 +112,129 @@ exports.changePassword = async (req, res) => {
     }
 }
 
-// 
+// get all properties of user with matching id from params if authorized
+exports.getUserProperties = async (req, res) => {
+    try {
+        const properties = await db.query(`SELECT
+        p_id,
+        p_name,
+        p_address_street_num,
+        p_address_street_name,
+        p_address_city,
+        p_address_state,
+        p_bed,
+        p_bath,
+        p_area_sq_ft,
+        p_price,
+        p_listingType,
+        property.created_at,
+        property.updated_at,
+        frontal
+        FROM property
+        JOIN users
+        ON property.user_id = users.user_id
+        JOIN image
+        ON property.image_id = image.image_id
+        WHERE property.user_id = $1`,
+            [req.user]
+        );
+        res.json(properties.rows);
+        // console.log(properties.rows);
+
+    } catch (error) {
+        res.status(500).json({
+            success: false,
+            message: error.message,
+        })
+        // console.log(error);
+    }
+}
+
+
+// get property with matching id
+exports.getProperty = async (req, res) => {
+    try {
+        const property = await db.query(`
+        SELECT
+        p_name,
+        p_address_street_num,
+        p_address_street_name,
+        p_address_city,
+        p_address_state,
+        p_description,
+        p_type,
+        p_bed,
+        p_bath,
+        p_area_sq_ft,
+        p_repair_quality,
+        p_year,
+        p_price,
+        p_listingType,
+        p_availability_status,
+        created_at,
+        updated_at,
+        frontal,
+        kitchen,
+        living,
+        bath
+        FROM property 
+        JOIN users 
+        ON property.user_id = users.user_id
+        JOIN images
+        ON property.image_id = image.image_id 
+        WHERE property.user_id = $1 AND property.property_id = $2`,
+            [req.user, req.params.id]
+        );
+        res.json(property.rows[0]);
+
+    } catch (error) {
+        res.status(500).json({
+            success: false,
+            message: error.message,
+        })
+    }
+}
+
+// get properties with matching id for all users
+exports.getAllProperties = async (req, res) => {
+    try {
+        const properties = await db.query(`
+        SELECT
+        p_name,
+        p_address_street_num,
+        p_address_street_name,
+        p_address_city,
+        p_address_state,
+        p_description,
+        p_type,
+        p_bed,
+        p_bath,
+        p_area_sq_ft,
+        p_repair_quality,
+        p_year,
+        p_price,
+        p_listingType,
+        p_availability_status,
+        created_at,
+        updated_at,
+        frontal,
+        kitchen,
+        living,
+        bath
+        FROM property 
+        JOIN users 
+        ON property.user_id = users.user_id
+        JOIN images
+        ON property.image_id = images.image_id 
+        WHERE property.property_id = $1`,
+            [req.params.id]
+        );
+        res.json(properties.rows[0]);
+
+    } catch (error) {
+        res.status(500).json({
+            success: false,
+            message: error.message,
+        })
+    }
+}

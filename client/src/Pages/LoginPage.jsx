@@ -49,9 +49,6 @@ function LoginPage({ setAuth }) {
                     setAuth(true);
                     toastSuccess("Logged in successfully!");
                     // console.log("Logged in successfully!");
-                    setTimeout(() => {
-                        window.location.replace("/");
-                    }, 2000);
                 } else {
                     setAuth(false);
                 }

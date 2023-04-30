@@ -92,7 +92,7 @@ quia. Quo neque error repudiandae fuga? Ipsa laudantium molestias eos</div>
 
 
     </section>
-    return <div>PropertyDetails</div>;
+    // return <div>PropertyDetails</div>;
 
 };
 export default PropertyDetails;

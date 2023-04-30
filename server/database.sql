@@ -30,7 +30,7 @@ CREATE TABLE property (
     p_address_city varchar(255) NOT NULL,
     p_address_state varchar(255) NOT NULL,
     user_id uuid REFERENCES users(user_id),
-    image_id integer REFERENCES image(image_id),
+    image_id uuid REFERENCES image(image_id),
     p_description text NOT NULL,
     p_type varchar(255) NOT NULL,
     p_bed integer NOT NULL,
@@ -42,13 +42,12 @@ CREATE TABLE property (
     p_listingType varchar(255) NOT NULL,
     p_availability_status boolean NOT NULL,
     created_at timestamp DEFAULT now(),
-    updated_at timestamp DEFAULT now(),
-    p_count integer NOT NULL 
+    updated_at timestamp DEFAULT now()
 );
 
 -- image table
 CREATE TABLE image (
-    image_id integer PRIMARY KEY,
+    image_id uuid PRIMARY KEY DEFAULT uuid_generate_v4(),
     frontal varchar(255) NOT NULL,
     bath varchar(255) NOT NULL,
     kitchen varchar(255) NOT NULL,
@@ -79,3 +78,20 @@ CREATE TRIGGER decrement_user_property_count
 AFTER DELETE ON property
 FOR EACH ROW
 EXECUTE FUNCTION update_user_property_count();
+
+
+-- insert into property (user_id, image_id, p_name, p_address_street_num, p_address_street_name, p_address_city, p_address_state, p_description, p_type, p_bed, p_bath, p_area_sq_ft, p_repair_quality, p_year, p_price, p_listingType, p_availability_status ) values ('435e64a8-f03a-4d3b-ab9e-77a3fc81f58f', 'a938e020-6341-44d6-8fb8-e630a6d85a72', 'Nice House', 100, 'Tokha', 'Kathmandu', 'Bagmati', 'Nicer Nice desc', 'House', 4,5,2000, 'Poor', 2000, 300, 'Rent', true);
+
+
+select
+first_name,
+last_name,
+p_name,
+p_description,
+frontal
+from property
+join users
+on property.user_id = users.user_id
+join image
+on property.image_id = image.image_id
+where property.user_id = '435e64a8-f03a-4d3b-ab9e-77a3fc81f58f';

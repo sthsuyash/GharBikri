@@ -9,13 +9,13 @@ import Testimonials from '../Layouts/homeMain/Testimonials'
 import Hero from "../Layouts/homeMain/Hero";
 import FeaturedProperty from "../Layouts/homeMain/FeaturedProperty";
 
-function Home({isAuthenticated}) {
+function Home() {
     return (
         <>
             <Header />
             <Hero />
             <Stats />
-            <FeaturedProperty isAuthenticated={isAuthenticated} />
+            <FeaturedProperty/>
             <Team />
             <Testimonials />
             <Featured />

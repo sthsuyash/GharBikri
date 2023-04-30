@@ -101,11 +101,10 @@ function AppRoutes() {
             <Route
                 path='/sell'
                 element={
-                    // isAuthenticated ? (<Sell />
-                    // ) : (
-                    //     <Navigate replace to="/login" />
-                    // )}
-                    <Sell />}
+                    isAuthenticated ? (<Sell />
+                    ) : (
+                        <Navigate replace to="/login" />
+                    )}
             />
 
 
