@@ -8,7 +8,7 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 export default function Sell() {
-    const fileInputRef = useRef(null);
+    // const fileInputRef = useRef(null);
 
     const [file, setFile] = useState({
         preview: "",
@@ -187,7 +187,10 @@ export default function Sell() {
                         p_availability_status: "",
                         p_frontal_image: ""
                     });
-                    window.location = "/dashboard";
+                    // wait for 2 seconds and then redirect to dashboard
+                    setTimeout(() => {
+                        window.location = "/dashboard";
+                    }, 2000);
                 }
                 else {
                     toastError("Property not added");
@@ -345,9 +348,9 @@ export default function Sell() {
                                                 Description
                                             </label>
                                             <div className="flex">
-                                                <input
+                                                <textarea
                                                     name="p_description"
-                                                    type="text"
+                                                    rows={6}
                                                     className="w-full mt-2 px-3 py-2 text-gray-500 bg-transparent outline-none focus:border-indigo-600 shadow-sm rounded-lg border-2 border-gray-200"
                                                     placeholder="This is a beautiful house with a pool and a garden."
                                                     value={p_description}

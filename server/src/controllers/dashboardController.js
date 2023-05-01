@@ -225,45 +225,6 @@ exports.getProperty = async (req, res) => {
     }
 }
 
-// get all properties in the database and send array of property objects for the home page
-// exclude the property of same user who is logged in
-// also add limit and offset for pagination
-exports.getAllProperties = async (req, res) => {
-    try {
-        const { limit, offset } = req.query;
-        const properties = await db.query(`
-        SELECT
-        p_id,
-        p_name,
-        p_address_street_num,
-        p_address_street_name,
-        p_address_city,
-        p_address_state,
-        p_bed,
-        p_bath,
-        p_area_sq_ft,
-        p_price,
-        p_listingType,
-        p_frontal_image
-        FROM property
-        JOIN users
-        ON property.user_id = users.user_id
-        WHERE property.user_id != $1
-        LIMIT $2 OFFSET $3`,
-            [req.user, limit, offset]
-        );
-        res.json(properties.rows);
-
-    } catch (error) {
-        res.status(500).json({
-            success: false,
-            message: error.message,
-        })
-        console.log(error.message);
-    }
-}
-
-
 // edit property with matching id if authorized
 exports.editProperty = async (req, res) => {
     try {
@@ -337,47 +298,16 @@ exports.editProperty = async (req, res) => {
     }
 }
 
-// get all properties by property type
-exports.getPropertiesByType = async (req, res) => {
-    try {
-        const properties = await db.query(`SELECT
-        p_id,
-        p_name,
-        p_address_street_num,
-        p_address_street_name,
-        p_address_city,
-        p_address_state,
-        p_bed,
-        p_bath,
-        p_area_sq_ft,
-        p_price,
-        p_listingType,
-        p_frontal_image
-        FROM property
-        WHERE p_listingType = $1`, [req.params.listingType]);
-        res.json(properties.rows);
-        // console.log(properties.rows);
-
-    } catch (error) {
-        res.status(500).json({
-            success: false,
-            message: error.message,
-        })
-        console.log(error);
-    }
-}
-
 // delete property with matching id if authorized
 exports.deleteProperty = async (req, res) => {
     try {
         const property = await db.query("SELECT p_frontal_image FROM property WHERE p_id = $1 AND user_id = $2", [req.params.id, req.user]);
 
+        // delete frontal image from the file system
+        fs.unlinkSync(`/client/src/assets/uploads/${property.rows[0].p_frontal_image}`);
+
+
         const deleteProperty = await db.query("DELETE FROM property WHERE p_id = $1 AND user_id = $2 RETURNING *", [req.params.id, req.user]);
-        // delete images from the file system
-        const images = await db.query("SELECT * FROM images WHERE p_id = $1", [req.params.id]);
-        images.rows.forEach(image => {
-            fs.unlinkSync(`./public/uploads/${image.image_name}`);
-        });
 
         res.json(deleteProperty.rows[0]);
 

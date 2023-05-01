@@ -5,12 +5,27 @@ const db = require('../db');
 // get all properties which have status of buy
 const getBuy = async (req, res) => {
     try {
-        const properties = await db.query(`SELECT p_id, p_name, p_address_street_num, p_address_street_name, 
-        p_address_city, p_address_state, user_id,p_description, p_type, p_bed, p_bath, p_area_sq_ft, p_repair_quality, 
-        p_year, p_price, p_listingtype, p_availability_status FROM property WHERE p_listingtype = 'Buy'`);
+        const properties = await db.query(`
+        SELECT 
+        p_id, 
+        p_name, 
+        p_address_street_num, 
+        p_address_street_name, 
+        p_address_city, 
+        p_address_state, 
+        user_id,
+        p_bed,
+        p_bath, 
+        p_area_sq_ft, 
+        p_price,
+        p_listingtype,
+        p_frontal_image
+        FROM property
+        WHERE p_listingtype = 'Buy'
+        `);
         res.status(200).json({ property: properties.rows });
     } catch (error) {
-        res.status(500).json({ error:error.message });
+        res.status(500).json({ error: error.message });
     }
 }
 
@@ -24,7 +39,7 @@ const getBuyFilter = async (req, res) => {
         WHERE p_listingtype = $1 AND p_price BETWEEN $2 AND $3 AND p_address_city = $4 AND p_type = $5`, ["Buy", price[0], price[1], city, type]);
         res.status(200).json({ property: properties.rows });
     } catch (error) {
-        res.status(500).json({ error:error.message });
+        res.status(500).json({ error: error.message });
     }
 }
 
@@ -38,7 +53,7 @@ const getBuyId = async (req, res) => {
          FROM property WHERE p_id = $1`, [id]);
         res.status(200).json({ property: properties.rows[0] });
     } catch (error) {
-        res.status(500).json({ error:error.message });
+        res.status(500).json({ error: error.message });
     }
 }
 

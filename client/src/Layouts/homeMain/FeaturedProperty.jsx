@@ -9,45 +9,45 @@ import { SERVER_URL } from "../../Config";
 
 
 function FeaturedProperty() {
-
     const [rentProperties, setRentProperties] = useState([]);
 
     const [buyProperties, setBuyProperties] = useState([]);
 
-    const getProperties = async (listingType) => {
+    const getRentProperties = async () => {
         try {
-            const limit = 3;
-            const page = 1;
-            const offset = (page - 1) * limit;
-            const res = await axios.get(`${SERVER_URL}/api/dashboard/get-all-properties/${listingType}`, {
-                params: {
-                    limit,
-                    offset
-                }
-            });
-            if (listingType === "Rent") {
-                setRentProperties(res.data);
-            } else {
-                setBuyProperties(res.data);
-            }
+            // send user parameter to backend to exclude properties posted by current logged in user if any user is logged in
+            const res = await axios.get(`${SERVER_URL}/api/properties/home/rent`);
+            setRentProperties(res.data.property);
         } catch (error) {
             console.log(error);
         }
     }
 
-    const shouldFetch = useRef(false); // to prevent infinite loop
+    const getBuyProperties = async () => {
+        try {
+            const res = await axios.get(`${SERVER_URL}/api/properties/home/buy`);
+            setBuyProperties(res.data.property);
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
+    const shouldFetch = useRef(true); // to prevent infinite loop
     useEffect(() => {
         if (!shouldFetch.current) {
-            shouldFetch.current = true; // set it to true first time component renders
-            getProperties("Rent");
-            getProperties("Buy");
+            shouldFetch.current = false; // set it to true first time component renders
         }
+        getRentProperties();
+        getBuyProperties();
     }, []);
+
 
 
 
     return (
         <>
+            {console.log(rentProperties)}
+            {console.log(buyProperties)}
             <div className="mx-auto max-w-full px-4 lg:px-24 md:px-8 md:flex-row flex lg:flex-row flex-wrap my-0 justify-normal">
                 <h2 className="text-6xl font-extrabold tracking-tight leading-none text-gray-900 md:text-5xl lg:text-7xl sm:mb-5 sm:mx-6">
                     Featured Properties

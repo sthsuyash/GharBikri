@@ -32,12 +32,6 @@ router.get('/get-user-properties', authorization, getUserProperties);
 // get property with matching id
 router.get('property/:id', getProperty);
 
-// get all properties of all users except the user who is logged in with pagination
-router.get('/get-all-properties/', getAllProperties);
-
-// get all properties by property type
-router.get('/get-all-properties/:listingType', getPropertiesByType);
-
 // edit property with matching id
 router.put('/property/:id', authorization, editProperty);
 
