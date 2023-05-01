@@ -26,6 +26,7 @@ function Dashboard() {
     user.created_at = new Date(user.created_at).toLocaleDateString();
     user.updated_at = new Date(user.updated_at).toLocaleDateString();
 
+    // load user who is logged in
     const loadUser = async () => {
         const result = await axios.get("http://localhost:3000/api/dashboard", {
             headers: { token: localStorage.token }
@@ -39,8 +40,9 @@ function Dashboard() {
         loadProperties();
     }, []);
 
+    // load properties of user who is logged in
     const loadProperties = async () => {
-        const result = await axios.get(`${SERVER_URL}/api/dashboard/userproperties`, {
+        const result = await axios.get(`${SERVER_URL}/api/dashboard/get-user-properties`, {
             headers: { token: localStorage.token }
         });
         // console.log(result.data);

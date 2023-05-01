@@ -1,12 +1,8 @@
 // this component takes properties data from backend and display it in the home page
 
 import axios from "axios";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import PropertyCard from "../../components/Card/propertyCard";
-import frontal1 from "../../assets/Images/mockData/1_frontal.jpg"
-import frontal2 from "../../assets/Images/mockData/2_frontal.jpg"
-import frontal3 from "../../assets/Images/mockData/3_frontal.jpg"
-import frontal4 from "../../assets/Images/mockData/4_frontal.jpg"
 import globe from "../../assets/Images/globe.png"
 import { Link } from "react-router-dom";
 import { SERVER_URL } from "../../Config";
@@ -14,45 +10,41 @@ import { SERVER_URL } from "../../Config";
 
 function FeaturedProperty() {
 
-    const [properties, setProperties] = useState([
-        {
-            p_id: 1,
-            p_name: "Property 1",
-            p_price: 1000000,
-            p_address_street_num: 123,
-            p_address_street_name: "Main St",
-            p_address_city: "San Jose",
-            p_address_state: "CA",
-            p_bed: 3,
-            p_bath: 2,
-            p_area_sq_ft: 2020,
-            p_frontal_image: frontal1,
-            p_listingType: "Buy"
-        },
-        {
-            p_id: 2,
-            p_name: "Property 2",
-            p_price: 2000,
-            p_address_street_num: 456,
-            p_address_street_name: "Main St",
-            p_address_city: "San Jose",
-            p_address_state: "CA",
-            p_bed: 4,
-            p_bath: 3,
-            p_area_sq_ft: 2000,
-            p_frontal_image: frontal2,
-            p_listingType: "Rent",
-        },
+    const [rentProperties, setRentProperties] = useState([]);
+
+    const [buyProperties, setBuyProperties] = useState([]);
+
+    const getProperties = async (listingType) => {
+        try {
+            const limit = 3;
+            const page = 1;
+            const offset = (page - 1) * limit;
+            const res = await axios.get(`${SERVER_URL}/api/dashboard/get-all-properties/${listingType}`, {
+                params: {
+                    limit,
+                    offset
+                }
+            });
+            if (listingType === "Rent") {
+                setRentProperties(res.data);
+            } else {
+                setBuyProperties(res.data);
+            }
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
+    const shouldFetch = useRef(false); // to prevent infinite loop
+    useEffect(() => {
+        if (!shouldFetch.current) {
+            shouldFetch.current = true; // set it to true first time component renders
+            getProperties("Rent");
+            getProperties("Buy");
+        }
+    }, []);
 
 
-    ]);
-
-    // use axios to get data from backend
-    // useEffect(() => {
-    //     axios.get(`${SERVER_URL}/api/properties`).then((res) => {
-    //         setProperties(res.data);
-    //     });
-    // }, []);
 
     return (
         <>
@@ -70,8 +62,9 @@ function FeaturedProperty() {
                         <span className="self-start lg:self-end text-gray-400"><Link to="/rent" className="transition-all hover:underline hover:text-blue-700">Explore all Rent</Link> &rarr;</span>
                     </div>
                     <div className="grid grid-cols-1 gap-x-16 gap-y-16 lg:grid-cols-3 justify-start md:grid-cols-2">
-                        {properties.map((property) => (
-                            property.p_listingType === "Rent" && <PropertyCard key={property.p_id} property={property} />
+                        {/* show all properties whose user_id is not equal to loggedin user  */}
+                        {rentProperties.map((property) => (
+                            <PropertyCard key={property.p_id} property={property} />
                         ))}
                     </div>
                 </div>
@@ -83,8 +76,8 @@ function FeaturedProperty() {
                         <span className="self-start lg:self-end text-gray-400"><Link to="/rent" className="transition-all hover:underline hover:text-blue-700">Explore all Buy</Link> &rarr;</span>
                     </div>
                     <div className="grid grid-cols-1 gap-x-16 gap-y-16 lg:grid-cols-3 justify-start md:grid-cols-2">
-                        {properties.map((property) => (
-                            property.p_listingType === "Buy" && <PropertyCard key={property.p_id} property={property} />
+                        {buyProperties.map((property) => (
+                            <PropertyCard key={property.p_id} property={property} />
                         ))}
                     </div>
                 </div>
