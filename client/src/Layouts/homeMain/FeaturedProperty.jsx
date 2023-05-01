@@ -46,8 +46,6 @@ function FeaturedProperty() {
 
     return (
         <>
-            {console.log(rentProperties)}
-            {console.log(buyProperties)}
             <div className="mx-auto max-w-full px-4 lg:px-24 md:px-8 md:flex-row flex lg:flex-row flex-wrap my-0 justify-normal">
                 <h2 className="text-6xl font-extrabold tracking-tight leading-none text-gray-900 md:text-5xl lg:text-7xl sm:mb-5 sm:mx-6">
                     Featured Properties
@@ -63,9 +61,15 @@ function FeaturedProperty() {
                     </div>
                     <div className="grid grid-cols-1 gap-x-16 gap-y-16 lg:grid-cols-3 justify-start md:grid-cols-2">
                         {/* show all properties whose user_id is not equal to loggedin user  */}
-                        {rentProperties.map((property) => (
-                            <PropertyCard key={property.p_id} property={property} />
-                        ))}
+                        {rentProperties ?
+                            rentProperties.map((property) => (
+                                <PropertyCard key={property.p_id} property={property} />
+                            ))
+                            :
+                            (
+                                <div className="text-center text-2xl font-bold text-gray-400">No properties found</div>
+                            )
+                        }
                     </div>
                 </div>
 
@@ -76,9 +80,14 @@ function FeaturedProperty() {
                         <span className="self-start lg:self-end text-gray-400"><Link to="/rent" className="transition-all hover:underline hover:text-blue-700">Explore all Buy</Link> &rarr;</span>
                     </div>
                     <div className="grid grid-cols-1 gap-x-16 gap-y-16 lg:grid-cols-3 justify-start md:grid-cols-2">
-                        {buyProperties.map((property) => (
-                            <PropertyCard key={property.p_id} property={property} />
-                        ))}
+                        {buyProperties ?
+                            buyProperties.map((property) => (
+                                <PropertyCard key={property.p_id} property={property} />
+                            ))
+                            : (
+                                <div className="text-center text-2xl font-bold text-gray-400">No properties found</div>
+                            )
+                        }
                     </div>
                 </div>
             </div>
