@@ -34,8 +34,8 @@ function Nav() {
     };
 
     return (
-        <header className="bg-white sticky top-0 z-10 shadow-lg">
-            <nav className="mx-auto flex max-w-full items-center justify-between py-6 lg:px-16 px-4 md:px-8" aria-label="Global">
+        <header className="bg-white sticky top-0 z-50 shadow-lg">
+            <nav className="mx-auto flex max-w-full items-center justify-between py-4 lg:px-16 px-4 md:px-8" aria-label="Global">
                 <div className="flex lg:flex-1">
                     <Link to="/" className="-m-1.5 p-1.5">
                         <span className="sr-only">GharBikri</span>

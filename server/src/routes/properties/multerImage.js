@@ -1,22 +1,9 @@
 const { Router } = require('express');
 const router = Router();
 
-const multipleUploads = require('../../controllers/multerImage')
+const uploadImage = require('../../controllers/multerImage');
 
-// upload image
-router.post('/', multipleUploads, (req, res) => {
-    try {
-        const files = req.files;
-        if (!files) {
-            const error = new Error('Please upload a file');
-            error.httpStatusCode = 400;
-            return next(error);
-        }
-        res.send(files);
-    } catch (error) {
-        console.log(error.message);
-    }
-});
+//upload the vehicle image in the post to the server
+router.route("/").post(uploadImage);
 
 module.exports = router;
-

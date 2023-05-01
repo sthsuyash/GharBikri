@@ -24,14 +24,22 @@ exports.getUser = async (req, res) => {
             success: false,
             message: error.message,
         })
+        console.log(error.message)
     }
 }
-
 
 // edit user with matching id if authorized
 exports.editUser = async (req, res) => {
     try {
-        const { first_name, last_name, user_email, phone_number, address_city, address_state } = req.body;
+        const {
+            first_name,
+            last_name,
+            user_email,
+            phone_number,
+            address_city,
+            address_state
+        } = req.body;
+
         // check if user email is already in use
         const email = await db.query("SELECT * FROM users WHERE user_email = $1", [user_email]);
         if (email.rows[0] && email.rows[0].user_id !== req.user) {
@@ -83,6 +91,11 @@ exports.deleteUser = async (req, res) => {
 
         // delete all properties and images of property associated with user
         properties.forEach(async (property) => {
+            // remove images from file system
+            const images = await db.query("SELECT p_frontal_image FROM property WHERE p_id = $1", [property.p_id]);
+            images.rows.forEach((image) => {
+                fs.unlinkSync(image.p_frontal_image);
+            });
             await db.query("DELETE FROM property WHERE p_id = $1", [property.p_id]);
         })
 
@@ -138,6 +151,7 @@ exports.changePassword = async (req, res) => {
 }
 
 // get all properties of user with matching id from params if authorized
+// This is for the dashboard to show property cards
 exports.getUserProperties = async (req, res) => {
     try {
         const properties = await db.query(`SELECT
@@ -152,31 +166,26 @@ exports.getUserProperties = async (req, res) => {
         p_area_sq_ft,
         p_price,
         p_listingType,
-        property.created_at,
-        property.updated_at,
         p_frontal_image
         FROM property
         JOIN users
         ON property.user_id = users.user_id
-        JOIN image
-        ON property.image_id = image.image_id
         WHERE property.user_id = $1`,
             [req.user]
         );
         res.json(properties.rows);
-        // console.log(properties.rows);
 
     } catch (error) {
         res.status(500).json({
             success: false,
             message: error.message,
         })
-        // console.log(error);
+        console.log(error.message);
     }
 }
 
-
 // get property with matching id
+// This is for the property expanded view
 exports.getProperty = async (req, res) => {
     try {
         const property = await db.query(`
@@ -195,19 +204,14 @@ exports.getProperty = async (req, res) => {
         p_year,
         p_price,
         p_listingType,
+        p_frontal_image,
         p_availability_status,
         created_at,
         updated_at,
-        frontal,
-        kitchen,
-        living,
-        bath
         FROM property 
         JOIN users 
         ON property.user_id = users.user_id
-        JOIN images
-        ON property.image_id = image.image_id 
-        WHERE property.user_id = $1 AND property.property_id = $2`,
+        WHERE property.user_id = $1 AND property.p_id = $2`,
             [req.user, req.params.id]
         );
         res.json(property.rows[0]);
@@ -217,52 +221,48 @@ exports.getProperty = async (req, res) => {
             success: false,
             message: error.message,
         })
+        console.log(error.message)
     }
 }
 
-// get properties with matching id for all users
+// get all properties in the database and send array of property objects for the home page
+// exclude the property of same user who is logged in
+// also add limit and offset for pagination
 exports.getAllProperties = async (req, res) => {
     try {
+        const { limit, offset } = req.query;
         const properties = await db.query(`
         SELECT
+        p_id,
         p_name,
         p_address_street_num,
         p_address_street_name,
         p_address_city,
         p_address_state,
-        p_description,
-        p_type,
         p_bed,
         p_bath,
         p_area_sq_ft,
-        p_repair_quality,
-        p_year,
         p_price,
         p_listingType,
-        p_availability_status,
-        created_at,
-        updated_at,
-        frontal,
-        kitchen,
-        living,
-        bath
-        FROM property 
-        JOIN users 
+        p_frontal_image
+        FROM property
+        JOIN users
         ON property.user_id = users.user_id
-        JOIN images
-        ON property.image_id = images.image_id 
-        WHERE property.property_id = $1`,
-            [req.params.id]
+        WHERE property.user_id != $1
+        LIMIT $2 OFFSET $3`,
+            [req.user, limit, offset]
         );
-        res.json(properties.rows[0]);
+        res.json(properties.rows);
 
     } catch (error) {
         res.status(500).json({
             success: false,
             message: error.message,
         })
+        console.log(error.message);
     }
 }
+
 
 // edit property with matching id if authorized
 exports.editProperty = async (req, res) => {
@@ -283,10 +283,7 @@ exports.editProperty = async (req, res) => {
             p_price,
             p_listingType,
             p_availability_status,
-            frontal,
-            kitchen,
-            living,
-            bath
+            p_frontal_image
         } = req.body;
 
         const property = await db.query(`
@@ -306,13 +303,12 @@ exports.editProperty = async (req, res) => {
         p_price = $13, 
         p_listingType = $14, 
         p_availability_status = $15, 
-        frontal = $16, 
-        kitchen = $17, 
-        living = $18, 
-        bath = $19,
+        p_frontal_image = $16, 
         updated_at = CURRENT_TIMESTAMP
-        WHERE property_id = $20 AND user_id = $21 RETURNING *`,
-            [p_name,
+        WHERE p_id = $17 AND user_id = $18
+        RETURNING *`,
+            [
+                p_name,
                 p_address_street_num,
                 p_address_street_name,
                 p_address_city,
@@ -327,14 +323,12 @@ exports.editProperty = async (req, res) => {
                 p_price,
                 p_listingType,
                 p_availability_status,
-                frontal,
-                kitchen,
-                living,
-                bath,
-                req.params.id, req.user]
+                p_frontal_image,
+                req.params.id,
+                req.user
+            ]
         );
         res.json(property.rows[0]);
-
     } catch (error) {
         res.status(500).json({
             success: false,
@@ -343,16 +337,55 @@ exports.editProperty = async (req, res) => {
     }
 }
 
-// delete property with matching id if authorized
-exports.deleteProperty = async (req, res) => {
+// get all properties by property type
+exports.getPropertiesByType = async (req, res) => {
     try {
-        const property = await db.query("DELETE FROM property WHERE property_id = $1 AND user_id = $2 RETURNING *", [req.params.id, req.user]);
-        res.json(property.rows[0]);
+        const properties = await db.query(`SELECT
+        p_id,
+        p_name,
+        p_address_street_num,
+        p_address_street_name,
+        p_address_city,
+        p_address_state,
+        p_bed,
+        p_bath,
+        p_area_sq_ft,
+        p_price,
+        p_listingType,
+        p_frontal_image
+        FROM property
+        WHERE p_listingType = $1`, [req.params.listingType]);
+        res.json(properties.rows);
+        // console.log(properties.rows);
 
     } catch (error) {
         res.status(500).json({
             success: false,
             message: error.message,
         })
+        console.log(error);
+    }
+}
+
+// delete property with matching id if authorized
+exports.deleteProperty = async (req, res) => {
+    try {
+        const property = await db.query("SELECT p_frontal_image FROM property WHERE p_id = $1 AND user_id = $2", [req.params.id, req.user]);
+
+        const deleteProperty = await db.query("DELETE FROM property WHERE p_id = $1 AND user_id = $2 RETURNING *", [req.params.id, req.user]);
+        // delete images from the file system
+        const images = await db.query("SELECT * FROM images WHERE p_id = $1", [req.params.id]);
+        images.rows.forEach(image => {
+            fs.unlinkSync(`./public/uploads/${image.image_name}`);
+        });
+
+        res.json(deleteProperty.rows[0]);
+
+    } catch (error) {
+        res.status(500).json({
+            success: false,
+            message: error.message,
+        })
+        console.log(error);
     }
 }

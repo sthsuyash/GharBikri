@@ -9,7 +9,9 @@ const propertyCard = ({ property }) => {
 
     const deleteProperty = async () => {
         try {
-            await axios.delete(`${SERVER_URL}/api/dashboard/property/${property.p_id}`);
+            await axios.delete(`${SERVER_URL}/api/dashboard/property/${property.p_id}`, {
+                headers: { token: localStorage.token }
+            });
             // refresh page
             window.location.reload();
         } catch (error) {
@@ -24,7 +26,18 @@ const propertyCard = ({ property }) => {
                 {/* image div */}
                 <Link
                     to={`/property/${property.p_id}`} className="relative">
-                    <img className="h-56 w-full object-cover" src={property.p_frontal_image} alt="property image" />
+                    {/* if window location is sell then dont add relative src  */}
+                    {window.location.pathname === "/sell" ?
+                        <img
+                            src={property.p_frontal_image}
+                            alt={`${property.p_frontal_image}`}
+                            className="w-full h-56 object-cover"
+                        /> : <img
+                            src={`src/assets/uploads/${property.p_frontal_image}`}
+                            alt={`${property.p_frontal_image}`}
+                            className="w-full h-56 object-cover" />
+                    }
+
                     <div className="absolute inset-0 bg-black opacity-25"></div>
                 </Link>
 
@@ -33,7 +46,7 @@ const propertyCard = ({ property }) => {
                         <div className="flex justify-start">
                             <span className="text-blue-700 lg:text-3xl font-bold text-2xl">${property.p_price}</span>
                             {/* if property.listingType is rent then display per month  */}
-                            {property.p_listingType === "Rent" ? <span className="text-gray-500 text-lg font-semibold">&nbsp;/month</span> : null}
+                            {property.p_listingtype === "Rent" ? <span className="text-gray-500 text-lg font-semibold">&nbsp;/month</span> : null}
 
                         </div>
                     </div>

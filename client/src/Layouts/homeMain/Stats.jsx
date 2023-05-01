@@ -16,7 +16,7 @@ const Stats = () => {
                 <div className="mx-auto grid max-w-2xl grid-cols-1 gap-x-8 gap-y-16 sm:gap-y-20 lg:mx-0 lg:max-w-none lg:grid-cols-2">
                     <div className="relative">
 
-                        <div className="shadow-xl ring-4 ring-gray-400/50 rounded-lg  hidden lg:inline-block overflow-hidden">
+                        <div className="shadow-xl  rounded-lg  hidden lg:inline-block overflow-hidden">
                             <img
                                 src={home2}
                                 alt="House2"
@@ -24,7 +24,7 @@ const Stats = () => {
                             />
                         </div>
 
-                        <div className="absolute top-20 left-32 shadow-xl ring-4 ring-gray-400/50 rounded-lg hidden lg:inline-block overflow-hidden z-10">
+                        <div className="absolute top-20 left-32 shadow-xl  rounded-lg hidden lg:inline-block overflow-hidden z-10">
                             <img
                                 src={home1}
                                 alt="House1"
@@ -32,7 +32,7 @@ const Stats = () => {
                             />
                         </div>
 
-                        <div className="absolute top-12 left-72 shadow-2xl ring-4 h-80 ring-gray-400/50 z-0 rounded-lg hidden lg:inline-block overflow-hidden">
+                        <div className="absolute top-12 left-72 shadow-2xl h-80  z-0 rounded-lg hidden lg:inline-block overflow-hidden">
                             <img
                                 src={home3}
                                 alt="House3"
