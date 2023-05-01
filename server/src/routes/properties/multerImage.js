@@ -7,4 +7,3 @@ const uploadImage = require('../../controllers/multerImage');
 router.route("/").post(uploadImage);
 
 module.exports = router;
-
