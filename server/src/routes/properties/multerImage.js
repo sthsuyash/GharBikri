@@ -14,7 +14,7 @@ router.post('/', multipleUploads, (req, res) => {
         }
         res.send(files);
     } catch (error) {
-        console.log(error);
+        console.log(error.message);
     }
 });
 
