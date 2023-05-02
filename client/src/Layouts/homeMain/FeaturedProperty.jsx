@@ -9,6 +9,22 @@ import { SERVER_URL } from "../../Config";
 
 
 function FeaturedProperty() {
+    const [user, setUser] = useState({
+        user_id: "",
+    });
+
+    useEffect(() => {
+        loadUser();
+    }, []);
+
+    const loadUser = async () => {
+        const result = await axios.get("http://localhost:3000/api/dashboard", {
+            headers: { token: localStorage.token }
+        });
+        setUser(result.data);
+    };
+
+
     const [rentProperties, setRentProperties] = useState([]);
 
     const [buyProperties, setBuyProperties] = useState([]);
@@ -16,7 +32,11 @@ function FeaturedProperty() {
     const getRentProperties = async () => {
         try {
             // send user parameter to backend to exclude properties posted by current logged in user if any user is logged in
-            const res = await axios.get(`${SERVER_URL}/api/properties/home/rent`);
+            const res = await axios.get(`${SERVER_URL}/api/properties/home/rent`, {
+                params: {
+                    user_id: user.user_id
+                }
+            });
             setRentProperties(res.data.property);
         } catch (error) {
             console.log(error);
@@ -25,7 +45,11 @@ function FeaturedProperty() {
 
     const getBuyProperties = async () => {
         try {
-            const res = await axios.get(`${SERVER_URL}/api/properties/home/buy`);
+            const res = await axios.get(`${SERVER_URL}/api/properties/home/buy`, {
+                params: {
+                    user_id: user.user_id
+                }
+            });
             setBuyProperties(res.data.property);
         } catch (error) {
             console.log(error);
@@ -39,7 +63,7 @@ function FeaturedProperty() {
         }
         getRentProperties();
         getBuyProperties();
-    }, []);
+    }, [user]);
 
 
 
@@ -61,7 +85,7 @@ function FeaturedProperty() {
                     </div>
                     <div className="grid grid-cols-1 gap-x-16 gap-y-16 lg:grid-cols-3 justify-start md:grid-cols-2">
                         {/* show all properties whose user_id is not equal to loggedin user  */}
-                        {rentProperties ?
+                        {rentProperties.length > 0 ?
                             rentProperties.map((property) => (
                                 <PropertyCard key={property.p_id} property={property} />
                             ))
@@ -80,7 +104,7 @@ function FeaturedProperty() {
                         <span className="self-start lg:self-end text-gray-400"><Link to="/rent" className="transition-all hover:underline hover:text-blue-700">Explore all Buy</Link> &rarr;</span>
                     </div>
                     <div className="grid grid-cols-1 gap-x-16 gap-y-16 lg:grid-cols-3 justify-start md:grid-cols-2">
-                        {buyProperties ?
+                        {buyProperties.length > 0 ?
                             buyProperties.map((property) => (
                                 <PropertyCard key={property.p_id} property={property} />
                             ))
@@ -90,22 +114,6 @@ function FeaturedProperty() {
                         }
                     </div>
                 </div>
-            </div>
-
-            {/* div to display some centered text */}
-
-            <div className="flex flex-wrap justify-center text-center lg:my-16 my-8 max-w-3xl mx-auto">
-                <div className="p-4">
-                    <h2 className="text-6xl font-bold text-gray-900 mb-6">
-                        wherever you are, you will definitely get a place
-                    </h2>
-                    <p className="text-gray-400 font-semibold text-lg max-w-xl mx-auto">
-                        Wherever you want to live, don&apos;t hesitate to contact us. We will help you find the best place for you.
-                    </p>
-                </div>
-            </div>
-            <div className="w-full flex flex-wrap justify-center text-center lg:my-16 my-8 mx-auto">
-                <img src={globe} alt="globe" className="w-1/2" />
             </div>
         </>
     );

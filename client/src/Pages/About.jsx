@@ -1,4 +1,5 @@
 import React from "react";
+import Team from "../Layouts/About/Team";
 
 const About = () => {
     return (
@@ -39,6 +40,7 @@ const About = () => {
                                             </p>
                                         </div>
                                     </div>
+                                    <Team />
                                     <div className="flex flex-col gap-4">
                                         <div className="flex flex-col gap-2">
                                             <h3 className="text-2xl font-bold text-gray-800 dark:text-gray-100">

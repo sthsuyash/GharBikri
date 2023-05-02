@@ -6,11 +6,11 @@ function Header() {
         <div className="bg-white">
 
             {/* main div */}
-            <div className="mx-auto max-w-full px-4 lg:px-16 md:px-8 md:flex-row flex-col flex lg:flex-row flex-wrap lg:my-16 my-10 justify-normal">
+            <div className="mx-auto max-w-full px-4 lg:px-16 md:px-8 md:flex-row flex-col flex lg:flex-row flex-wrap lg:my-12 my-6 justify-normal">
 
                 {/* left div */}
                 <div className="lg:w-2/4 md:w-2/4 self-center">
-                    <h1 className="text-6xl font-extrabold tracking-tight leading-none text-gray-900 lg:text-8xl sm:mb-5 lg:pr-20">Let&apos;s Find Your Comfort <span className="text-blue-500">House!</span></h1>
+                    <h1 className="text-6xl font-extrabold tracking- leading-none text-gray-900 lg:text-8xl sm:mb-5 lg:pr-20">Let&apos;s Find Your Comfort <span className="text-blue-500">House!</span></h1>
                 </div>
 
                 {/* right div */}
@@ -18,7 +18,7 @@ function Header() {
 
                     {/* first component of right div */}
                     <div className="space-y-1">
-                        <h2 className="capitalize text-gray-400 text-md lg:text-xl lg:my-2 my-5">Find comfort in the house with us, want to find a home? we are ready to help you wholeheartedly based on what you need</h2>
+                        <h2 className="capitalize text-gray-400 text-md lg:text-lg lg:my-2 my-5">Find comfort in the house with us, want to find a home? we are ready to help you wholeheartedly based on what you need</h2>
 
                         <Link
                             to="/about"

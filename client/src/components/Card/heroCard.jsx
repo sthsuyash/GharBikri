@@ -30,8 +30,8 @@ const HeroCard = () => {
 
     return (
         <form className="flex justify-center items-center" onSubmit={handleSubmit}>
-            <div className="w-full flex flex-col items-center">
-                <div className="md:w-[80%] max-w-[1300px] w-[100%] shadow-2xl">
+            <div className="w-full flex flex-col items-center ">
+                <div className="md:w-[80%] max-w-[1400px] w-[100%] shadow-2xl ">
                     <div className="bg-white p-10">
                         <div className="grid content-center md:grid-cols-2 xl:grid-cols-4 md:gap-5 ">
                             <div>
@@ -85,8 +85,11 @@ const HeroCard = () => {
                             </div>
                             <div className="flex flex-col sm:pt-[5]">
 
-                                <button className="bg-blue-700 px-10 py-4 text-white w-fit h-fit lg:self-end self-start lg:my-auto">
-                                    Search <span className="inline-flex "><ImSearch /></span>
+                                <button
+                                    className="transition-all bg-blue-600 px-10 py-4 border hover:border-slate-800 text-white w-fit h-fit lg:self-end self-start lg:my-auto hover:bg-white hover:text-blue-900 hover:font-extrabold hover:border-blue"
+                                    type="submit"
+                                >
+                                    Search <span className="inline-flex"><ImSearch /></span>
                                 </button>
                             </div>
                         </div>

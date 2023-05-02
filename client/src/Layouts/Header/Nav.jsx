@@ -34,15 +34,10 @@ function Nav() {
     };
 
     return (
-        <header className="bg-white sticky top-0 z-50 shadow-lg">
-            <nav className="mx-auto flex max-w-full items-center justify-between py-4 lg:px-16 px-4 md:px-8" aria-label="Global">
-                <div className="flex lg:flex-1">
-                    <Link to="/" className="-m-1.5 p-1.5">
-                        <span className="sr-only">GharBikri</span>
-                        <img className="h-10 w-auto" src={logo} alt="GharBikri" />
-                    </Link>
-                </div>
-                <div className="flex lg:hidden">
+        <header className="bg-white sticky top-0 z-50 shadow-neutral-300 shadow-sm">
+            <nav className="mx-auto flex max-w-full items-center justify-between py-4 lg:px-20 px-4 md:px-8" aria-label="Global">
+
+                <div className="flex lg:hidden ">
                     <button
                         type="button"
                         className="-m-2.5 inline-flex items-center justify-center rounded-md p-2.5 text-gray-700"
@@ -52,17 +47,26 @@ function Nav() {
                         <Bars3Icon className="h-6 w-6" aria-hidden="true" />
                     </button>
                 </div>
-                <Popover.Group className="hidden lg:flex lg:gap-x-12">
-                    <Link to="/rent" className={`transition-all text-2xl font-extrabold leading-6 text-gray-900  hover:text-blue-600 ${location.pathname === "/rent" ? "underline" : ""}`}>
+
+                <Popover.Group className="hidden lg:flex lg:gap-x-12 lg:flex-1">
+                    <Link to="/rent" className={`transition-all text-xl font-extrabold leading-6 text-gray-900  hover:text-blue-600 ${location.pathname === "/rent" ? "underline" : ""}`}>
                         Rent
                     </Link>
-                    <Link to="/buy" className={`transition-all text-2xl font-bold leading-6 text-gray-900  hover:text-blue-600 ${location.pathname === "/buy" ? "underline" : ""}`}>
+                    <Link to="/buy" className={`transition-all text-xl font-bold leading-6 text-gray-900  hover:text-blue-600 ${location.pathname === "/buy" ? "underline" : ""}`}>
                         Buy
                     </Link>
-                    <Link to="/sell" className={`transition-all text-2xl font-bold leading-6 text-gray-900  hover:text-blue-600 ${location.pathname === "/sell" ? "underline" : ""}`}>
+                    <Link to="/sell" className={`transition-all text-xl font-bold leading-6 text-gray-900  hover:text-blue-600 ${location.pathname === "/sell" ? "underline" : ""}`}>
                         Sell
                     </Link>
                 </Popover.Group>
+
+                <div className="flex lg:flex-2">
+                    <Link to="/" className="-m-1.5 p-1.5">
+                        <span className="sr-only">GharBikri</span>
+                        <img className="h-12 w-auto" src={logo} alt="GharBikri" />
+                    </Link>
+                </div>
+
 
                 {/* check if logged in or not, if logged in then render logout button, else render login and register  */}
                 {localStorage.getItem("token") ? (
@@ -79,6 +83,7 @@ function Nav() {
                                     <li className="hover:underline">
                                         <a href="/favourites"><FcLike />Favourites</a>
                                     </li>
+                                    <hr className="my-2" />
                                     <li className="hover:underline flex flex-row">
                                         <Link to="/">
                                             <FcUnlock />
@@ -99,28 +104,19 @@ function Nav() {
                     </div>
                 ) : (
                     <div className="hidden lg:flex lg:flex-1 lg:justify-end ">
-                        <div className="relative inline-block text-left pr-5">
-                            <Link to="/login"
-                                className="text-blue-600 inline-flex justify-center w-full px-4 py-3 text-md font-medium hover:text-gray-950 hover:font-bold hover:underline">
-                                Login
-                            </Link>
-                        </div>
-
                         <div className="relative inline-block text-left ">
-                            <Link to="/register">
+                            <Link to="/login">
                                 <button
                                     type="button"
-                                    className="transition-all inline-flex justify-center w-full border border-gray-300 shadow-sm px-4 py-3 text-md font-medium text-gray-50 hover:bg-gray-50 hover:text-blue-600  bg-blue-600 hover:font-bold"
+                                    className="transition-all font-bold justify-center shadow-sm text-lg  text-gray-700  hover:text-blue-600  hover:underline"
                                     id="options-menu"
                                     aria-haspopup="true"
                                     aria-expanded="true"
                                 >
-                                    Register Now
+                                    Sign in
                                 </button>
                             </Link>
-
                         </div>
-
                     </div>
                 )}
             </nav>
@@ -173,35 +169,39 @@ function Nav() {
                                 </a>
 
                             </div>
-                            <div className="py-6">
-                                <a
-                                    href="/dashboard"
-                                    className="-mx-3 block rounded-lg px-3 py-2.5 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
-                                >
-                                    Profile
-                                </a>
-                                <a
-                                    href="/settings"
-                                    className="-mx-3 block rounded-lg px-3 py-2.5 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
-                                >
-                                    Settings
-                                </a>
-                            </div>
-                            <div className="py-6">
-                                <a
-                                    href="/login"
-                                    className="-mx-3 block rounded-lg px-3 py-2.5 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
-                                >
-                                    Login
-                                </a>
-                                <a
-                                    href="/register"
-                                    className="-mx-3 block rounded-lg px-3 py-2.5 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
-                                >
-                                    Register
-                                </a>
+                            {localStorage.getItem("token") ? (
+                                <div className="py-6">
+                                    <a
+                                        href="/dashboard"
+                                        className="flex flex-row gap-x-1 items-center -mx-3 rounded-lg px-3 py-2.5 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
+                                    >
+                                        <FcSettings />Profile
+                                    </a>
+                                    <a
+                                        href="/favourites"
+                                        className="flex flex-row gap-x-1 items-center -mx-3 rounded-lg px-3 py-2.5 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
+                                    >
+                                        <FcLike />Favourites
+                                    </a>
+                                    <hr className="my-2" />
+                                    <button
+                                        onClick={(e) => { logout(e) }}
 
-                            </div>
+                                        className="flex flex-row gap-x-1 items-center -mx-3 rounded-lg px-3 py-2.5 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
+                                    >
+                                        <FcUnlock />Logout
+                                    </button>
+                                </div>
+                            ) : (
+                                <div className="py-6">
+                                    <a
+                                        href="/login"
+                                        className="-mx-3 block rounded-lg px-3 py-2.5 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
+                                    >
+                                        Sign in
+                                    </a>
+                                </div>
+                            )}
                         </div>
                     </div>
                 </Dialog.Panel>

@@ -70,18 +70,18 @@ function LoginPage({ setAuth }) {
     };
 
     return (
-        <main className="w-full flex px-10">
+        <main className="w-full flex">
             <style
                 dangerouslySetInnerHTML={{
                     __html:
                         "@import url('https://cdnjs.cloudflare.com/ajax/libs/MaterialDesign-Webfont/5.3.45/css/materialdesignicons.min.css')"
                 }}
             />
-            <div className="relative flex-1 hidden items-center justify-center bg-white lg:flex h-screen">
+            <div className="relative flex-1 hidden items-center justify-center bg-white lg:flex h-screen lg:-mt-20 max-h-[2000px]">
                 <div className="relative z-10 w-full max-w-md">
                     <div className=" mt-16 space-y-3">
-                        <h3 className="text-5xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-teal-500 to-gray-900">Welcome Back!</h3>
-                        <p className="text-lg text-transparent bg-clip-text bg-gradient-to-r from-white to-amber-950">
+                        <h3 className="text-5xl font-bold text-teal-500">Welcome Back!</h3>
+                        <p className="text-lg text-transparent bg-clip-text bg-gradient-to-r from-white to-amber-100">
                             Login to your account to continue your house hunt.
                         </p>
                         <div className="flex items-center -space-x-2 overflow-hidden">
@@ -90,20 +90,20 @@ function LoginPage({ setAuth }) {
                             <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-0.3.5&q=80&fm=jpg&crop=faces&fit=crop&h=200&w=200&s=a72ca28288878f8404a795f39642a46f" className="w-10 h-10 rounded-full border-2 border-white" />
                             <img src="https://randomuser.me/api/portraits/men/86.jpg" className="w-10 h-10 rounded-full border-2 border-white" />
                             <img src="https://images.unsplash.com/photo-1510227272981-87123e259b17?ixlib=rb-0.3.5&q=80&fm=jpg&crop=faces&fit=crop&h=200&w=200&s=3759e09a5b9fbe53088b23c615b6312e" className="w-10 h-10 rounded-full border-2 border-white" />
-                            <p className="text-md font-semibold text-transparent bg-clip-text bg-gradient-to-r from-blue-600  to-gray-950 translate-x-5">
+                            <p className="text-md font-semibold text-transparent bg-clip-text bg-gradient-to-r from-blue-200  to-blue-100 translate-x-5">
                                 Welcome, one of our 5.000+ users
                             </p>
                         </div>
                     </div>
                 </div>
                 <div
-                    className="absolute inset-0 my-auto rounded-2xl"
+                    className="absolute inset-0 my-auto"
                     style={{
                         backgroundImage: `url(${loginImage})`,
                         backgroundSize: "cover",
                         backgroundPosition: "center",
                         backgroundRepeat: "no-repeat",
-                        filter: "blur(1.5px)",
+                        filter: "brightness(0.5) contrast(1)",
                     }}
                 />
             </div>
@@ -180,6 +180,13 @@ function LoginPage({ setAuth }) {
                             Login
                         </button>
                         <ToastContainer />
+
+                        {/* forgot password */}
+                        <div className="flex items-center justify-between">
+                            <Link to="/forgot-password" className="text-sm font-medium text-indigo-600 hover:text-indigo-500">
+                                Forgot Password?
+                            </Link>
+                        </div>
 
                         {/* continue with google */}
                         <div className="mt-5">
