@@ -4,9 +4,9 @@ const { getRentHome, getBuyHome } = require('../../controllers/homePropertyContr
 const router = Router();
 
 // get any 3 random properties which have status of rent which is not posted by current logged in user
-router.get('/rent', getRentHome);
+router.get('/rent', authMiddleware, getRentHome);
 
 // get any 3 random properties which have status of buy which is not posted by current logged in user
-router.get('/buy', getBuyHome);
+router.get('/buy', authMiddleware, getBuyHome);
 
 module.exports = router;
