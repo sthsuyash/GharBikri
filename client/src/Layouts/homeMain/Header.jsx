@@ -18,7 +18,7 @@ function Header() {
 
                     {/* first component of right div */}
                     <div className="space-y-1">
-                        <h2 className="capitalize text-gray-400 text-md lg:text-lg lg:my-2 my-5">Find comfort in the house with us, want to find a home? we are ready to help you wholeheartedly based on what you need</h2>
+                        <h2 className="capitalize text-gray-400 text-md lg:text-lg lg:my-2 my-5 mr-1">Find comfort in the house with us, want to find a home? we are ready to help you wholeheartedly based on what you need</h2>
 
                         <Link
                             to="/about"

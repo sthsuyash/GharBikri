@@ -2,6 +2,7 @@ import React from "react";
 import home1 from "../../assets/Images/home1.jpg";
 import home2 from "../../assets/Images/home2.jpg";
 import home3 from "../../assets/Images/home3.jpg";
+import { Link } from "react-router-dom";
 
 const stats = [
     { id: 1, name: 'Apartment Sale', value: '400+' },
@@ -47,13 +48,14 @@ const Stats = () => {
                             <p className="mt-10 text-lg  text-gray-400 mb-4 text-justify w-full lg:w-3/4">
                                 We are a company that provides a variety of services in the field of real estate, we are ready to help you find a house that suits your needs.
                             </p>
-                            <button type="button"
+                            <Link
+                                to="/about"
                                 className="transition-all inline-flex justify-center w-fit border border-gray-300 shadow-sm px-4 py-3 text-md font-medium text-gray-50 hover:bg-gray-50 hover:text-gray-950  bg-blue-600 hover:font-bold mb-10"
                                 id="options-menu"
                                 aria-haspopup="true"
                                 aria-expanded="true"
                             >Read More &rarr;
-                            </button>
+                            </Link>
 
                             <dl className="grid grid-cols-1 gap-x-8 gap-y-16  lg:grid-cols-3 py-10">
                                 {stats.map((stat) => (

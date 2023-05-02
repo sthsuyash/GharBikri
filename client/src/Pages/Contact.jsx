@@ -1,8 +1,13 @@
-import React from "react";
+import React, { useEffect } from "react";
 
 // TODO send mail to the mail address
 
 export default function Contact() {
+
+    useEffect(() => {
+        window.scrollTo(0, 0);
+        document.title = "Contact Us | Property Rent or Buy";
+    }, []);
 
     const contactMethods = {
         contact: "testmail@gmail.com",

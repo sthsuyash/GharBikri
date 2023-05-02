@@ -1,7 +1,13 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Team from "../Layouts/About/Team";
 
 const About = () => {
+
+    useEffect(() => {
+        window.scrollTo(0, 0);
+        document.title = "Who We Are | GharBikri";
+    }, []);
+
     return (
         <div>
             <div>

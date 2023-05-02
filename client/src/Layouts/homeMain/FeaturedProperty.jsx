@@ -3,7 +3,6 @@
 import axios from "axios";
 import React, { useEffect, useRef, useState } from "react";
 import PropertyCard from "../../components/Card/propertyCard";
-import globe from "../../assets/Images/globe.png"
 import { Link } from "react-router-dom";
 import { SERVER_URL } from "../../Config";
 
@@ -32,11 +31,8 @@ function FeaturedProperty() {
     const getRentProperties = async () => {
         try {
             // send user parameter to backend to exclude properties posted by current logged in user if any user is logged in
-            const res = await axios.get(`${SERVER_URL}/api/properties/home/rent`, {
-                params: {
-                    user_id: user.user_id
-                }
-            });
+            let user_id = user.user_id;
+            const res = await axios.get(`${SERVER_URL}/api/properties/home?user_id=${user_id}&listingtype=Rent`);
             setRentProperties(res.data.property);
         } catch (error) {
             console.log(error);
@@ -45,11 +41,9 @@ function FeaturedProperty() {
 
     const getBuyProperties = async () => {
         try {
-            const res = await axios.get(`${SERVER_URL}/api/properties/home/buy`, {
-                params: {
-                    user_id: user.user_id
-                }
-            });
+            // send user parameter to backend to exclude properties posted by current logged in user if any user is logged in
+            let user_id = user.user_id;
+            const res = await axios.get(`${SERVER_URL}/api/properties/home?user_id=${user_id}&listingtype=Buy`);
             setBuyProperties(res.data.property);
         } catch (error) {
             console.log(error);

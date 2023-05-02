@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 import PropertyCard from "../components/Card/propertyCard";
 import { SERVER_URL } from "../Config";
@@ -8,6 +8,11 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 export default function Sell() {
+
+    useEffect(() => {
+        document.title = "Sell Your Property | Property Host";
+    })
+
     // const fileInputRef = useRef(null);
 
     const [file, setFile] = useState({

@@ -11,6 +11,7 @@ import Profile from "../Header/Avatar";
 import axios from "axios";
 import { FcUnlock, FcSettings, FcLike } from "react-icons/fc";
 import { SERVER_URL } from "../../Config";
+import { FaEnvelope, FaInfoCircle, FaSignInAlt } from "react-icons/fa";
 
 function Nav() {
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -37,7 +38,7 @@ function Nav() {
         <header className="bg-white sticky top-0 z-50 shadow-neutral-300 shadow-sm">
             <nav className="mx-auto flex max-w-full items-center justify-between py-4 lg:px-20 px-4 md:px-8" aria-label="Global">
 
-                <div className="flex lg:hidden ">
+                <div className="flex lg:hidden">
                     <button
                         type="button"
                         className="-m-2.5 inline-flex items-center justify-center rounded-md p-2.5 text-gray-700"
@@ -67,10 +68,34 @@ function Nav() {
                     </Link>
                 </div>
 
+                <div className="hidden lg:flex-1 lg:flex lg:flex-row justify-end space-x-5 mr-5">
+                    <Link to="/about">
+                        <button
+                            type="button"
+                            className="flex flex-row items-center gap-1 transition-all font-medium justify-center shadow-sm text-lg  text-gray-700  hover:text-blue-600"
+                            id="options-menu"
+                            aria-haspopup="true"
+                            aria-expanded="true"
+                        >
+                            <FaInfoCircle />About
+                        </button>
+                    </Link>
 
+                    <Link to="/contact">
+                        <button
+                            type="button"
+                            className="flex flex-row items-center gap-1 transition-all font-medium justify-center shadow-sm text-lg  text-gray-700  hover:text-blue-600"
+                            id="options-menu"
+                            aria-haspopup="true"
+                            aria-expanded="true"
+                        >
+                            <FaEnvelope />Contact Us
+                        </button>
+                    </Link>
+                </div>
                 {/* check if logged in or not, if logged in then render logout button, else render login and register  */}
                 {localStorage.getItem("token") ? (
-                    <div className="hidden lg:flex lg:flex-1 lg:justify-end">
+                    <div>
                         <div className="relative inline-block text-left pr-5">
                             <div className="dropdown dropdown-end">
                                 <label tabIndex={0} className="cursor-pointer">
@@ -103,17 +128,17 @@ function Nav() {
                         </div>
                     </div>
                 ) : (
-                    <div className="hidden lg:flex lg:flex-1 lg:justify-end ">
-                        <div className="relative inline-block text-left ">
+                    <div>
+                        <div className="relative text-left flex flex-row">
                             <Link to="/login">
                                 <button
                                     type="button"
-                                    className="transition-all font-bold justify-center shadow-sm text-lg  text-gray-700  hover:text-blue-600  hover:underline"
+                                    className="flex flex-row items-center gap-1 transition-all font-medium justify-center shadow-sm text-lg  text-gray-700  hover:text-blue-600"
                                     id="options-menu"
                                     aria-haspopup="true"
                                     aria-expanded="true"
                                 >
-                                    Sign in
+                                    <FaSignInAlt />Sign in
                                 </button>
                             </Link>
                         </div>
