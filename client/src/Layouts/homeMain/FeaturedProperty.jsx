@@ -57,9 +57,7 @@ function FeaturedProperty() {
         }
         getRentProperties();
         getBuyProperties();
-    }, [user]);
-
-
+    }, []);
 
 
     return (
@@ -79,12 +77,11 @@ function FeaturedProperty() {
                     </div>
                     <div className="grid grid-cols-1 gap-x-16 gap-y-16 lg:grid-cols-3 justify-start md:grid-cols-2">
                         {/* show all properties whose user_id is not equal to loggedin user  */}
-                        {rentProperties.length > 0 ?
+                        {rentProperties ?
                             rentProperties.map((property) => (
                                 <PropertyCard key={property.p_id} property={property} />
-                            ))
-                            :
-                            (
+                            )
+                            ) : (
                                 <div className="text-center text-2xl font-bold text-gray-400">No properties found</div>
                             )
                         }
@@ -98,11 +95,11 @@ function FeaturedProperty() {
                         <span className="self-start lg:self-end text-gray-400"><Link to="/rent" className="transition-all hover:underline hover:text-blue-700">Explore all Buy</Link> &rarr;</span>
                     </div>
                     <div className="grid grid-cols-1 gap-x-16 gap-y-16 lg:grid-cols-3 justify-start md:grid-cols-2">
-                        {buyProperties.length > 0 ?
+                        {buyProperties ?
                             buyProperties.map((property) => (
                                 <PropertyCard key={property.p_id} property={property} />
-                            ))
-                            : (
+                            )
+                            ) : (
                                 <div className="text-center text-2xl font-bold text-gray-400">No properties found</div>
                             )
                         }
