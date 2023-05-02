@@ -6,11 +6,10 @@ const {
     deleteUser,
     changePassword,
     getUserProperties,
-    getAllProperties,
     getProperty,
     editProperty,
     deleteProperty,
-    getPropertiesByType } = require('../controllers/dashboardController');
+} = require('../controllers/dashboardController');
 const router = Router();
 
 // get user

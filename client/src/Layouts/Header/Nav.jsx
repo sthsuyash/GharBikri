@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import { Dialog, Popover } from "@headlessui/react";
 import {
@@ -34,8 +34,23 @@ function Nav() {
         }, 2000);
     };
 
+    const [user, setUser] = useState({
+        user_email: "",
+    });
+
+    const loadUser = async () => {
+        const result = await axios.get(`${SERVER_URL}/api/dashboard`, {
+            headers: { token: localStorage.token },
+        });
+        setUser(result.data);
+    };
+
+    useEffect(() => {
+        loadUser();
+    }, []);
+
     return (
-        <header className="bg-white sticky top-0 z-50 shadow-neutral-300 shadow-sm">
+        <header className="bg-white sticky top-0 z-10 shadow-neutral-300 shadow-sm">
             <nav className="mx-auto flex max-w-full items-center justify-between py-4 lg:px-20 px-4 md:px-8" aria-label="Global">
 
                 <div className="flex lg:hidden">
@@ -64,7 +79,7 @@ function Nav() {
                 <div className="flex lg:flex-2">
                     <Link to="/" className="-m-1.5 p-1.5">
                         <span className="sr-only">GharBikri</span>
-                        <img className="h-12 w-auto" src={logo} alt="GharBikri" />
+                        <img className="h-10 w-auto" src={logo} alt="GharBikri" />
                     </Link>
                 </div>
 
@@ -95,20 +110,26 @@ function Nav() {
                 </div>
                 {/* check if logged in or not, if logged in then render logout button, else render login and register  */}
                 {localStorage.getItem("token") ? (
-                    <div>
+                    <div className="hidden lg:flex">
                         <div className="relative inline-block text-left pr-5">
                             <div className="dropdown dropdown-end">
                                 <label tabIndex={0} className="cursor-pointer">
                                     <Profile textSizeRatio={2.5} classname={"rounded-full"} size={45} />
                                 </label>
-                                <ul tabIndex={0} className="transition-all dropdown-content menu py-2 px-2 border shadow-lg rounded-lg bg-white">
+                                {/* show signed in as values */}
+                                <ul tabIndex={0} className="transition-all dropdown-content menu py-2 px-4 border shadow-lg rounded-lg bg-white">
+                                    <li className="text-sm text-gray-700 cursor-default">
+                                        <p className="text-sm">Signed in as</p>
+                                        <p className="font-semibold -mt-4">{user.user_email}</p>
+                                    </li>
+                                    <hr className="" />
                                     <li className="hover:underline flex flex-row">
                                         <a href="/dashboard"><FcSettings />Profile</a>
                                     </li>
                                     <li className="hover:underline">
                                         <a href="/favourites"><FcLike />Favourites</a>
                                     </li>
-                                    <hr className="my-2" />
+                                    <hr className="" />
                                     <li className="hover:underline flex flex-row">
                                         <Link to="/">
                                             <FcUnlock />
@@ -149,7 +170,7 @@ function Nav() {
             {/* for small screen */}
 
             <Dialog as="div" className="lg:hidden" open={mobileMenuOpen} onClose={setMobileMenuOpen}>
-                <div className="fixed inset-0 z-10" />
+                <div className="fixed inset-0 z-auto" />
                 <Dialog.Panel className="fixed inset-y-0 right-0 z-10 w-full overflow-y-auto bg-white px-6 py-6 sm:max-w-sm sm:ring-1 sm:ring-gray-900/10">
                     <div className="flex items-center justify-between">
                         <Link to="/" className="-m-1.5 p-1.5">
