@@ -11,7 +11,7 @@ const About = () => {
     return (
         <div>
             <div>
-                <div className="xl:max-w-[1200px] max-w-[90%] mx-auto">
+                <div className="xl:max-w-[1700px] max-w-[90%] mx-auto">
                     <div className=" mx-auto">
                         <div className="grid gap-12">
                             <div>
@@ -46,69 +46,69 @@ const About = () => {
                                             </p>
                                         </div>
                                     </div>
-                                    <Team />
-                                    <div className="flex flex-col gap-4">
-                                        <div className="flex flex-col gap-2">
-                                            <h3 className="text-2xl font-bold text-gray-800 dark:text-gray-100">
-                                                Our Services
-                                            </h3>
-                                            <p className="text-gray-800 dark:text-gray-400">
-                                                We offer a wide range of services to help you buy, sell, or rent property. Here are just a few of the things we can do for you:
-                                            </p>
-                                            <div className="flex flex-col gap-2">
+                                </div>
+                            </div>
+                            <Team />
+                            <div className="flex flex-col gap-4">
+                                <div className="flex flex-col gap-2">
+                                    <h3 className="text-2xl font-bold text-gray-800 dark:text-gray-100">
+                                        Our Services
+                                    </h3>
+                                    <p className="text-gray-800 dark:text-gray-400">
+                                        We offer a wide range of services to help you buy, sell, or rent property. Here are just a few of the things we can do for you:
+                                    </p>
+                                    <div className="flex flex-col gap-2">
 
-                                                <h3 className="text-2xl font-bold text-gray-800 dark:text-gray-100">
-                                                    Buy:
-                                                </h3>
+                                        <h3 className="text-2xl font-bold text-gray-800 dark:text-gray-100">
+                                            Buy:
+                                        </h3>
 
-                                                <ul className="list-disc list-inside text-gray-800 dark:text-gray-400">
+                                        <ul className="list-disc list-inside text-gray-800 dark:text-gray-400">
 
-                                                    <li>Help you find the perfect property that meets your needs and budget</li>
-                                                    <li>Guide you through the buying process, from making an offer to closing the deal</li>
-                                                    <li>Assist with financing options and mortgage pre-approvals.</li>
-                                                </ul>
-                                                Sell:
+                                            <li>Help you find the perfect property that meets your needs and budget</li>
+                                            <li>Guide you through the buying process, from making an offer to closing the deal</li>
+                                            <li>Assist with financing options and mortgage pre-approvals.</li>
+                                        </ul>
+                                        Sell:
 
-                                                Help you price your property competitively and market it effectively to potential buyers
-                                                Handle all the paperwork and legal aspects of the transaction
-                                                Negotiate on your behalf to get you the best possible deal
-                                                Rent:
+                                        Help you price your property competitively and market it effectively to potential buyers
+                                        Handle all the paperwork and legal aspects of the transaction
+                                        Negotiate on your behalf to get you the best possible deal
+                                        Rent:
 
-                                                Help you find the perfect rental property that meets your needs and budget
-                                                Handle all the paperwork and legal aspects of the rental agreement
-                                                Manage your rental property portfolio, including finding tenants, collecting rent, and handling maintenance requests
-                                            </div>
-                                            Why Choose Us?
-                                            With so many real estate companies out there, why should you choose GharBikri? Here are just a few reasons:
-
-                                            Expertise:
-                                            Our team of real estate professionals has years of experience and a deep understanding of the local market. We can help you navigate the complex real estate landscape and make informed decisions that are in your best interests.
-
-                                            Technology:
-                                            At GharBikri, we believe that technology should make your life easier. That's why we've invested in cutting-edge tools and software to streamline the real estate process and provide you with a seamless, hassle-free experience.
-
-                                            Customer Service:
-                                            We understand that buying, selling, or renting property can be stressful. That's why we're here to provide you with the best possible customer service every step of the way. We're always available to answer your questions, provide guidance, and help you make informed decisions.
-
-                                            Community:
-                                            We're not just a real estate company - we're part of the community. We're committed to giving back and making a positive impact in the areas we serve. When you work with us, you're not just getting a real estate agent - you're getting a partner who's invested in your success.
-
-                                            Contact Us
-                                            Ready to get started? Contact us today to learn more about our services and how we can help you achieve your real estate goals. Whether you're looking to buy, sell, or rent property, we're here to help you every step of the way. Thank you for choosing GharBikri!
-
-                                            Our commitment to excellence goes beyond just providing quality properties. We also strive to offer a personalized and professional experience for our clients. Whether you're looking to buy, sell, or rent a property, we're here to guide you every step of the way.
-
-                                            Our team of experienced and knowledgeable agents is dedicated to providing the best possible service to our clients. We understand that buying or selling a property can be a complex and overwhelming process, which is why we're here to make it as stress-free as possible. We'll work closely with you to understand your unique needs and preferences, and use our expertise to help you find the perfect property that meets your requirements.
-
-                                            At GharBikri, we believe in transparency and honesty in all our dealings. We understand the importance of clear communication, and we make sure that our clients are always kept informed throughout the process. Our goal is to establish long-term relationships with our clients by providing them with the best possible service and exceeding their expectations.
-
-                                            Our website is designed to be user-friendly and easy to navigate. We offer a wide range of properties for sale or rent, including apartments, houses, and commercial properties. Our listings are regularly updated to ensure that you have access to the latest and most accurate information.
-
-                                            In addition to our property listings, we also provide valuable resources and tools to help you make informed decisions. Our blog features informative articles on various aspects of real estate, and our mortgage calculator can help you estimate your monthly payments.
-
-                                            At GharBikri, we're committed to making your real estate journey a success. Whether you're a first-time buyer or an experienced investor, we're here to help you achieve your goals. Contact us today to learn more about how we can assist you in your real estate journey.
-                                        </div>
+                                        Help you find the perfect rental property that meets your needs and budget
+                                        Handle all the paperwork and legal aspects of the rental agreement
+                                        Manage your rental property portfolio, including finding tenants, collecting rent, and handling maintenance requests
                                     </div>
+                                    Why Choose Us?
+                                    With so many real estate companies out there, why should you choose GharBikri? Here are just a few reasons:
+
+                                    Expertise:
+                                    Our team of real estate professionals has years of experience and a deep understanding of the local market. We can help you navigate the complex real estate landscape and make informed decisions that are in your best interests.
+
+                                    Technology:
+                                    At GharBikri, we believe that technology should make your life easier. That's why we've invested in cutting-edge tools and software to streamline the real estate process and provide you with a seamless, hassle-free experience.
+
+                                    Customer Service:
+                                    We understand that buying, selling, or renting property can be stressful. That's why we're here to provide you with the best possible customer service every step of the way. We're always available to answer your questions, provide guidance, and help you make informed decisions.
+
+                                    Community:
+                                    We're not just a real estate company - we're part of the community. We're committed to giving back and making a positive impact in the areas we serve. When you work with us, you're not just getting a real estate agent - you're getting a partner who's invested in your success.
+
+                                    Contact Us
+                                    Ready to get started? Contact us today to learn more about our services and how we can help you achieve your real estate goals. Whether you're looking to buy, sell, or rent property, we're here to help you every step of the way. Thank you for choosing GharBikri!
+
+                                    Our commitment to excellence goes beyond just providing quality properties. We also strive to offer a personalized and professional experience for our clients. Whether you're looking to buy, sell, or rent a property, we're here to guide you every step of the way.
+
+                                    Our team of experienced and knowledgeable agents is dedicated to providing the best possible service to our clients. We understand that buying or selling a property can be a complex and overwhelming process, which is why we're here to make it as stress-free as possible. We'll work closely with you to understand your unique needs and preferences, and use our expertise to help you find the perfect property that meets your requirements.
+
+                                    At GharBikri, we believe in transparency and honesty in all our dealings. We understand the importance of clear communication, and we make sure that our clients are always kept informed throughout the process. Our goal is to establish long-term relationships with our clients by providing them with the best possible service and exceeding their expectations.
+
+                                    Our website is designed to be user-friendly and easy to navigate. We offer a wide range of properties for sale or rent, including apartments, houses, and commercial properties. Our listings are regularly updated to ensure that you have access to the latest and most accurate information.
+
+                                    In addition to our property listings, we also provide valuable resources and tools to help you make informed decisions. Our blog features informative articles on various aspects of real estate, and our mortgage calculator can help you estimate your monthly payments.
+
+                                    At GharBikri, we're committed to making your real estate journey a success. Whether you're a first-time buyer or an experienced investor, we're here to help you achieve your goals. Contact us today to learn more about how we can assist you in your real estate journey.
                                 </div>
                             </div>
                         </div>
