@@ -6,7 +6,6 @@ import { Link } from "react-router-dom";
 import { toastSuccess, toastError } from '../components/Toast'
 import { registerValidate } from '../Middleware/registerValidation';
 import { SERVER_URL } from '../Config';
-import registerImage from '../assets/Images/register/registerHome.jpg';
 
 const RegisterPage = ({ setAuth }) => {
     // Create a state variable called inputs and a function called setInputs
@@ -132,7 +131,7 @@ const RegisterPage = ({ setAuth }) => {
                 <div
                     className="absolute inset-0 my-auto -mt-10"
                     style={{
-                        backgroundImage: `url(${registerImage})`,
+                        backgroundImage: `url(${})`,
                         backgroundSize: "cover",
                         backgroundPosition: "center",
                         backgroundRepeat: "no-repeat",
