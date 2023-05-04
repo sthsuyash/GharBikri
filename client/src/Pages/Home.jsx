@@ -12,11 +12,10 @@ function Home() {
     return (
         <>
             <Header />
-            <Hero />
             <Stats />
-            <FeaturedProperty />
+            {/* <FeaturedProperty /> */}
             <Testimonials />
-            <Featured />
+            {/* <Featured /> */}
             <Newsletter />
         </>
     );

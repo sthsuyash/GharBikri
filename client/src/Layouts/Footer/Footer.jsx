@@ -3,12 +3,13 @@ import logo from "../../assets/Images/GharBikri-logo.png"
 
 const Footer = () => {
     return (
-        <>
-            <footer className="footer p-10 bg-white text-slate-600 mt-10">
+        <div className='mt-14 mb-2'>
+            <hr className="border-gray-200 shadow-lg" />
+            <footer className="footer py-4 bg-white text-slate-600 mt-10 max-w-[1280px] mx-auto px-6 lg:px-0 xl:px-0">
                 <div className="md:place-self-center md:justify-self-center ">
 
                     <div className="grid grid-flow-col gap-4">
-                        <div className="flex flex-col mb-10 md:mb-5 max-w-sm">
+                        <div className="flex flex-col mb-10 md:mb-5 max-w-lg">
                             <a href="/" className="mb-10 md:mb-5">
                                 <img src={logo} className="h-10" alt="Gharbikri Logo" />
                             </a>
@@ -42,7 +43,7 @@ const Footer = () => {
                     <a className="link link-hover" href='https://www.google.com/maps/place/Bagmati'>Bagmati, Nepal</a>
                 </div>
             </footer>
-            <footer className="footer px-10 py-4 border-t bg-white text-slate-500">
+            <footer className="footer py-4 bg-white text-slate-500">
                 <hr className=" border-gray-400" />
                 <div className="flex flex-col items-center justify-between">
                     <span className="text-sm text-gray-500 sm:text-center dark:text-gray-400">© {new Date().getFullYear()} <a href="/" className="hover:underline">GharBikri</a>™. All Rights Reserved.
@@ -67,7 +68,7 @@ const Footer = () => {
                     </div>
                 </div>
             </footer>
-        </>
+        </div>
     )
 }
 

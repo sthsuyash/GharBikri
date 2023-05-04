@@ -1,103 +1,142 @@
-import React from "react";
-import { HiOutlineLocationMarker } from "react-icons/hi";
-import { ImPriceTags } from "react-icons/im";
-import { BsHousesFill } from "react-icons/bs";
-import { ImSearch } from "react-icons/im";
+import React, { useState } from "react";
+import { AiFillCar } from "react-icons/ai";
+import { RiCalendarEventFill, RiMotorbikeFill } from "react-icons/ri";
 import { Link } from "react-router-dom";
+import { MdOutlineLocationOn, MdOutlineAttachMoney } from "react-icons/md";
+import { TbHomeSearch } from "react-icons/tb";
+import axios from "axios";
 
 const HeroCard = () => {
+    const [data, setData] = useState({
+        location: "",
+        propertyType: "House",
+        listingType: "Rent",
+        minPrice: "",
+        maxPrice: "",
+    });
 
-    const [location, setLocation] = React.useState("");
-    const [minPrice, setMinPrice] = React.useState();
-    const [maxPrice, setMaxPrice] = React.useState();
-    const [propertyType, setPropertyType] = React.useState("1")
+    const [searchData, setSearchData] = useState([]);
 
-    // on submitting the form, the page is routed to rent page filtered by the user's input
-    const handleSubmit = (e) => {
-        e.preventDefault();
-
-
-        // if the user has not entered any value in the fields then all the properties are displayed
-        // else the user's input is used
-
-        if (location === "" && minPrice === "" && maxPrice === "" && propertyType === "") {
-            <Link to="/rent" />
+    const searchProperty = async () => {
+        try {
+            const response = await axios.get(
+                `http://localhost:5000/search/searchVehicle`,
+                { params: data }
+            );
+            setSearchData(response.data);
+        } catch (error) {
+            console.log(error);
         }
-        else {
-            window.location = `/rent?location=${location}&minPrice=${minPrice}&maxPrice=${maxPrice}&propertyType=${propertyType}`;
-        }
-    }
+    };
+
+    // console.log(searchData);
+
+    // console.log(data);
+
+    const handleChange = (e) => {
+        const { name, value } = e.target;
+        setData((prevData) => ({ ...prevData, [name]: value }));
+    };
 
     return (
-        <form className="flex justify-center items-center" onSubmit={handleSubmit}>
-            <div className="w-full flex flex-col items-center ">
-                <div className="md:w-[80%] max-w-[1400px] w-[100%] shadow-2xl ">
-                    <div className="bg-white p-10">
-                        <div className="grid content-center md:grid-cols-2 xl:grid-cols-4 md:gap-5 ">
-                            <div>
-                                <label className="text-gray-500"><span className="inline-flex"><HiOutlineLocationMarker /></span> Preferred Location</label>
-                                <input
-                                    type="text"
-                                    placeholder="Kathmandu"
-                                    className="w-full border-2 border-gray-300 bg-white p-2 mb-4"
-                                    name="location"
-                                    value={location}
-                                    onChange={(e) => setLocation(e.target.value)}
-                                />
-                            </div>
+        <div className="">
+            <div className="w-full flex h-auto flex-col justify-center items-center">
+                <div className="w-[100%] xl:max-w-[900px] xl:w-[100%] relative ">
 
+                    <div className="bg-white p-10 md:p-10 lg:p-10 shadow-lg md:rounded-3xl">
+                        <div className="grid content-center md:grid-cols-2 xl:grid-cols-4 gap-6 md:gap-5 ">
                             <div>
-                                <label className="text-gray-500"><span className="inline-flex"><ImPriceTags /></span> Avg Price</label>
-                                <div className="flex flex-row gap-1">
+                                <div className="flex gap-3 items-center">
+                                    <MdOutlineLocationOn className="text-3xl text-yellow-500" />
+                                    <label className="text-black text-xl font-bold">
+                                        {" "}
+                                        Location
+                                    </label>
+                                </div>
+                                <div>
                                     <input
-                                        type="number"
-                                        placeholder="min"
-                                        className="w-full border-2 text-gray-500 border-gray-300 bg-white p-2 mb-4"
-                                        name="minPrice"
-                                        value={minPrice}
-                                        onChange={(e) => setMinPrice(e.target.value)}
-                                    />
-                                    <input
-                                        type="number"
-                                        placeholder="max"
-                                        className="w-full border-2 text-gray-500 border-gray-300 bg-white p-2 mb-4"
-                                        name="maxPrice"
-                                        value={maxPrice}
-                                        onChange={(e) => setMaxPrice(e.target.value)}
+                                        type="text"
+                                        placeholder="Preferred Location"
+                                        className="w-full border-none text-gray-500 bg-white rounded-lg p-2  placeholder:text-gray-400 text-lg font-medium py focus:outline-none"
+                                        onChange={handleChange}
+                                        id="location"
+                                        name="location"
                                     />
                                 </div>
                             </div>
 
                             <div className="flex flex-col">
-                                <label className=" text-gray-500"><span className="inline-flex"><BsHousesFill /></span> Property type</label>
-                                {/* create a dropdown from the propertyType state  */}
+                                <div className="flex gap-3 items-center">
+                                    <TbHomeSearch className="text-3xl text-blue-600" />
+                                    <label className="text-black text-xl font-bold">
+                                        {" "}
+                                        Property Type
+                                    </label>
+                                </div>
                                 <select
-                                    className="w-full border-2 border-gray-300 bg-white p-2 mb-4"
+                                    id="hs-select-label"
+                                    onChange={handleChange}
+                                    className="w-full border-none text-gray-500 bg-white rounded-lg p-1  placeholder:text-gray-400 text-xl font-medium py focus:outline-none"
                                     name="propertyType"
-                                    value={propertyType}
-                                    onChange={(e) => setPropertyType(e.target.value)}
                                 >
-                                    <option value="1">House</option>
-                                    <option value="2">Apartment</option>
-                                    <option value="3">Villa</option>
-                                    <option value="4">Office</option>
+                                    <option>House</option>
+                                    <option>Apartment</option>
+                                    <option>Office</option>
+                                    <option>Land</option>
                                 </select>
                             </div>
-                            <div className="flex flex-col sm:pt-[5]">
 
-                                <button
-                                    className="transition-all bg-blue-600 px-10 py-4 border hover:border-slate-800 text-white w-fit h-fit lg:self-end self-start lg:my-auto hover:bg-white hover:text-blue-900 hover:font-extrabold hover:border-blue"
-                                    type="submit"
-                                >
-                                    Search <span className="inline-flex"><ImSearch /></span>
-                                </button>
+                            <div className="flex flex-col">
+                                <div className="flex gap-3 items-center">
+                                    <MdOutlineAttachMoney className="text-3xl text-green-500" />
+                                    <label className="text-black text-xl font-bold">Min Price</label>
+                                </div>
+                                <div>
+                                    <input
+                                        type="number"
+                                        placeholder="Enter Min Price"
+                                        className="w-full border-none text-gray-500 bg-white rounded-lg p-2  placeholder:text-gray-400 text-lg font-medium py focus:outline-none"
+                                        onChange={handleChange}
+                                        id="minPrice"
+                                        name="minPrice"
+                                    />
+                                </div>
+                            </div>
+
+                            <div className="flex flex-col">
+                                <div className="flex gap-3 items-center">
+                                    <MdOutlineAttachMoney className="text-3xl text-green-500" />
+                                    <label className="text-black text-xl font-bold">Max Price</label>
+                                </div>
+                                <div>
+                                    <input
+                                        type="number"
+                                        placeholder="Enter max Price"
+                                        className="w-full border-none text-gray-500 bg-white rounded-lg p-2  placeholder:text-gray-400 text-lg font-medium py focus:outline-none"
+                                        onChange={handleChange}
+                                        id="maxPrice"
+                                        name="maxPrice"
+                                    />
+                                </div>
                             </div>
                         </div>
+
                     </div>
 
+                    <div className="md:absolute md:right-[5%] flex items-center justify-center -translate-y-1/2">
+                        <Link
+                            to={`/search?location=${data.location}&propertyType=${data.propertyType}`}
+                            state={data}
+                            onClick={searchProperty}
+                        >
+                            <button className="bg-cyan-600 px-10 py-4 text-white text-xl font-bold rounded-lg hover:bg-cyan-700">
+                                Search
+                            </button>
+                        </Link>
+                    </div>
                 </div>
             </div>
-        </form>
+        </div >
     );
 };
 

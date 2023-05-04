@@ -2,30 +2,10 @@ html {
   scroll-behavior: smooth;
 }
 
-@import url('https://fonts.googleapis.com/css2?family=PT+Sans:ital,wght@0,400;0,700;1,400;1,700&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Josefin+Sans:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;1,100;1,200;1,300;1,400;1,500;1,600;1,700&family=Lato:ital,wght@0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap');
-// import heebo font
-@import url('https://fonts.googleapis.com/css2?family=Heebo:wght@100;300;400;500;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
 
-$font-family-josefin: 'Josefin Sans', sans-serif;
-$font-family-lato: 'Lato', sans-serif;
-$font-family-varela: 'Varela Round', sans-serif;
-$font-family-heebo: 'Heebo', sans-serif;
+$font-family-poppins: 'Poppins', sans-serif;
 
 #root {
-  font-family: $font-family-heebo;
-}
-
-.font-lato {
-  font-family: $font-family-lato;
-}
-
-.font-josefin {
-  font-family: $font-family-josefin;
-}
-
-.superscript {
-  font-size: 0.8em;
-  position: relative;
-  top: -0.5em;
+  font-family: $font-family-poppins;
 }

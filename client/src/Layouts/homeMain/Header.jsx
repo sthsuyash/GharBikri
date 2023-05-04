@@ -1,50 +1,68 @@
 import React from "react";
+import HeroCard from "../../components/Card/heroCard";
+import { useEffect, useState } from "react";
+import Animate from "react-smooth";
+import image from "../../assets/Images/main-pic.jpg"
 import { Link } from "react-router-dom";
 
-function Header() {
+// {/* <div className="max-w-[1440px] mx-auto lg:px-20 relative text-center lg:text-start px-20 py-4 overflow-hidden">
+//             {/* add image with text that says "Find your dream home"
+// <div className="overflow-hidden rounded-3xl">
+//     {/* add image 
+//     <div className="relative h-[500px] lg:h-[700px]">
+//         {/* <img src={image} alt="Main pic" className="w-full lg:h-auto rounded-3xl" /> 
+//         <img src={image} alt="main-pic" className="object-cover w-full h-full" />
+//     </div>
+//     <div className="absolute top-0 left-0 right-0 bottom-0 lg:w-full lg:h-full py-20 px-32">
+//         <h1 className="font-semibold text-gray-700 max-w-[500px] mb-4 lg:text-[96px] lg:leading-none md:text-xl md:leading-tight">Find your dream home</h1>
+//         <p className="text-xl mb-10 md:text-white text-gray-900">We help you find a house that suits your needs</p>
+//         <button className="rounded-3xl transition-all inline-flex justify-center w-fit shadow-sm px-4 py-3 text-md font-medium text-gray-50 hover:bg-cyan-700 hover:text-white  bg-cyan-600 border border-cyan-600 mb-10">
+//             <a href="#search">Search Now</a>
+//         </button>
+//     </div>
+// </div> * /}
+
+const Hero = () => {
     return (
-        <div className="bg-white">
-
-            {/* main div */}
-            <div className="mx-auto max-w-full px-4 lg:px-16 md:px-8 md:flex-row flex-col flex lg:flex-row flex-wrap lg:my-12 my-6 justify-normal">
-
-                {/* left div */}
-                <div className="lg:w-2/4 md:w-2/4 self-center">
-                    <h1 className="text-6xl font-extrabold tracking- leading-none text-gray-900 lg:text-8xl sm:mb-5 lg:pr-20">Let&apos;s Find Your Comfort <span className="text-blue-500">House!</span></h1>
+        <div className="max-w-[1440px] mx-auto relative text-center lg:text-start lg:px-20 py-4 overflow-hidden pb-20">
+            <div
+                className={`relative delay-500 transition-all h-fit text-black bg-white flex`}
+            >
+                <div
+                    className="absolute transition-all duration-1000 ease-in-out w-full h-full object-center lg:rounded-3xl"
+                    alt="background"
+                    style={{
+                        backgroundImage: `url(${image})`,
+                        backgroundSize: "cover",
+                        backgroundRepeat: "no-repeat",
+                        backgroundPosition: "center",
+                    }}
+                ></div>
+                <div
+                    className="self-start z-[2] w-full h-auto mx-auto"
+                >
+                    <div className="w-full mx-auto z-[0] py-[400px] md:py-[200px] mt-[-250px] md:mt-[-80px] lg:mt-[0px]">
+                        <Animate to="1" from="0" attributeName="opacity">
+                            <div className="px-20">
+                                <h1 className="md:text-5xl sm:text-5xl text-4xl font-semibold md:py-6 md:max-w-xl text-gray-700">
+                                    Find your dream home
+                                </h1>
+                                <p className="text-xl mb-10 md:text-black text-gray-900">
+                                    We help you find a house that suits your needs
+                                </p>
+                                <button className="rounded-3xl transition-all inline-flex justify-center w-fit shadow-sm px-4 py-3 text-md font-medium text-gray-50 hover:bg-cyan-700 hover:text-white  bg-cyan-600 border border-cyan-600 mb-10">
+                                    <Link to="/about">Learn More</Link>
+                                </button>
+                            </div>
+                        </Animate>
+                    </div>
                 </div>
-
-                {/* right div */}
-                <div className="flex flex-col lg:w-2/4 md:w-2/4 justify-start space-y-10">
-
-                    {/* first component of right div */}
-                    <div className="space-y-1">
-                        <h2 className="capitalize text-gray-400 text-md lg:text-lg lg:my-2 my-5 mr-1">Find comfort in the house with us, want to find a home? we are ready to help you wholeheartedly based on what you need</h2>
-
-                        <Link
-                            to="/about"
-                            type="button"
-                            className="transition-all inline-flex justify-center w-fit border border-gray-300 shadow-sm px-4 py-3 text-md font-medium text-gray-50 hover:bg-gray-50 hover:text-gray-950  bg-blue-600 hover:font-bold"
-                            id="options-menu"
-                            aria-haspopup="true"
-                            aria-expanded="true"
-                        >Read More &rarr;
-                        </Link>
-                    </div>
-
-                    {/* second component of right div */}
-                    <div className="flex items-center -space-x-2 overflow-hidden">
-                        <img src="https://api.uifaces.co/our-content/donated/xZ4wg2Xj.jpg" className="w-10 h-10 rounded-full border-2 border-white" />
-                        <img src="https://images.unsplash.com/photo-1510227272981-87123e259b17?ixlib=rb-0.3.5&q=80&fm=jpg&crop=faces&fit=crop&h=200&w=200&s=3759e09a5b9fbe53088b23c615b6312e" className="w-10 h-10 rounded-full border-2 border-white" />
-                        <img src="https://randomuser.me/api/portraits/men/65.jpg" className="w-10 h-10 rounded-full border-2 border-white" />
-                        <p className=" text-gray-500 text-md translate-x-5">
-                            5.000+ people have found their home with us
-                        </p>
-                    </div>
+                <div className="absolute z-[2] translate-y-[350%] w-full h-auto">
+                    <HeroCard />
                 </div>
             </div>
         </div>
     );
+};
 
-}
-
-export default Header;
+export default Hero;

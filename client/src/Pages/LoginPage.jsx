@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import axios from "axios";
@@ -9,6 +9,12 @@ import { SERVER_URL } from "../Config";
 import loginImage from "../assets/Images/login/homelogin.jpg";
 
 function LoginPage({ setAuth }) {
+
+    useEffect(() => {
+        document.title = "Login";
+        window.scrollTo(0, 0);
+    }, []);
+    
     // inputs state
     const [inputs, setInputs] = useState({
         user_email: "",
@@ -77,7 +83,7 @@ function LoginPage({ setAuth }) {
                         "@import url('https://cdnjs.cloudflare.com/ajax/libs/MaterialDesign-Webfont/5.3.45/css/materialdesignicons.min.css')"
                 }}
             />
-            <div className="relative flex-1 hidden items-center justify-center bg-white lg:flex h-screen lg:-mt-20 max-h-[2000px]">
+            <div className="relative flex-1 hidden items-center justify-center bg-white lg:flex h-screen lg:-mt-16 max-h-[2000px]">
                 <div className="relative z-10 w-full max-w-md">
                     <div className=" mt-16 space-y-3">
                         <h3 className="text-5xl font-bold text-teal-500">Welcome Back!</h3>
