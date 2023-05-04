@@ -3,7 +3,7 @@ import logo from "../../assets/Images/GharBikri-logo.png"
 
 const Footer = () => {
     return (
-        <div className='mt-14 mb-2'>
+        <div className='mb-2'>
             <hr className="border-gray-200 shadow-lg" />
             <footer className="footer py-4 bg-white text-slate-600 mt-10 max-w-[1280px] mx-auto px-6 lg:px-0 xl:px-0">
                 <div className="md:place-self-center md:justify-self-center ">

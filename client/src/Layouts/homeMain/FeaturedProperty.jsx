@@ -85,22 +85,27 @@ export default function FeaturedProperty() {
                         <div className="text-center text-2xl font-bold text-gray-400">No properties found</div>)
                     }
 
-                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-                        {buyProperties ?
-                            buyProperties.map((property) => (
-                                <PropertyCard key={property.p_id} property={property} />
-                            )
-                            ) : (
-                                <div className="text-center text-2xl font-bold text-gray-400">No properties found</div>
-                            )
-                        }
-                    </div>
+                    <h3 className="text-center lg:text-left text-3xl font-semibold mb-8">Buy</h3>
+                    {buyProperties ? (
+                        <>
+                            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-16 lg:mx-0 mx-8">
+                                {
+                                    buyProperties.map((property) => (
+                                        <PropertyCard key={property.p_id} property={property} />
+                                    ))
+                                }
+                            </div>
 
-                    <div className="mt-12 text-center outline-none block text-sm text-gray-600">
-                        <a className="h-10 rounded-3xl text-sm shadow-md bg-none p-4 hover:bg-black hover:text-white transition-all" href="">
-                            View all
-                        </a>
-                    </div>
+                            <div className="my-12 text-center outline-none block text-sm text-gray-600">
+                                <Link className="h-10 rounded-3xl text-sm shadow-md bg-none p-4 hover:bg-black hover:text-white transition-all" to="/buy">
+                                    View all
+                                </Link>
+                            </div>
+                        </>
+                    ) : (
+                        <div className="text-center text-2xl font-bold text-gray-400">No properties found</div>)
+                    }
+
                 </div>
             </div>
         </>

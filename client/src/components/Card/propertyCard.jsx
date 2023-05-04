@@ -85,7 +85,7 @@ const propertyCard = ({ property }) => {
                 src={`src/assets/uploads/${property.p_frontal_image}`}
                 alt={`${property.p_frontal_image}`} className="w-full h-[250px] object-cover" />
             <div className="p-4">
-                <div className="flex items-center justify-between">
+                <div className="flex items-center justify-between mb-2">
                     <div className="flex justify-start">
                         <span className="text-cyan-600 lg:text-3xl font-bold text-2xl">${property.p_price}</span>
                         {/* if property.listingType is rent then display per month  */}
@@ -94,8 +94,14 @@ const propertyCard = ({ property }) => {
                         }
                     </div>
                 </div>
-                <h3 className="text-xl font-semibold mb-2">{property.p_name}</h3>
-                <hr className="lg:mb-4 md:mb-4 mb-3" />
+                <Link
+                    to={`/property/${property.p_id}`}>
+                    <h3 className="text-2xl font-semibold">{property.p_name}</h3>
+                </Link>
+                <div className="flex items-center mb-3">
+                    <div className="text-gray-400 lg:text-md md:text-sm font-medium text-xs pt-1">{property.p_address_street_num} {property.p_address_street_name} • {property.p_address_city} • {property.p_address_state}</div>
+                </div>
+                <hr className="mb-3" />
                 <div className="lg:text-sm flex justify-between text-xs">
                     <span className="flex items-center">
                         <span className="text-cyan-700"><MdOutlineBed /></span>
@@ -111,8 +117,7 @@ const propertyCard = ({ property }) => {
                     </div>
                 </div>
             </div>
-        </div >
-
+        </div>
     )
 }
 

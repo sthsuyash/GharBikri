@@ -6,7 +6,6 @@ import { Link } from "react-router-dom";
 import { toastSuccess, toastError } from "../components/Toast";
 import { loginValidate } from "../Middleware/loginValidation";
 import { SERVER_URL } from "../Config";
-import loginImage from "../assets/Images/login/homelogin.jpg";
 
 function LoginPage({ setAuth }) {
 

@@ -3,11 +3,11 @@ import React from "react";
 export default function Error404() {
     return (
         <>
-            <div className="min-w-screen flex items-center p-5 lg:p-20 overflow-hidden relative">
+            <div className="min-w-screen flex items-center p-5 lg:p-20 overflow-hidden relative max-w-[1280px] mx-auto">
                 <div className="flex-1 min-w-full rounded-3xl bg-white shadow-xl p-10 lg:p-20 text-gray-800 relative md:flex items-center text-center md:text-left">
                     <div className="w-full md:w-1/2">
                         <div className="mb-10 md:mb-20 text-gray-400 font-light">
-                            <h1 className="font-black uppercase text-3xl lg:text-5xl text-sky-600 mb-10">
+                            <h1 className="font-black uppercase text-3xl lg:text-5xl text-cyan-600 mb-10">
                                 You seem to be lost!
                             </h1>
                             <p className="text-lg font-medium">The page you&apos;re looking for isn&apos;t available.</p>
