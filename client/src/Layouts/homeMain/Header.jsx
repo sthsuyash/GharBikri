@@ -24,44 +24,46 @@ import { Link } from "react-router-dom";
 
 const Hero = () => {
     return (
-        <div className="max-w-[1440px] mx-auto relative text-center lg:text-start lg:px-20 py-4 overflow-hidden pb-20">
-            <div
-                className={`relative delay-500 transition-all h-fit text-black bg-white flex`}
-            >
+        <>
+            <div className="max-w-[1440px] mx-auto relative text-center lg:text-start lg:px-20 py-4 overflow-hidden pb-20">
                 <div
-                    className="absolute transition-all duration-1000 ease-in-out w-full h-full object-center lg:rounded-3xl"
-                    alt="background"
-                    style={{
-                        backgroundImage: `url(${image})`,
-                        backgroundSize: "cover",
-                        backgroundRepeat: "no-repeat",
-                        backgroundPosition: "center",
-                    }}
-                ></div>
-                <div
-                    className="self-start z-[2] w-full h-auto mx-auto"
+                    className={`relative delay-500 transition-all h-fit text-black bg-white flex`}
                 >
-                    <div className="w-full mx-auto z-[0] py-[400px] md:py-[200px] mt-[-250px] md:mt-[-80px] lg:mt-[0px]">
-                        <Animate to="1" from="0" attributeName="opacity">
-                            <div className="px-20">
-                                <h1 className="md:text-5xl sm:text-5xl text-4xl font-semibold md:py-6 md:max-w-xl text-gray-700">
-                                    Find your dream home
-                                </h1>
-                                <p className="text-xl mb-10 md:text-black text-gray-900">
-                                    We help you find a house that suits your needs
-                                </p>
-                                <button className="rounded-3xl transition-all inline-flex justify-center w-fit shadow-sm px-4 py-3 text-md font-medium text-gray-50 hover:bg-cyan-700 hover:text-white  bg-cyan-600 border border-cyan-600 mb-10">
-                                    <Link to="/about">Learn More</Link>
-                                </button>
-                            </div>
-                        </Animate>
+                    <div
+                        className="absolute transition-all duration-1000 ease-in-out w-full h-full object-center lg:rounded-3xl"
+                        alt="background"
+                        style={{
+                            backgroundImage: `url(${image})`,
+                            backgroundSize: "cover",
+                            backgroundRepeat: "no-repeat",
+                            backgroundPosition: "center",
+                        }}
+                    ></div>
+                    <div
+                        className="self-start z-[2] w-full h-auto mx-auto"
+                    >
+                        <div className="w-full mx-auto z-[0] py-[400px] md:py-[200px] mt-[-350px] md:mt-[-80px] lg:mt-[0px]">
+                            <Animate to="1" from="0" attributeName="opacity">
+                                <div className="px-20">
+                                    <h1 className="md:text-5xl sm:text-5xl text-4xl font-semibold md:py-6 md:max-w-xl text-gray-700">
+                                        Find your dream home
+                                    </h1>
+                                    <p className="text-xl mb-10 text-cyan-800">
+                                        We help you find a house that suits your needs
+                                    </p>
+                                    <button className="rounded-3xl transition-all inline-flex justify-center w-fit shadow-sm px-4 py-3 text-md font-medium text-gray-50 hover:bg-cyan-700 hover:text-white  bg-cyan-600 border border-cyan-600 mb-10">
+                                        <Link to="/about">Learn More</Link>
+                                    </button>
+                                </div>
+                            </Animate>
+                        </div>
                     </div>
                 </div>
-                <div className="absolute z-[2] translate-y-[350%] w-full h-auto">
+                <div className="absolute z-[2] translate-y-[-80%] w-full h-auto md:translate-y-[-80%] lg:translate-y-[-80%] lg:translate-x-[-6%]">
                     <HeroCard />
                 </div>
             </div>
-        </div>
+        </>
     );
 };
 

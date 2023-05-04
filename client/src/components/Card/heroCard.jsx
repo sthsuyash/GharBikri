@@ -1,10 +1,9 @@
 import React, { useState } from "react";
-import { AiFillCar } from "react-icons/ai";
-import { RiCalendarEventFill, RiMotorbikeFill } from "react-icons/ri";
 import { Link } from "react-router-dom";
 import { MdOutlineLocationOn, MdOutlineAttachMoney } from "react-icons/md";
 import { TbHomeSearch } from "react-icons/tb";
 import axios from "axios";
+import { SERVER_URL } from "../../Config";
 
 const HeroCard = () => {
     const [data, setData] = useState({
@@ -19,8 +18,7 @@ const HeroCard = () => {
 
     const searchProperty = async () => {
         try {
-            const response = await axios.get(
-                `http://localhost:5000/search/searchVehicle`,
+            const response = await axios.get(`${SERVER_URL}/api/properties/search}`,
                 { params: data }
             );
             setSearchData(response.data);
@@ -41,9 +39,9 @@ const HeroCard = () => {
     return (
         <div className="">
             <div className="w-full flex h-auto flex-col justify-center items-center">
-                <div className="w-[100%] xl:max-w-[900px] xl:w-[100%] relative ">
+                <div className="w-[90%] xl:max-w-[1000px] xl:w-[90%] relative md:max-w-[900px]">
 
-                    <div className="bg-white p-10 md:p-10 lg:p-10 shadow-lg md:rounded-3xl">
+                    <div className="bg-white p-10 md:p-10 lg:p-10 shadow-lg rounded-3xl">
                         <div className="grid content-center md:grid-cols-2 xl:grid-cols-4 gap-6 md:gap-5 ">
                             <div>
                                 <div className="flex gap-3 items-center">

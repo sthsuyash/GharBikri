@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 import Team from "../Layouts/About/Team";
+import Featured from "../Layouts/homeMain/Featured";
 
 const About = () => {
 
@@ -91,6 +92,9 @@ const About = () => {
                                         </ul>
                                     </div>
 
+                                    <Featured />
+
+
                                     <h3 className="text-2xl font-bold text-gray-800 ">
                                         Why Choose Us?
                                     </h3>
@@ -102,35 +106,35 @@ const About = () => {
                                         Expertise:
                                     </h3>
                                     <p className="text-gray-800">
-                                    Our team of real estate professionals has years of experience and a deep understanding of the local market. We can help you navigate the complex real estate landscape and make informed decisions that are in your best interests.
+                                        Our team of real estate professionals has years of experience and a deep understanding of the local market. We can help you navigate the complex real estate landscape and make informed decisions that are in your best interests.
                                     </p>
 
                                     <h3 className="text-2xl font-bold text-gray-800 ">
                                         Technology:
                                     </h3>
                                     <p className="text-gray-800">
-                                    At GharBikri, we believe that technology should make your life easier. That's why we've invested in cutting-edge tools and software to streamline the real estate process and provide you with a seamless, hassle-free experience.
+                                        At GharBikri, we believe that technology should make your life easier. That's why we've invested in cutting-edge tools and software to streamline the real estate process and provide you with a seamless, hassle-free experience.
                                     </p>
 
                                     <h3 className="text-2xl font-bold text-gray-800 ">
                                         Customer Service:
                                     </h3>
                                     <p className="text-gray-800">
-                                    We understand that buying, selling, or renting property can be stressful. That's why we're here to provide you with the best possible customer service every step of the way. We're always available to answer your questions, provide guidance, and help you make informed decisions.
+                                        We understand that buying, selling, or renting property can be stressful. That's why we're here to provide you with the best possible customer service every step of the way. We're always available to answer your questions, provide guidance, and help you make informed decisions.
                                     </p>
 
                                     <h3 className="text-2xl font-bold text-gray-800 ">
                                         Community:
                                     </h3>
                                     <p className="text-gray-800">
-                                    We're not just a real estate company - we're part of the community. We're committed to giving back and making a positive impact in the areas we serve. When you work with us, you're not just getting a real estate agent - you're getting a partner who's invested in your success.
+                                        We're not just a real estate company - we're part of the community. We're committed to giving back and making a positive impact in the areas we serve. When you work with us, you're not just getting a real estate agent - you're getting a partner who's invested in your success.
                                     </p>
 
                                     <h3 className="text-2xl font-bold text-gray-800 ">
                                         Contact Us
                                     </h3>
                                     <p className="text-gray-800">
-                                    Ready to get started? Contact us today to learn more about our services and how we can help you achieve your real estate goals. Whether you're looking to buy, sell, or rent property, we're here to help you every step of the way. Thank you for choosing GharBikri!
+                                        Ready to get started? Contact us today to learn more about our services and how we can help you achieve your real estate goals. Whether you're looking to buy, sell, or rent property, we're here to help you every step of the way. Thank you for choosing GharBikri!
                                     </p>
                                     Our commitment to excellence goes beyond just providing quality properties. We also strive to offer a personalized and professional experience for our clients. Whether you're looking to buy, sell, or rent a property, we're here to guide you every step of the way.
 

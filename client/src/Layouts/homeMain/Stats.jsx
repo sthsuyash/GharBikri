@@ -13,7 +13,7 @@ const stats = [
 const Stats = () => {
     return (
         <>
-            <div className="my-20 max-w-[1280px] mx-auto px-10">
+            <div className="my-20 max-w-[1280px] mx-auto lg:px-10">
                 <div className="max-w-full mx-6 lg:mx-10 lg:px-8">
                     <div className="">
                         <div>
