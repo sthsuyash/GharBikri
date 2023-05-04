@@ -131,7 +131,7 @@ const RegisterPage = ({ setAuth }) => {
                 <div
                     className="absolute inset-0 my-auto -mt-10"
                     style={{
-                        backgroundImage: `url(${})`,
+                        backgroundImage: `url('https://images.unsplash.com/photo-1512918728675-ed5a9ecdebfb?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=3b6b4b5b5b0b0b0b0b0b0b0b0b0b0b0b&auto=format&fit=crop&w=1950&q=80')`,
                         backgroundSize: "cover",
                         backgroundPosition: "center",
                         backgroundRepeat: "no-repeat",
