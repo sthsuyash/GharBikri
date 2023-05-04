@@ -1,7 +1,4 @@
 import React from "react";
-import home1 from "../../assets/Images/home1.jpg";
-import home2 from "../../assets/Images/home2.jpg";
-import home3 from "../../assets/Images/home3.jpg";
 import { Link } from "react-router-dom";
 
 const stats = [
