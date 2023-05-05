@@ -1,7 +1,7 @@
 import React from 'react';
 import logo from "../../assets/Images/GharBikri-logo.png"
 
-const Footer = () => {
+const Footer = ({ setAuth, isAuthenticated }) => {
     return (
         <div className='mb-2'>
             <hr className="border-gray-200 shadow-lg" />
@@ -21,7 +21,8 @@ const Footer = () => {
                 </div>
                 <div>
                     <span className="footer-title">Services</span>
-                    <a className="link link-hover" href='/sell'>Sell</a>
+                    {/* if authenticated then goto /sell else goto /login */}
+                    {isAuthenticated ? <a className="link link-hover" href='/sell'>Sell</a> : <a className="btn-disabled text-gray-400">Sell</a>}
                     <a className="link link-hover" href='/rent'>Rent</a>
                     <a className="link link-hover" href='/buy'>Buy</a>
                 </div>

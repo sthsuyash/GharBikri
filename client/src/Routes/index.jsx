@@ -1,16 +1,12 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { Routes, Route, Navigate } from 'react-router-dom';
-import axios from 'axios';
 // components
 import Home from '../Pages/Home';
 import About from '../Pages/About'
 import Contact from '../Pages/Contact'
 
 // pages
-import LoginPage from '../Pages/LoginPage'
-import RegisterPage from '../Pages/RegisterPage'
 import DashBoard from '../Pages/DashBoard'
-
 import EditUser from '../Pages/EditUser'
 import EditProperty from '../Pages/EditProperty'
 
@@ -21,33 +17,8 @@ import Error404 from '../Pages/Error404'
 
 import PropertyDetails from '../Pages/PageDetails';
 
-import { SERVER_URL } from '../Config';
 
-function AppRoutes() {
-
-    const [isAuthenticated, setIsAuthenticated] = useState(false);
-
-    const setAuth = (boolean) => {
-        setIsAuthenticated(boolean);
-    };
-
-    const isAuth = async () => {
-        try {
-            const response = await axios.get(`${SERVER_URL}/api/auth/is-verify`, {
-                headers: { token: localStorage.token }
-            });
-
-            const parseRes = response.data;
-            parseRes === true ? setIsAuthenticated(true) : setIsAuthenticated(false);
-
-        } catch (err) {
-            console.error(err.message);
-        }
-    };
-
-    useEffect(() => {
-        isAuth();
-    }, []);
+function AppRoutes({ setAuth, isAuthenticated }) {
 
     return (
         <Routes>
@@ -61,30 +32,10 @@ function AppRoutes() {
             />
 
             <Route
-                path="/login"
-                element={
-                    !isAuthenticated ? (<LoginPage setAuth={setAuth} />
-                    ) : (
-                        <Navigate replace to="/dashboard" />
-                    )}
-            />
-
-            <Route
-                path="/register"
-                element={
-                    !isAuthenticated ? (<RegisterPage setAuth={setAuth} />
-                    ) : (
-                        <Navigate replace to="/dashboard" />
-                    )}
-            />
-
-            <Route
                 path="/dashboard"
                 element={
-                    isAuthenticated ? (<DashBoard setAuth={setAuth} />
-                    ) : (
-                        <Navigate replace to="/login" />
-                    )}
+                    <DashBoard setAuth={setAuth} />
+                }
             />
 
             <Route
@@ -104,10 +55,8 @@ function AppRoutes() {
             <Route
                 path='/sell'
                 element={
-                    isAuthenticated ? (<Sell />
-                    ) : (
-                        <Navigate replace to="/login" />
-                    )}
+                    <Sell />
+                }
             />
 
 
@@ -138,19 +87,15 @@ function AppRoutes() {
             <Route
                 path="/dashboard/edituser/:id"
                 element={
-                    isAuthenticated ? (<EditUser />
-                    ) : (
-                        <Navigate replace to="/login" />
-                    )}
+                    <EditUser />
+                }
             />
 
             <Route
                 path="/dashboard/editproperty/:id"
                 element={
-                    isAuthenticated ? (<EditProperty setAuth={setAuth} />
-                    ) : (
-                        <Navigate replace to="/login" />
-                    )}
+                    <EditProperty />
+                }
             />
 
         </Routes>

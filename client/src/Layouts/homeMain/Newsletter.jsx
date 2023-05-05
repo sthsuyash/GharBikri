@@ -18,7 +18,7 @@ import { CalendarDaysIcon, HandRaisedIcon } from '@heroicons/react/24/outline'
 export default function Newsletter() {
     return (
         <div className='max-w-[1440px] mx-auto lg:px-20'>
-            <div className="relative isolate overflow-hidden bg-gray-900 py-16 sm:py-24 lg:py-24 lg:rounded-2xl my-5">
+            <div className="relative isolate overflow-hidden bg-cyan-900 py-16 sm:py-24 lg:py-24 lg:rounded-3xl my-5">
                 <div className="px-6 lg:px-12">
                     <div className="grid max-w-2xl grid-cols-1 gap-x-8 gap-y-16 lg:max-w-none lg:grid-cols-2">
                         <div className="max-w-xl lg:max-w-lg ">
@@ -53,7 +53,7 @@ export default function Newsletter() {
                                     <CalendarDaysIcon className="h-6 w-6 text-white" aria-hidden="true" />
                                 </div>
                                 <dt className="mt-4 font-semibold text-white">Weekly articles</dt>
-                                <dd className="mt-2 leading-7 text-gray-400">
+                                <dd className="mt-2 leading-7 text-gray-300">
                                     Receive our weekly articles straight to your inbox and stay informed on the latest industry prices.
                                 </dd>
                             </div>
@@ -62,7 +62,7 @@ export default function Newsletter() {
                                     <HandRaisedIcon className="h-6 w-6 text-white" aria-hidden="true" />
                                 </div>
                                 <dt className="mt-4 font-semibold text-white">No spam</dt>
-                                <dd className="mt-2 leading-7 text-gray-400">
+                                <dd className="mt-2 leading-7 text-gray-300">
                                     We respect your privacy and promise no spam. You&apos;ll only receive valuable content and updates from us.
                                 </dd>
                             </div>

@@ -1,38 +1,38 @@
 export function registerValidate(inputs) {
-    let errors = {};
+    let register_errors = {};
 
-    if (!inputs.user_email) {
-        errors.user_email = "Email required";
+    if (!inputs.register_user_email) {
+        register_errors.register_user_email = "Email required";
     }
-    else if (/^([a-zA-Z0-9._%+-]+)@([a-zA-Z0-9.-]+\.[a-zA-Z]{2,})$/.test(inputs.email)) {
-        errors.user_email = "Email address is invalid";
-    }
-
-    if (!inputs.first_name) {
-        errors.first_name = "First Name required";
+    else if (!/\S+@\S+\.\S+/.test(inputs.register_user_email)) {
+        register_errors.register_user_email = "Email address is invalid";
     }
 
-    if (!inputs.last_name) {
-        errors.last_name = "Last Name required";
+    if (!inputs.register_first_name) {
+        register_errors.register_first_name = "First Name required";
     }
 
-    if (!inputs.password) {
-        errors.password = "Password is required";
-    } else if (inputs.password.length < 6) {
-        errors.password = "Password needs to be 6 characters or more";
+    if (!inputs.register_last_name) {
+        register_errors.register_last_name = "Last Name required";
     }
 
-    if (!/^[0-9]{10}$/.test(inputs.phone_number)) {
-        errors.phone_number = "Phone Number is invalid";
+    if (!inputs.register_password) {
+        register_errors.register_password = "Password is required";
+    } else if (inputs.register_password.length < 6) {
+        register_errors.register_password = "Password needs to be 6 characters or more";
     }
 
-    if (!inputs.address_city) {
-        errors.address_city = "City is required";
+    if (!/^[0-9]{10}$/.test(inputs.register_phone_number)) {
+        register_errors.register_phone_number = "Phone Number is invalid";
     }
 
-    if (!inputs.address_state) {
-        errors.address_state = "State is required";
+    if (!inputs.register_address_city) {
+        register_errors.register_address_city = "City is required";
     }
 
-    return errors;
+    if (!inputs.register_address_state) {
+        register_errors.register_address_state = "State is required";
+    }
+
+    return register_errors;
 }

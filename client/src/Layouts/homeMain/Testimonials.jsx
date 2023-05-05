@@ -55,7 +55,7 @@ function Testimonials() {
                                             <img src={item.avatar} className="w-16 h-16 rounded-full border-2 border-indigo-500" />
                                             <div>
                                                 <span className="block text-gray-800 font-semibold">{item.name}</span>
-                                                <span className="block text-indigo-600 text-sm mt-0.5">{item.title}</span>
+                                                <span className="block text-cyan-600 text-sm mt-0.5">{item.title}</span>
                                             </div>
                                         </div>
                                     </figure>
@@ -65,7 +65,7 @@ function Testimonials() {
                     </ul>
                 </div>
             </div>
-            <div className="absolute top-0 w-full h-[350px]" style={{ background: "linear-gradient(152.92deg,rgba(0, 255, 190, 0.1) 4.54%, rgba(0, 255, 255, 0.2) 34.2%, rgba(0, 100, 153, 0.2) 77.55%)" }}></div>
+            <div className="absolute top-0 w-full h-[390px]" style={{ background: "linear-gradient(152.92deg,rgba(0, 255, 190, 0.0) 1.54%, rgba(0, 255, 255, 0.1) 24.2%, rgba(0, 100, 153, 0.0) 99.55%)" }}></div>
         </section>
     )
 }

@@ -11,12 +11,11 @@ import axios from "axios";
 import { FcUnlock, FcSettings, FcLike } from "react-icons/fc";
 import { SERVER_URL } from "../../Config";
 
-import { ToastContainer } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
 import { toastSuccess, toastError } from "../../components/Toast";
 import { loginValidate } from "../../Middleware/loginValidation";
+import { registerValidate } from "../../Middleware/registerValidation";
 
-function Nav({ setAuth }) {
+function Nav({ setAuth, isAuthenticated }) {
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
     const navigate = useNavigate();
@@ -27,39 +26,14 @@ function Nav({ setAuth }) {
         window.location.reload();
     };
 
-    const logout = async (e) => {
-        e.preventDefault();
-        axios.get(`${SERVER_URL}/api/auth/logout`);
-        await localStorage.removeItem("token");
-        toastSuccess("Logged out Successfully");
-        setTimeout(() => {
-            refreshPage();
-        }, 2000);
-    };
-
-    const [user, setUser] = useState({
-        user_email: "",
-    });
-
-    const loadUser = async () => {
-        const result = await axios.get(`${SERVER_URL}/api/dashboard`, {
-            headers: { token: localStorage.token },
-        });
-        setUser(result.data);
-    };
-
-    useEffect(() => {
-        loadUser();
-    }, []);
+    // error state
+    const [error, setError] = useState({});
 
     // inputs state
     const [inputs, setInputs] = useState({
         user_email: "",
         password: "",
     });
-
-    // error state
-    const [error, setError] = useState({});
 
     // Destructure the inputs object
     const { user_email, password } = inputs;
@@ -90,10 +64,14 @@ function Nav({ setAuth }) {
                 if (parseRes.token) {
                     localStorage.setItem("token", parseRes.token); // localStorage is a browser API that stores data with no expiration
                     setAuth(true);
+                    setShowModal(false);
                     toastSuccess("Logged in successfully!");
+                    setTimeout(() => {
+                        refreshPage();
+                    }, 2000);
+                    loadUser();
                     // console.log("Logged in successfully!");
                     // close the modal
-                    setShowModal(false);
                 } else {
                     setAuth(false);
                 }
@@ -116,6 +94,147 @@ function Nav({ setAuth }) {
 
     const [showModal, setShowModal] = useState(false);
 
+    const [showRegisterModal, setShowRegisterModal] = useState(false);
+
+
+
+    const logout = async (e) => {
+        e.preventDefault();
+        axios.get(`${SERVER_URL}/api/auth/logout`);
+        await localStorage.removeItem("token");
+        toastSuccess("Logged out Successfully");
+        setTimeout(() => {
+            refreshPage();
+        }, 2000);
+    };
+
+    const [user, setUser] = useState({
+        user_email: "",
+    });
+
+    const loadUser = async () => {
+        const result = await axios.get(`${SERVER_URL}/api/dashboard`, {
+            headers: { token: localStorage.token },
+        });
+        setUser(result.data);
+    };
+
+    useEffect(() => {
+        loadUser();
+    }, [user]);
+
+    // Create a state variable called registerInputs and a function called setInputs
+    const [registerInputs, setregisterInputs] = useState({
+        register_user_email: "",
+        register_first_name: "",
+        register_last_name: "",
+        register_password: "",
+        register_phone_number: "",
+        register_address_city: "",
+        register_address_state: ""
+    });
+
+    // registerError state
+    const [registerError, setregisterError] = useState(
+        {
+            register_user_email: "",
+            register_first_name: "",
+            register_last_name: "",
+            register_password: "",
+            register_phone_number: "",
+            register_address_city: "",
+            register_address_state: ""
+        }
+    );
+
+    // Destructure the registerInputs object
+    const {
+        register_user_email,
+        register_first_name,
+        register_last_name,
+        register_password,
+        register_phone_number,
+        register_address_city,
+        register_address_state
+    } = registerInputs;
+
+    // e is an event object
+    const onRegisterChange = (e) => {
+        setregisterInputs({
+            ...registerInputs,
+            [e.target.name]: e.target.value
+        }); // ...registerInputs is a spread operator that copies the current state of registerInputs 
+        // console.log(e.target.name, e.target.value)
+        // [e.target.name] is a computed property name that will be the name of the input field 
+        // e.target.value is the value of the input field
+    };
+
+    const onSubmitRegisterForm = async (e) => {
+        e.preventDefault(); // Prevents the default behavior of the browser
+
+        const registerErrors = registerValidate(registerInputs);
+        setregisterError(
+            {
+                register_user_email: registerErrors.register_user_email,
+                register_first_name: registerErrors.register_first_name,
+                register_last_name: registerErrors.register_last_name,
+                register_password: registerErrors.register_password,
+                register_phone_number: registerErrors.register_phone_number,
+                register_address_city: registerErrors.register_address_city,
+                register_address_state: registerErrors.register_address_state
+            }
+        );
+
+        // console.log(Object.keys(registerError).length);
+
+        if (Object.keys(registerErrors).length === 0) {
+            try {
+                const body = {
+                    user_email: register_user_email,
+                    first_name: register_first_name,
+                    last_name: register_last_name,
+                    password: register_password,
+                    phone_number: register_phone_number,
+                    address_city: register_address_city,
+                    address_state: register_address_state
+                };
+                const response = await axios.post(`${SERVER_URL}/api/auth/register`, body);
+                const parseRes = response.data;
+
+                if (parseRes.token) {
+                    localStorage.setItem("token", parseRes.token);
+                    setAuth(true);
+                    toastSuccess('Registered successfully!');
+                    // console.log("Registered successfully!");
+                    // close the modal
+                    setShowRegisterModal(false);
+                    setTimeout(() => {
+                        refreshPage();
+                    }, 2000);
+                } else {
+                    setAuth(false);
+                }
+            } catch (err) {
+                if (err.response.status === 422) {
+                    const registerErrors = err.response.data.registerErrors;
+                    const registerErrorMessage = registerErrors.map((registerError) => registerError.msg).join(" & ");
+                    console.log(registerErrorMessage)
+                    toastError(registerErrorMessage);
+                }
+            }
+        }
+        else {
+            // if all fields are empty, display registerError message
+            if (!register_user_email && !register_first_name && !register_last_name && !register_password && !register_phone_number && !register_address_city && !register_address_state) {
+                toastError('All fields are required!');
+            }
+            else {
+                const registerErrorMessages = Object.values(registerErrors).filter(registerError => registerError !== null && registerError !== undefined);
+                registerErrorMessages.forEach(registerError => toastError(registerError));
+            }
+        }
+    };
+
     return (
         <header className="p-6 max-w-[1280px] mx-auto">
             <style
@@ -125,8 +244,8 @@ function Nav({ setAuth }) {
                 }}
             />
 
+            {/* login modal  */}
             {showModal && (
-
                 <div className="fixed z-50 inset-0 overflow-y-auto" >
                     <div className="flex items-center justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
                         {/* overlay */}
@@ -136,15 +255,19 @@ function Nav({ setAuth }) {
 
                         <span className="hidden sm:inline-block sm:align-middle sm:h-screen"></span>&#8203;
 
-                        <div className="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-xl sm:w-full">
+                        <div className="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-xl sm:w-full pb-6">
 
                             <div className="flex-1 flex items-center justify-center bg-white  rounded-lg p-6">
                                 <div className="w-full max-w-md space-y-8 px-4 bg-white text-gray-00 sm:px-0">
                                     <div className="mt-5 space-y-2">
                                         <h3 className="text-gray-800 text-2xl font-bold sm:text-3xl">Login to your account</h3>
                                         <p>
-                                            Don&apos;t have an account?
-                                            <Link to="/register" className="font-medium text-indigo-00 hover:text-indigo-500"> Sign Up</Link>
+                                            Don&apos;t have an account?&nbsp;
+                                            <button
+                                                className="font-medium text-cyan-500 hover:text-cyan-600"
+                                                onClick={() => { setShowRegisterModal(true); setShowModal(false) }}
+                                            > Sign Up
+                                            </button>
                                         </p>
                                     </div>
 
@@ -163,7 +286,7 @@ function Nav({ setAuth }) {
                                                 <input
                                                     name="user_email"
                                                     type="email"
-                                                    className="w-full mt-2 px-3 py-2 text-gray-500 bg-transparent outline-none focus:border-indigo-00 shadow-sm -ml-10 pl-10 pr-3 rounded-lg border-2 border-gray-200"
+                                                    className="w-full mt-2 px-3 py-2 text-gray-500 bg-transparent outline-none focus:border-cyan-00 shadow-sm -ml-10 pl-10 pr-3 rounded-lg border-2 border-gray-200"
                                                     placeholder="sammy12@gmail.com"
                                                     value={user_email}
                                                     onChange={(e) => onChange(e)}
@@ -188,7 +311,7 @@ function Nav({ setAuth }) {
                                                 <input
                                                     name="password"
                                                     type="password"
-                                                    className="w-full mt-2 px-3 py-2 text-gray-500 bg-transparent outline-none focus:border-indigo-00 shadow-sm -ml-10 pl-10 pr-3 rounded-lg border-2 border-gray-200"
+                                                    className="w-full mt-2 px-3 py-2 text-gray-500 bg-transparent outline-none focus:border-cyan-00 shadow-sm -ml-10 pl-10 pr-3 rounded-lg border-2 border-gray-200"
                                                     placeholder="************"
                                                     value={password}
                                                     onChange={(e) => onChange(e)}
@@ -204,7 +327,7 @@ function Nav({ setAuth }) {
 
                                         {/* submit the form */}
                                         <button
-                                            className="w-full px-4 py-2 text-white font-medium bg-indigo-00 hover:bg-indigo-500 active:bg-indigo-00 rounded-lg duration-150"
+                                            className="w-full px-4 py-2 text-white font-medium bg-cyan-600 hover:bg-cyan-700 active:bg-cyan-00 rounded-lg duration-150"
                                             type="submit"
                                         >
                                             Login
@@ -212,7 +335,7 @@ function Nav({ setAuth }) {
 
                                         {/* forgot password */}
                                         <div className="flex items-center justify-between">
-                                            <Link to="/forgot-password" className="text-sm font-medium text-indigo-00 hover:text-indigo-500">
+                                            <Link to="/forgot-password" className="text-sm font-medium text-cyan-600 hover:text-cyan-700">
                                                 Forgot Password?
                                             </Link>
                                         </div>
@@ -246,10 +369,225 @@ function Nav({ setAuth }) {
                 </div>
             )}
 
+            {/* register modal */}
+            {showRegisterModal && (
+                <div className="fixed z-50 inset-0 overflow-y-auto" >
+                    <div className="flex items-center justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
+                        {/* overlay */}
+                        <div className="fixed inset-0 transition-opacity" onClick={() => { setShowRegisterModal(false) }}>
+                            <div className="absolute inset-0 bg-gray-900 opacity-75"></div>
+                        </div>
 
+                        {/* <span className="hidden sm:inline-block sm:align-middle sm:h-screen"></span>&#8203; */}
+
+                        <div className="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-xl sm:w-full pb-6">
+                            <div className="flex-1 flex items-center justify-center bg-white  rounded-lg p-6">
+                                <div className="w-full max-w-md space-y-8 px-4 bg-white text-gray-00 sm:px-0">
+                                    <div className="mt-5 space-y-2">
+                                        <h3 className="text-gray-800 text-2xl font-bold sm:text-3xl">Create an account</h3>
+                                        <p className='lg:text-lg text-sm'>Already have an account?&nbsp;
+                                            <button
+                                                className="font-medium text-cyan-500 hover:text-cyan-600"
+                                                onClick={() => { setShowRegisterModal(false); setShowModal(true) }}
+                                            >
+                                                Log in
+                                            </button>
+                                        </p>
+                                    </div>
+
+                                    {/* main form */}
+                                    <form
+                                        onSubmit={onSubmitRegisterForm}
+                                        className="space-y-5"
+                                    >
+                                        <div className='flex lg:flex-row gap-5 flex-col'>
+
+                                            {/* register_first_name */}
+                                            <div>
+                                                <label className="font-medium">
+                                                    First Name
+                                                </label>
+                                                <div className="flex">
+                                                    <div className="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center pt-2"><i className="mdi mdi-account-outline text-gray-400 text-lg"></i></div>
+                                                    <input
+                                                        name="register_first_name"
+                                                        type="text"
+                                                        className="w-full mt-2 px-3 py-2 text-gray-500 bg-transparent outline-none focus:border-cyan-600 shadow-sm -ml-10 pl-10 pr-3 rounded-lg border-2 border-gray-200"
+                                                        placeholder="John"
+                                                        value={register_first_name}
+                                                        onChange={(e) => onRegisterChange(e)}
+                                                    />
+                                                </div>
+                                                {registerError.register_first_name && (
+                                                    <p className="text-red-500 text-xs italic">
+                                                        {registerError.register_first_name}
+                                                    </p>
+                                                )}
+                                            </div>
+
+                                            {/* register_last_name */}
+                                            <div>
+                                                <label className="font-medium">
+                                                    Last Name
+                                                </label>
+                                                <div className="flex">
+                                                    <div className="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center pt-2"><i className="mdi mdi-account-outline text-gray-400 text-lg"></i></div>
+                                                    <input
+                                                        name="register_last_name"
+                                                        type="text"
+                                                        className="w-full mt-2 px-3 py-2 text-gray-500 bg-transparent outline-none focus:border-cyan-600 shadow-sm -ml-10 pl-10 pr-3 rounded-lg border-2 border-gray-200"
+                                                        placeholder="Smith"
+                                                        value={register_last_name}
+                                                        onChange={(e) => onRegisterChange(e)}
+                                                    />
+                                                </div>
+                                                {registerError.register_last_name && (
+                                                    <p className="text-red-500 text-xs italic">
+                                                        {registerError.register_last_name}
+                                                    </p>
+                                                )}
+                                            </div>
+                                        </div>
+
+                                        {/* email */}
+                                        <div>
+                                            <label className="font-medium">
+                                                Email
+                                            </label>
+                                            <div className="flex">
+                                                <div className="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center pt-2"><i className="mdi mdi-email-outline text-gray-400 text-lg"></i></div>
+                                                <input
+                                                    name="register_user_email"
+                                                    type="email"
+                                                    className="w-full mt-2 px-3 py-2 text-gray-500 bg-transparent outline-none focus:border-cyan-600 shadow-sm -ml-10 pl-10 pr-3 rounded-lg border-2 border-gray-200"
+                                                    placeholder="sammy12@gmail.com"
+                                                    value={register_user_email}
+                                                    onChange={(e) => onRegisterChange(e)}
+                                                />
+                                            </div>
+                                            {/* text that shows up when validation registerError */}
+                                            {registerError.register_user_email && (
+                                                <p className="text-red-500 text-xs italic">
+                                                    {registerError.register_user_email}
+                                                </p>
+                                            )}
+                                        </div>
+
+
+                                        {/* register_password */}
+                                        <div>
+                                            <label className="font-medium">
+                                                Password
+                                            </label>
+                                            <div className="flex">
+                                                <div className="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center pt-2"><i className="mdi mdi-lock-outline text-gray-400 text-lg"></i></div>
+                                                <input
+                                                    name="register_password"
+                                                    type="password"
+                                                    className="w-full mt-2 px-3 py-2 text-gray-500 bg-transparent outline-none focus:border-cyan-600 shadow-sm -ml-10 pl-10 pr-3 rounded-lg border-2 border-gray-200"
+                                                    placeholder="************"
+                                                    value={register_password}
+                                                    onChange={(e) => onRegisterChange(e)}
+                                                />
+                                            </div>
+                                            {registerError.register_password && (
+                                                <p className=" text-red-500 text-xs italic">
+                                                    {registerError.register_password}
+                                                </p>
+                                            )}
+                                        </div>
+
+                                        {/* phone */}
+                                        <div>
+                                            <label className="font-medium">
+                                                Phone Number
+                                            </label>
+                                            <div className="flex">
+                                                <div className="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center pt-2"><i className="mdi mdi-phone-outline text-gray-400 text-lg"></i></div>
+                                                <input
+                                                    name="register_phone_number"
+                                                    type="register_phone_number"
+                                                    className="w-full mt-2 px-3 py-2 text-gray-500 bg-transparent outline-none focus:border-cyan-600 shadow-sm -ml-10 pl-10 pr-3 rounded-lg border-2 border-gray-200"
+                                                    value={register_phone_number}
+                                                    onChange={(e) => onRegisterChange(e)}
+                                                    placeholder='9841234567'
+                                                />
+                                            </div>
+                                            {registerError.register_phone_number && (
+                                                <p className=" text-red-500 text-xs italic">
+                                                    {registerError.register_phone_number}
+                                                </p>
+                                            )}
+                                        </div>
+
+                                        {/* address */}
+                                        <div className='flex flex-col lg:flex-row gap-x-5'>
+                                            {/* register_address_city */}
+                                            <div>
+                                                <label className="font-medium">
+                                                    City
+                                                </label>
+                                                <div className="flex">
+                                                    <div className="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center pt-2"><i className="mdi mdi-map-marker-outline text-gray-400 text-lg"></i></div>
+                                                    <input
+                                                        name="register_address_city"
+                                                        type="register_address_city"
+                                                        className="w-full mt-2 px-3 py-2 text-gray-500 bg-transparent outline-none focus:border-cyan-600 shadow-sm -ml-10 pl-10 pr-3 rounded-lg border-2 border-gray-200 "
+                                                        value={register_address_city}
+                                                        onChange={(e) => onRegisterChange(e)}
+                                                        placeholder='Kathmandu'
+                                                    />
+                                                </div>
+                                                {registerError.register_address_city && (
+                                                    <p className=" text-red-500 text-xs italic">
+                                                        {registerError.register_address_city}
+                                                    </p>
+                                                )}
+                                            </div>
+
+                                            {/* register_address_state */}
+                                            <div>
+                                                <label className="font-medium">
+                                                    State
+                                                </label>
+                                                <div className="flex">
+                                                    <div className="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center pt-2"><i className="mdi mdi-map-marker-outline text-gray-400 text-lg"></i></div>
+                                                    <input
+                                                        name="register_address_state"
+                                                        type="register_address_state"
+                                                        className="w-full mt-2 px-3 py-2 text-gray-500 bg-transparent outline-none focus:border-cyan-600 shadow-sm -ml-10 pl-10 pr-3 rounded-lg border-2 border-gray-200"
+                                                        value={register_address_state}
+                                                        onChange={(e) => onRegisterChange(e)}
+                                                        placeholder='Bagmati'
+                                                    />
+                                                </div>
+                                                {registerError.register_address_state && (
+                                                    <p className=" text-red-500 text-xs italic">
+                                                        {registerError.register_address_state}
+                                                    </p>
+                                                )}
+                                            </div>
+                                        </div>
+
+                                        {/* submit the form */}
+                                        <button
+                                            className="w-full px-4 py-2 text-white font-medium bg-cyan-600 hover:bg-cyan-500 active:bg-cyan-600 rounded-lg duration-150"
+                                            type="submit"
+                                        >
+                                            Create account
+                                        </button>
+
+                                        {/*  */}
+
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            )}
 
             <nav className="mx-auto flex items-center justify-between max-w-[1280px] w-[90%]" aria-label="Global">
-
                 <div className="flex lg:hidden">
                     <button
                         type="button"
@@ -268,9 +606,24 @@ function Nav({ setAuth }) {
                     <Link to="/buy" className={`transition-all text-md font-semibold leading-6 text-gray-500  hover:text-cyan-600 ${location.pathname === "/buy" ? "underline" : ""}`}>
                         Buy
                     </Link>
-                    <Link to="/sell" className={`transition-all text-md font-semibold leading-6 text-gray-500  hover:text-cyan-600 ${location.pathname === "/sell" ? "underline" : ""}`}>
-                        Sell
-                    </Link>
+                    {/* if user is logged in, show sell button */}
+                    {localStorage.getItem("token") ?
+                        (
+                            <Link
+                                to="/sell"
+                                className={`transition-all text-md font-semibold leading-6 text-gray-500  hover:text-cyan-600 ${location.pathname === "/sell" ? "underline" : ""}`}>
+                                Sell
+                            </Link>
+                        ) : (
+                            <button
+                                type="button"
+                                className="transition-all text-md font-semibold leading-6 text-gray-500  hover:text-cyan-600"
+                                onClick={() => setShowModal(true)}
+                            >
+                                Sell
+                            </button>
+                        )
+                    }
                 </Popover.Group>
 
                 <div className="flex lg:flex-2">
@@ -308,25 +661,23 @@ function Nav({ setAuth }) {
                 {/* check if logged in or not, if logged in then render logout button, else render login and register  */}
                 {localStorage.getItem("token") ? (
                     <div className="hidden md:flex">
-                        <div className="relative inline-block text-left pr-5">
+                        <div className="relative inline-block text-left">
                             <div className="dropdown dropdown-end">
                                 <label tabIndex={0} className="cursor-pointer">
-                                    <Profile textSizeRatio={2.5} classname={"rounded-full"} size={45} />
+                                    <Profile textSizeRatio={2} classname={"rounded-full"} size={40} />
                                 </label>
                                 {/* show signed in as values */}
-                                <ul tabIndex={0} className="transition-all dropdown-content menu py-2 px-4 border shadow-lg rounded-lg bg-white">
+                                <ul tabIndex={0} className="mt-2 transition-all dropdown-content menu py-2 px-2 border shadow-lg rounded-lg bg-white text-sm">
                                     <li className="text-sm text-gray-500 cursor-default">
                                         <p className="text-sm">Signed in as</p>
                                         <p className="font-semibold -mt-4">{user.user_email}</p>
                                     </li>
-                                    <hr className="" />
                                     <li className="hover:underline flex flex-row">
                                         <a href="/dashboard"><FcSettings />Profile</a>
                                     </li>
                                     <li className="hover:underline">
                                         <a href="/favourites"><FcLike />Favourites</a>
                                     </li>
-                                    <hr className="" />
                                     <li className="hover:underline flex flex-row">
                                         <Link to="/">
                                             <FcUnlock />
@@ -346,47 +697,23 @@ function Nav({ setAuth }) {
                         </div>
                     </div>
                 ) : (
-                    <div className="flex">
-                        <div className="relative inline-block ">
-                            <div className="dropdown dropdown-end">
-                                <label tabIndex={0} className="cursor-pointer">
-                                    <div className="avatar">
-                                        <div className="rounded-full bg-cyan-600 p-2">
-                                            {/* svg for profile  */}
-                                            <svg
-                                                xmlns="http://www.w3.org/2000/svg"
-                                                className="h-5 w-5 rounded-full"
-                                                viewBox="0 0 20 20"
-                                                fill="white"
-                                            >
-                                                <path
-                                                    fillRule="evenodd"
-                                                    d="M10 2a4 4 0 100 8 4 4 0 000-8zM5.5 6a2.5 2.5 0 100 5 2.5 2.5 0 000-5zM10 13c-2.667 0-8 1.333-8 4v1h16v-1c0-2.667-5.333-4-8-4z"
-                                                    clipRule="evenodd"
-                                                />
-                                            </svg>
-
-                                        </div>
-                                    </div>
-                                </label>
-
-                                <ul tabIndex={0} className="transition-all dropdown-content menu py-2 px-4 border shadow-lg rounded-lg bg-white">
-                                    <li className="text-sm text-gray-500 cursor-default">
-                                        <button
-                                            type="button"
-                                            className="items-center gap-1 transition-all font-medium justify-center shadow-sm text-md  text-gray-500  hover:text-cyan-600"
-                                            id="options-menu"
-                                            aria-haspopup="true"
-                                            aria-expanded="true"
-                                            onClick={() => { setShowModal(true) }}
-                                        >
-                                            Sign in
-                                        </button>
-                                    </li>
-                                </ul>
-                            </div>
-
-                        </div>
+                    <div
+                        className="rounded-full bg-cyan-600 p-2 hover:cursor-pointer"
+                        onClick={() => setShowModal(true)}
+                    >
+                        {/* svg for profile  */}
+                        <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            className="h-5 w-5 rounded-full"
+                            viewBox="0 0 20 20"
+                            fill="white"
+                        >
+                            <path
+                                fillRule="evenodd"
+                                d="M10 2a4 4 0 100 8 4 4 0 000-8zM5.5 6a2.5 2.5 0 100 5 2.5 2.5 0 000-5zM10 13c-2.667 0-8 1.333-8 4v1h16v-1c0-2.667-5.333-4-8-4z"
+                                clipRule="evenodd"
+                            />
+                        </svg>
                     </div>
                 )}
             </nav>
@@ -431,16 +758,40 @@ function Nav({ setAuth }) {
                                 >
                                     Buy
                                 </a>
+                                {/*  if logged in then go to sell else open login modal */}
+                                {localStorage.getItem("token") ? (
+                                    <a
+                                        href="/sell"
+                                        className="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-500 hover:bg-gray-50"
+                                    >
+                                        Sell
+                                    </a>
+                                ) : (
+                                    <button
+                                        type="button"
+                                        className="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-500 hover:bg-gray-50"
+                                        onClick={() => { setShowModal(true); setMobileMenuOpen(false) }}
+                                    >
+                                        Sell
+                                    </button>
+                                )}
+                                <hr className="my-2" />
                                 <a
-                                    href="/sell"
+                                    href="/about"
                                     className="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-500 hover:bg-gray-50"
                                 >
-                                    Sell
+                                    About
                                 </a>
-
+                                <a
+                                    href="/contact"
+                                    className="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-500 hover:bg-gray-50"
+                                >
+                                    Contact
+                                </a>
                             </div>
                             {localStorage.getItem("token") ? (
                                 <div className="py-6">
+                                    <hr className="" />
                                     <a
                                         href="/dashboard"
                                         className="flex flex-row gap-x-1 items-center -mx-3 rounded-lg px-3 py-2.5 text-base font-semibold leading-7 text-gray-500 hover:bg-gray-50"
@@ -453,7 +804,6 @@ function Nav({ setAuth }) {
                                     >
                                         <FcLike />Favourites
                                     </a>
-                                    <hr className="my-2" />
                                     <button
                                         onClick={(e) => { logout(e) }}
 
@@ -464,12 +814,13 @@ function Nav({ setAuth }) {
                                 </div>
                             ) : (
                                 <div className="py-6">
-                                    <a
-                                        href="/login"
-                                        className="-mx-3 block rounded-lg px-3 py-2.5 text-base font-semibold leading-7 text-gray-500 hover:bg-gray-50"
+                                    <button
+                                        type="button"
+                                        className="flex flex-row gap-x-1 items-center -mx-3 rounded-lg px-3 py-2.5 text-base font-semibold leading-7 text-gray-500 hover:bg-gray-50"
+                                        onClick={() => { setShowModal(true); setMobileMenuOpen(false) }}
                                     >
                                         Sign in
-                                    </a>
+                                    </button>
                                 </div>
                             )}
                         </div>

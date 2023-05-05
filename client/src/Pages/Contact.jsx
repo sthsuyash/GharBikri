@@ -1,4 +1,5 @@
 import React, { useEffect } from "react";
+import MiniNav from "../components/MiniNav/MiniNav";
 
 // TODO send mail to the mail address
 
@@ -18,12 +19,15 @@ export default function Contact() {
     return (
         <>
             {/* ====== Contact Section Start */}
-            <section className="relative z-10 overflow-hidden bg-white lg:py-20 max-w-[1280px] mx-auto xl:px-0 md:px-0 px-6">
+            <section className="relative z-10 overflow-hidden bg-white max-w-[1280px] w-[90%] mx-auto lg:p-6">
+                <div>
+                    <MiniNav />
+                </div>
                 <div className="container mx-auto">
                     <div className="-mx-4 flex flex-wrap lg:justify-between">
                         <div className="w-full px-4 lg:w-1/2 xl:w-6/12">
                             <div className="mb-12 max-w-[570px] lg:mb-0">
-                                <h2 className="text-dark mb-6 text-[32px] font-bold uppercase sm:text-[40px] lg:text-[36px] xl:text-[40px] text-center">
+                                <h2 className="text-dark mb-6 text-[28px] font-bold uppercase sm:text-[40px] lg:text-[36px] xl:text-[40px]">
                                     GET IN TOUCH WITH US
                                 </h2>
                                 <p className="text-body-color mb-9 text-base leading-relaxed text-justify">
