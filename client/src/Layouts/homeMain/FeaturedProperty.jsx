@@ -82,7 +82,7 @@ export default function FeaturedProperty() {
                             </div>
                         </>
                     ) : (
-                        <div className="text-center text-2xl font-bold text-gray-400">No properties found</div>)
+                        <div className="text-center text-2xl font-bold text-gray-400 mb-10">No properties found</div>)
                     }
 
                     <h3 className="text-center lg:text-left text-3xl font-semibold mb-8">Buy</h3>
