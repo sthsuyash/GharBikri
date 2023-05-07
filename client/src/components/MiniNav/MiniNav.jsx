@@ -3,7 +3,11 @@ import { AiOutlineRight, AiOutlineLeft } from "react-icons/ai";
 import { Link } from "react-router-dom";
 
 const MiniNav = () => {
-    const pagelocation = window.location.pathname;
+    // break down page location into array
+    const pagelocation = window.location.pathname.split("/");
+    // console.log(pagelocation)
+
+
     return (
         <div className="lg:mb-20 lg:px-0 mb-10">
             <div>
@@ -23,21 +27,34 @@ const MiniNav = () => {
                         >
                             <li className="text-sm">
                                 <Link
-                                    className="flex items-center text-gray-500 hover:text-blue-600"
+                                    className="flex items-center text-gray-500 hover:text-cyan-600"
                                     to={"/"}
                                 >
                                     Home
                                     <AiOutlineRight className="flex-shrink-0 mx-3 h-2.5 w-2.5 text-gray-600 dark:text-gray-600" />
                                 </Link>
                             </li>
-                            <li className="text-sm">
-                                <Link
-                                    className="flex items-center text-gray-500 hover:text-blue-600"
-                                    to={`${pagelocation}`}
-                                >
-                                    {pagelocation[1].toUpperCase() + pagelocation.slice(2)}
-                                </Link>
-                            </li>
+                            {
+                                pagelocation.map((page, index) => {
+                                    if (page !== "") {
+                                        page = page.charAt(0).toUpperCase() + page.slice(1);
+                                        return (
+                                            <li className="text-sm" key={index}>
+                                                <Link
+                                                    className="flex items-center text-gray-500 hover:text-cyan-600"
+                                                    to={`/${page}`}
+                                                >
+                                                    {page}
+                                                    {index !== pagelocation.length - 1 && (
+                                                        <AiOutlineRight className="flex-shrink-0 mx-3 h-2.5 w-2.5 text-gray-600 dark:text-gray-600" />
+                                                    )}
+                                                </Link>
+                                            </li>
+                                        );
+                                    }
+                                }
+                                )
+                            }
                         </ol>
                     </div>
                 </div>

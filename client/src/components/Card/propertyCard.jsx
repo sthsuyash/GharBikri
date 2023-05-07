@@ -69,6 +69,23 @@ const propertyCard = ({ property }) => {
                         <span>&nbsp;{property.p_area_sq_ft} sq.ft</span>
                     </div>
                 </div>
+                {/* if user is logged in and on dashboard page then show delete and edit button */}
+                {localStorage.token && window.location.pathname === "/dashboard" ?
+                    (
+                        <div className="flex justify-around mt-3">
+                            <Link
+                                to={`/edit/${property.p_id}`}
+                                className="bg-cyan-600 hover:bg-cyan-700 text-white font-bold py-2 px-4 rounded mt-3">
+                                Edit
+                            </Link>
+                            <button
+                                onClick={deleteProperty}
+                                className="bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded mt-3">
+                                Delete
+                            </button>
+                        </div>
+                    ) : null
+                }
             </div>
         </div>
     )
