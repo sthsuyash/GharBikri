@@ -8,7 +8,7 @@ import {
 import logo from "../../assets/Images/GharBikri-logo.png";
 import Profile from "../Header/Avatar";
 import axios from "axios";
-import { FcUnlock, FcSettings, FcLike } from "react-icons/fc";
+import { FcUnlock, FcSettings, FcLike, FcHome } from "react-icons/fc";
 import { SERVER_URL } from "../../Config";
 
 import { toastSuccess, toastError } from "../../components/Toast";
@@ -659,63 +659,82 @@ function Nav({ setAuth, isAuthenticated }) {
                     </Link>
                 </div>
                 {/* check if logged in or not, if logged in then render logout button, else render login and register  */}
-                {localStorage.getItem("token") ? (
-                    <div className="hidden md:flex">
-                        <div className="relative inline-block text-left">
-                            <div className="dropdown dropdown-end">
-                                <label tabIndex={0} className="cursor-pointer">
-                                    <Profile textSizeRatio={2} classname={"rounded-full"} size={40} />
-                                </label>
-                                {/* show signed in as values */}
-                                <ul tabIndex={0} className="mt-2 transition-all dropdown-content menu py-2 px-2 border shadow-lg rounded-lg bg-white text-sm">
-                                    <li className="text-sm text-gray-500 cursor-default">
-                                        <p className="text-sm">Signed in as</p>
-                                        <p className="font-semibold -mt-4">{user.user_email}</p>
-                                    </li>
-                                    <li className="hover:underline flex flex-row">
-                                        <a href="/dashboard"><FcSettings />Profile</a>
-                                    </li>
-                                    <li className="hover:underline">
-                                        <a href="/favourites"><FcLike />Favourites</a>
-                                    </li>
-                                    <li className="hover:underline flex flex-row">
-                                        <Link to="/">
-                                            <FcUnlock />
-                                            <button
-                                                type="button"
-                                                className="transition-all font-semibold justify-center shadow-sm text-md  text-red-500  hover:text-red-500  hover:font-bold hover:underline"
-                                                aria-haspopup="true"
-                                                aria-expanded="true"
-                                                onClick={(e) => { logout(e) }}
+                {
+                    localStorage.getItem("token") ? (
+                        <div className="hidden md:flex">
+                            <div className="relative inline-block text-left">
+                                <div className="dropdown dropdown-end">
+                                    <div className="flex flex-row items-center">
+                                        <Profile textSizeRatio={2} classname={"rounded-full"} size={35} />
+                                        <label tabIndex={0} className="cursor-pointer text-cyan-700">
+                                            <svg
+                                                className="w-5 h-5"
+                                                aria-hidden="true"
+                                                fill="currentColor"
+                                                viewBox="0 0 20 20"
+                                                xmlns="http://www.w3.org/2000/svg"
                                             >
-                                                Logout
-                                            </button>
-                                        </Link>
-                                    </li>
-                                </ul>
+                                                <path
+                                                    fillRule="evenodd"
+                                                    d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+                                                    clipRule="evenodd"
+                                                />
+                                            </svg>
+                                        </label>
+                                    </div>
+                                    {/* show signed in as values */}
+                                    <ul tabIndex={0} className="mt-2 transition-all dropdown-content menu py-2 px-2 border shadow-lg rounded-lg bg-white text-sm">
+                                        <li className="text-sm text-gray-500 cursor-default">
+                                            <p className="text-sm">Signed in as</p>
+                                            <p className="font-semibold -mt-4">{user.user_email}</p>
+                                        </li>
+                                        <li className="hover:underline flex flex-row">
+                                            <a href="/profile"><FcSettings />Profile</a>
+                                        </li>
+                                        <li className="hover:underline flex flex-row">
+                                            <a href="/dashboard"><FcHome />Dashboard</a>
+                                        </li>
+                                        <li className="hover:underline">
+                                            <a href="/favourites"><FcLike />Favourites</a>
+                                        </li>
+                                        <li className="hover:underline flex flex-row">
+                                            <Link to="/">
+                                                <FcUnlock />
+                                                <button
+                                                    type="button"
+                                                    className="transition-all font-semibold justify-center shadow-sm text-md  text-red-500  hover:text-red-500  hover:font-bold hover:underline"
+                                                    aria-haspopup="true"
+                                                    aria-expanded="true"
+                                                    onClick={(e) => { logout(e) }}
+                                                >
+                                                    Logout
+                                                </button>
+                                            </Link>
+                                        </li>
+                                    </ul>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                ) : (
-                    <div
-                        className="rounded-full bg-cyan-600 p-2 hover:cursor-pointer"
-                        onClick={() => setShowModal(true)}
-                    >
-                        {/* svg for profile  */}
-                        <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            className="h-5 w-5 rounded-full"
-                            viewBox="0 0 20 20"
-                            fill="white"
+                    ) : (
+                        <div
+                            className="rounded-full bg-cyan-600 p-2 hover:cursor-pointer"
+                            onClick={() => setShowModal(true)}
                         >
-                            <path
-                                fillRule="evenodd"
-                                d="M10 2a4 4 0 100 8 4 4 0 000-8zM5.5 6a2.5 2.5 0 100 5 2.5 2.5 0 000-5zM10 13c-2.667 0-8 1.333-8 4v1h16v-1c0-2.667-5.333-4-8-4z"
-                                clipRule="evenodd"
-                            />
-                        </svg>
-                    </div>
-                )}
+                            {/* svg for profile  */}
+                            <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                className="h-5 w-5 rounded-full"
+                                viewBox="0 0 20 20"
+                                fill="white"
+                            >
+                                <path
+                                    fillRule="evenodd"
+                                    d="M10 2a4 4 0 100 8 4 4 0 000-8zM5.5 6a2.5 2.5 0 100 5 2.5 2.5 0 000-5zM10 13c-2.667 0-8 1.333-8 4v1h16v-1c0-2.667-5.333-4-8-4z"
+                                    clipRule="evenodd"
+                                />
+                            </svg>
+                        </div>
+                    )}
             </nav>
 
             {/* for small screen */}
@@ -791,12 +810,17 @@ function Nav({ setAuth, isAuthenticated }) {
                             </div>
                             {localStorage.getItem("token") ? (
                                 <div className="py-6">
-                                    <hr className="" />
+                                    <a
+                                        href="/profile"
+                                        className="flex flex-row gap-x-1 items-center -mx-3 rounded-lg px-3 py-2.5 text-base font-semibold leading-7 text-gray-500 hover:bg-gray-50"
+                                    >
+                                        <FcSettings />Profile
+                                    </a>
                                     <a
                                         href="/dashboard"
                                         className="flex flex-row gap-x-1 items-center -mx-3 rounded-lg px-3 py-2.5 text-base font-semibold leading-7 text-gray-500 hover:bg-gray-50"
                                     >
-                                        <FcSettings />Profile
+                                        <FcHome />Dashboard
                                     </a>
                                     <a
                                         href="/favourites"
@@ -807,7 +831,7 @@ function Nav({ setAuth, isAuthenticated }) {
                                     <button
                                         onClick={(e) => { logout(e) }}
 
-                                        className="flex flex-row gap-x-1 items-center -mx-3 rounded-lg px-3 py-2.5 text-base font-semibold leading-7 text-gray-500 hover:bg-gray-50"
+                                        className="flex flex-row gap-x-1 items-center -mx-3 rounded-lg px-3 py-2.5 text-base font-semibold leading-7 text-red-500 hover:bg-gray-50"
                                     >
                                         <FcUnlock />Logout
                                     </button>
