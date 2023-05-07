@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from "axios";
 import { SERVER_URL } from '../Config';
+import MiniNav from '../components/MiniNav/MiniNav';
 
 const EditUser = () => {
     // Create a state variable called inputs and a function called setInputs
@@ -109,27 +110,27 @@ const EditUser = () => {
 
             const parseRes = res.data;
             console.log(parseRes);
-            window.location = "/dashboard";
+            window.location = "/profile";
         } catch (err) {
             console.error(err.message);
         }
     };
 
     return (
-        <main className="w-full lg:px-16 flex flex-col lg:flex-row justify-between">
+        <main className="max-w-[1280px] mx-auto lg:p-6 w-[90%] ">
             <style
                 dangerouslySetInnerHTML={{
                     __html:
                         "@import url('https://cdnjs.cloudflare.com/ajax/libs/MaterialDesign-Webfont/5.3.45/css/materialdesignicons.min.css')"
                 }}
             />
-            <div className='lg:w-1/2'>
+            <MiniNav />
+            <h1 className="text-3xl font-semibold text-center lg:text-left my-8 lg:text-5xl">Update {first_name} Profile</h1>
+            <div className='flex lg:flex-row flex-col gap-10'>
 
-                <div className="flex-1 flex items-center justify-center bg-white rounded-lg">
+                <div className='lg:w-1/2'>
+
                     <div className="w-full max-w-md space-y-8 px-4 bg-white text-gray-600 sm:px-0">
-                        <div className="mt-5 space-y-2">
-                            <h3 className="text-gray-800 text-2xl font-bold sm:text-3xl">Update {first_name} Profile</h3>
-                        </div>
 
                         {/* user form  */}
                         <form
@@ -148,7 +149,7 @@ const EditUser = () => {
                                         <input
                                             name="first_name"
                                             type="text"
-                                            className="w-full mt-2 px-3 py-2 text-gray-500 bg-transparent outline-none focus:border-indigo-600 shadow-sm -ml-10 pl-10 pr-3 rounded-lg border-2 border-gray-200"
+                                            className="w-full mt-2 px-3 py-2 text-gray-500 bg-transparent outline-none focus:border-cyan-600 shadow-sm -ml-10 pl-10 pr-3 rounded-lg border-2 border-gray-200"
                                             placeholder="John"
                                             value={first_name}
                                             onChange={(e) => onChange(e)}
@@ -166,7 +167,7 @@ const EditUser = () => {
                                         <input
                                             name="last_name"
                                             type="text"
-                                            className="w-full mt-2 px-3 py-2 text-gray-500 bg-transparent outline-none focus:border-indigo-600 shadow-sm -ml-10 pl-10 pr-3 rounded-lg border-2 border-gray-200"
+                                            className="w-full mt-2 px-3 py-2 text-gray-500 bg-transparent outline-none focus:border-cyan-600 shadow-sm -ml-10 pl-10 pr-3 rounded-lg border-2 border-gray-200"
                                             placeholder="Smith"
                                             value={last_name}
                                             onChange={(e) => onChange(e)}
@@ -185,7 +186,7 @@ const EditUser = () => {
                                     <input
                                         name="user_email"
                                         type="email"
-                                        className="w-full mt-2 px-3 py-2 text-gray-500 bg-transparent outline-none focus:border-indigo-600 shadow-sm -ml-10 pl-10 pr-3 rounded-lg border-2 border-gray-200"
+                                        className="w-full mt-2 px-3 py-2 text-gray-500 bg-transparent outline-none focus:border-cyan-600 shadow-sm -ml-10 pl-10 pr-3 rounded-lg border-2 border-gray-200"
                                         placeholder="sammy12@gmail.com"
                                         value={user_email}
                                         onChange={(e) => onChange(e)}
@@ -203,7 +204,7 @@ const EditUser = () => {
                                     <input
                                         name="phone_number"
                                         type="phone_number"
-                                        className="w-full mt-2 px-3 py-2 text-gray-500 bg-transparent outline-none focus:border-indigo-600 shadow-sm -ml-10 pl-10 pr-3 rounded-lg border-2 border-gray-200"
+                                        className="w-full mt-2 px-3 py-2 text-gray-500 bg-transparent outline-none focus:border-cyan-600 shadow-sm -ml-10 pl-10 pr-3 rounded-lg border-2 border-gray-200"
                                         value={phone_number}
                                         onChange={(e) => onChange(e)}
                                         placeholder='9841234567'
@@ -223,7 +224,7 @@ const EditUser = () => {
                                         <input
                                             name="address_city"
                                             type="address_city"
-                                            className="w-full mt-2 px-3 py-2 text-gray-500 bg-transparent outline-none focus:border-indigo-600 shadow-sm -ml-10 pl-10 pr-3 rounded-lg border-2 border-gray-200 "
+                                            className="w-full mt-2 px-3 py-2 text-gray-500 bg-transparent outline-none focus:border-cyan-600 shadow-sm -ml-10 pl-10 pr-3 rounded-lg border-2 border-gray-200 "
                                             value={address_city}
                                             onChange={(e) => onChange(e)}
                                             placeholder='Kathmandu'
@@ -241,7 +242,7 @@ const EditUser = () => {
                                         <input
                                             name="address_state"
                                             type="address_state"
-                                            className="w-full mt-2 px-3 py-2 text-gray-500 bg-transparent outline-none focus:border-indigo-600 shadow-sm -ml-10 pl-10 pr-3 rounded-lg border-2 border-gray-200"
+                                            className="w-full mt-2 px-3 py-2 text-gray-500 bg-transparent outline-none focus:border-cyan-600 shadow-sm -ml-10 pl-10 pr-3 rounded-lg border-2 border-gray-200"
                                             value={address_state}
                                             onChange={(e) => onChange(e)}
                                             placeholder='Bagmati'
@@ -252,7 +253,7 @@ const EditUser = () => {
 
                             {/* submit the form */}
                             <button
-                                className="w-full px-4 py-2 text-white font-medium bg-indigo-600 hover:bg-indigo-500 active:bg-indigo-600 rounded-lg duration-150"
+                                className="w-full px-4 py-2 text-white font-medium bg-cyan-600 hover:bg-cyan-700 active:bg-cyan-600 rounded-lg duration-150"
                                 type="submit"
                             >
                                 Update
@@ -260,64 +261,65 @@ const EditUser = () => {
                         </form>
                     </div>
                 </div>
-            </div>
 
-            {/* change password  */}
-            <div className="flex-1 flex items-center justify-center bg-white rounded-lg ">
-                <div className="w-full max-w-md space-y-8 px-4 bg-white text-gray-600 sm:px-0">
-                    <div className="">
-                        <h1 className="text-xl font-bold text-gray-700 md:text-2xl">Change Password</h1>
-                    </div>
-                    <div className="mt-4">
-                        <form
-                            onSubmit={(e) => onSubmitPassword(e)}
-                        >
-                            {/* old password */}
-                            <div className='mb-10'>
-                                <label className="font-medium">
-                                    Old Password
-                                </label>
-                                <div className="flex">
-                                    <div className="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center pt-2"><i className="mdi mdi-lock-outline text-gray-400 text-lg"></i></div>
-                                    <input
-                                        name="oldPassword"
-                                        type="password"
-                                        className="w-full mt-2 px-3 py-2 text-gray-500 bg-transparent outline-none focus:border-indigo-600 shadow-sm -ml-10 pl-10 pr-3 rounded-lg border-2 border-gray-200"
-                                        placeholder="************"
-                                        value={oldPassword}
-                                        onChange={(e) => onChangePassword(e)}
-                                    />
-                                </div>
-                            </div>
-
-                            {/* new password */}
-                            <div className='mb-10'>
-                                <label className="font-medium">
-                                    New Password
-                                </label>
-
-                                <div className="flex">
-                                    <div className="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center pt-2"><i className="mdi mdi-lock-outline text-gray-400 text-lg"></i></div>
-                                    <input
-                                        name="newPassword"
-                                        type="password"
-                                        className="w-full mt-2 px-3 py-2 text-gray-500 bg-transparent outline-none focus:border-indigo-600 shadow-sm -ml-10 pl-10 pr-3 rounded-lg border-2 border-gray-200"
-                                        placeholder="************"
-                                        value={newPassword}
-                                        onChange={(e) => onChangePassword(e)}
-                                    />
-                                </div>
-                            </div>
-                            <button
-                                className="w-full px-4 py-2 text-white font-medium bg-indigo-600 hover:bg-indigo-500 active:bg-indigo-600 rounded-lg duration-150"
-                                type="submit"
+                {/* change password  */}
+                <div className="flex-1 flex items-center justify-center bg-white rounded-lg ">
+                    <div className="w-full max-w-md space-y-8 px-4 bg-white text-gray-600 sm:px-0">
+                        <div className="">
+                            <h1 className="text-xl font-bold text-gray-700 md:text-2xl">Change Password</h1>
+                        </div>
+                        <div className="mt-4">
+                            <form
+                                onSubmit={(e) => onSubmitPassword(e)}
                             >
-                                Update Password
-                            </button>
-                        </form>
+                                {/* old password */}
+                                <div className='mb-10'>
+                                    <label className="font-medium">
+                                        Old Password
+                                    </label>
+                                    <div className="flex">
+                                        <div className="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center pt-2"><i className="mdi mdi-lock-outline text-gray-400 text-lg"></i></div>
+                                        <input
+                                            name="oldPassword"
+                                            type="password"
+                                            className="w-full mt-2 px-3 py-2 text-gray-500 bg-transparent outline-none focus:border-cyan-600 shadow-sm -ml-10 pl-10 pr-3 rounded-lg border-2 border-gray-200"
+                                            placeholder="************"
+                                            value={oldPassword}
+                                            onChange={(e) => onChangePassword(e)}
+                                        />
+                                    </div>
+                                </div>
+
+                                {/* new password */}
+                                <div className='mb-10'>
+                                    <label className="font-medium">
+                                        New Password
+                                    </label>
+
+                                    <div className="flex">
+                                        <div className="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center pt-2"><i className="mdi mdi-lock-outline text-gray-400 text-lg"></i></div>
+                                        <input
+                                            name="newPassword"
+                                            type="password"
+                                            className="w-full mt-2 px-3 py-2 text-gray-500 bg-transparent outline-none focus:border-cyan-600 shadow-sm -ml-10 pl-10 pr-3 rounded-lg border-2 border-gray-200"
+                                            placeholder="************"
+                                            value={newPassword}
+                                            onChange={(e) => onChangePassword(e)}
+                                        />
+                                    </div>
+                                </div>
+                                <button
+                                    className="w-full px-4 py-2 text-white font-medium bg-cyan-600 hover:bg-cyan-700 active:bg-cyan-600 rounded-lg duration-150"
+                                    type="submit"
+                                >
+                                    Update Password
+                                </button>
+                            </form>
+                        </div>
                     </div>
                 </div>
             </div>
+
         </main>
     );
 }
