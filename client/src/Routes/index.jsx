@@ -1,21 +1,20 @@
 import React from 'react';
-import { Routes, Route, Navigate } from 'react-router-dom';
-// components
+import { Routes, Route } from 'react-router-dom';
+
+// pages
 import Home from '../Pages/Home';
 import About from '../Pages/About'
 import Contact from '../Pages/Contact'
-
-// pages
+import Profile from '../Pages/Profile'
 import DashBoard from '../Pages/DashBoard'
 import EditUser from '../Pages/EditUser'
 import EditProperty from '../Pages/EditProperty'
-
 import Rent from '../Pages/Rent'
 import Buy from '../Pages/Buy'
 import Sell from '../Pages/Sell'
 import Error404 from '../Pages/Error404'
-
 import PropertyDetails from '../Pages/PageDetails';
+import Favourites from '../Pages/Favourites';
 
 
 function AppRoutes({ setAuth, isAuthenticated }) {
@@ -28,6 +27,13 @@ function AppRoutes({ setAuth, isAuthenticated }) {
                 path="/"
                 element={
                     <Home isAuthenticated={isAuthenticated} />
+                }
+            />
+
+            <Route
+                path="/profile"
+                element={
+                    <Profile />
                 }
             />
 
@@ -85,7 +91,7 @@ function AppRoutes({ setAuth, isAuthenticated }) {
             />
 
             <Route
-                path="/dashboard/edituser/:id"
+                path="/profile/edit"
                 element={
                     <EditUser />
                 }
@@ -98,6 +104,12 @@ function AppRoutes({ setAuth, isAuthenticated }) {
                 }
             />
 
+            <Route
+                path="/favourites"
+                element={
+                    <Favourites />
+                }
+            />
         </Routes>
     );
 }
