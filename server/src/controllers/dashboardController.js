@@ -1,5 +1,7 @@
 const db = require('../db');
 const bcrypt = require('bcrypt');
+const fs = require('fs');
+const { parse } = require('path');
 
 // get user with matching id if authorized, if exists in database
 exports.getUser = async (req, res) => {
@@ -92,10 +94,10 @@ exports.deleteUser = async (req, res) => {
         // delete all properties and images of property associated with user
         properties.forEach(async (property) => {
             // remove images from file system
-            const images = await db.query("SELECT p_frontal_image FROM property WHERE p_id = $1", [property.p_id]);
-            images.rows.forEach((image) => {
-                fs.unlinkSync(image.p_frontal_image);
-            });
+            // const images = await db.query("SELECT p_frontal_image FROM property WHERE p_id = $1", [property.p_id]);
+            // images.rows.forEach((image) => {
+            //     fs.unlinkSync(image.p_frontal_image);
+            // });
             await db.query("DELETE FROM property WHERE p_id = $1", [property.p_id]);
         })
 
@@ -202,19 +204,51 @@ exports.getProperty = async (req, res) => {
         p_area_sq_ft,
         p_repair_quality,
         p_year,
+        property.user_id,
         p_price,
         p_listingType,
         p_frontal_image,
         p_availability_status,
-        created_at,
-        updated_at,
+        property.created_at,
+        property.updated_at,
+        p_views
         FROM property 
         JOIN users 
         ON property.user_id = users.user_id
-        WHERE property.user_id = $1 AND property.p_id = $2`,
-            [req.user, req.params.id]
+        WHERE property.p_id = $1`,
+            [req.params.id]
         );
-        res.json(property.rows[0]);
+
+        const result = property.rows[0];
+
+        // get the user details of the property
+        const user = await db.query(`
+        SELECT 
+        user_id as owner_id,
+        first_name as owner_first_name,
+        last_name as owner_last_name,
+        user_email as owner_email,
+        phone_number as owner_phone_number
+        FROM users 
+        WHERE user_id = $1`,
+            [result.user_id]);
+
+        result.owner_id = user.rows[0].owner_id;
+        result.owner_first_name = user.rows[0].owner_first_name;
+        result.owner_last_name = user.rows[0].owner_last_name;
+        result.owner_email = user.rows[0].owner_email;
+        result.owner_phone_number = user.rows[0].owner_phone_number;
+
+        result.owner_id = parseInt(result.owner_id);
+        result.p_views = parseInt(result.p_views);
+        req.user = parseInt(req.user);
+
+        if (result.owner_id !== req.user) {
+            let p_views = result.p_views + 1;
+            await db.query(`UPDATE property SET p_views = $1 WHERE p_id = $2`, [p_views, req.params.id]);
+        }
+        // console.log(result)
+        res.json(result);
 
     } catch (error) {
         res.status(500).json({
@@ -304,7 +338,7 @@ exports.deleteProperty = async (req, res) => {
         const property = await db.query("SELECT p_frontal_image FROM property WHERE p_id = $1 AND user_id = $2", [req.params.id, req.user]);
 
         // delete frontal image from the file system
-        fs.unlinkSync(`/client/src/assets/uploads/${property.rows[0].p_frontal_image}`);
+        // fs.unlinkSync(`../../../client/src/assets/uploads/${property.rows[0].p_frontal_image}`);
 
 
         const deleteProperty = await db.query("DELETE FROM property WHERE p_id = $1 AND user_id = $2 RETURNING *", [req.params.id, req.user]);
