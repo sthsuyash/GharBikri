@@ -29,7 +29,7 @@ router.put('/change-password', authorization, changePassword);
 router.get('/get-user-properties', authorization, getUserProperties);
 
 // get property with matching id
-router.get('property/:id', getProperty);
+router.get('/property/:id', getProperty);
 
 // edit property with matching id
 router.put('/property/:id', authorization, editProperty);
