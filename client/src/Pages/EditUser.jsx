@@ -2,8 +2,15 @@ import React, { useEffect, useState } from 'react';
 import axios from "axios";
 import { SERVER_URL } from '../Config';
 import MiniNav from '../components/MiniNav/MiniNav';
+import { toastSuccess, toastError } from '../components/Toast';
 
 const EditUser = () => {
+
+    useEffect(() => {
+        window.scrollTo(0, 0);
+        document.title = "Edit Profile";
+    }, []);
+
     // Create a state variable called inputs and a function called setInputs
     const [inputs, setInputs] = useState({
         user_email: "",
@@ -82,15 +89,17 @@ const EditUser = () => {
                 address_state
             };
 
-            const res = await axios.put(`${SERVER_URL}/api/dashboard`, body, {
+            await axios.put(`${SERVER_URL}/api/dashboard`, body, {
                 headers: { token: localStorage.token }
             });
 
-            const parseRes = res.data;
-            console.log(parseRes);
-            window.location = "/dashboard";
+            toastSuccess("Profile updated successfully!");
+            setTimeout(() => {
+                window.location = "/profile";
+            }, 2000);
+
         } catch (err) {
-            console.error(err.message);
+            toastError(err.response.data);
         }
     };
 
@@ -104,15 +113,17 @@ const EditUser = () => {
                 newPassword
             };
 
-            const res = await axios.put(`${SERVER_URL}/api/dashboard/change-password`, body, {
+            await axios.put(`${SERVER_URL}/api/dashboard/change-password`, body, {
                 headers: { token: localStorage.token }
             });
 
-            const parseRes = res.data;
-            console.log(parseRes);
-            window.location = "/profile";
+            toastSuccess("Password updated successfully!");
+            setTimeout(() => {
+                window.location = "/profile";
+            }, 2000);
         } catch (err) {
-            console.error(err.message);
+            // console.error(err.response.data.message);
+            toastError(err.response.data.message);
         }
     };
 

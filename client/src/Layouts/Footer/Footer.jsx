@@ -3,9 +3,9 @@ import logo from "../../assets/Images/GharBikri-logo.png"
 
 const Footer = ({ setAuth, isAuthenticated }) => {
     return (
-        <>
+        <div className='mt-10'>
             <hr className="border-gray-200 shadow-lg" />
-            <div className='mb-2 flex flex-col max-w-[1280px] mx-auto px-6 lg:px-0 xl:px-0 lg:py-5 gap-3'>
+            <div className='mb-2 flex flex-col max-w-[1280px] mx-auto px-6 lg:px-0 xl:px-0 gap-3'>
                 <footer className="footer py-4 bg-white text-slate-600 mt-10 ">
                     <div className="md:place-self-center md:justify-self-center ">
                         <div className="grid grid-flow-col gap-4">
@@ -70,7 +70,7 @@ const Footer = ({ setAuth, isAuthenticated }) => {
                     </div>
                 </footer>
             </div>
-        </>
+        </div>
     )
 }
 

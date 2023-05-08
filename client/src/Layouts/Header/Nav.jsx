@@ -121,7 +121,7 @@ function Nav({ setAuth, isAuthenticated }) {
 
     useEffect(() => {
         loadUser();
-    }, [user]);
+    }, []);
 
     // Create a state variable called registerInputs and a function called setInputs
     const [registerInputs, setregisterInputs] = useState({

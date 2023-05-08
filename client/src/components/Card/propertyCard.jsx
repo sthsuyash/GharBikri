@@ -3,22 +3,8 @@ import { Link } from "react-router-dom";
 import { MdOutlineBed } from "react-icons/md";
 import { BiBath, BiArea } from "react-icons/bi";
 // import { AiOutlineHeart } from "react-icons/ai";
-import axios from "axios";
-import { SERVER_URL } from "../../Config";
 
 const propertyCard = ({ property }) => {
-
-    const deleteProperty = async () => {
-        try {
-            await axios.delete(`${SERVER_URL}/api/dashboard/property/${property.p_id}`, {
-                headers: { token: localStorage.token }
-            });
-            // refresh page
-            window.location.reload();
-        } catch (error) {
-            console.log(error);
-        }
-    }
 
     return (
         <div className="shadow-md rounded-3xl overflow-hidden min-w-[300px]">
@@ -69,23 +55,6 @@ const propertyCard = ({ property }) => {
                         <span>&nbsp;{property.p_area_sq_ft} sq.ft</span>
                     </div>
                 </div>
-                {/* if user is logged in and on dashboard page then show delete and edit button */}
-                {localStorage.token && window.location.pathname === "/dashboard" ?
-                    (
-                        <div className="flex justify-around mt-3">
-                            <Link
-                                to={`/edit/${property.p_id}`}
-                                className="bg-cyan-600 hover:bg-cyan-700 text-white font-bold py-2 px-4 rounded mt-3">
-                                Edit
-                            </Link>
-                            <button
-                                onClick={deleteProperty}
-                                className="bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded mt-3">
-                                Delete
-                            </button>
-                        </div>
-                    ) : null
-                }
             </div>
         </div>
     )

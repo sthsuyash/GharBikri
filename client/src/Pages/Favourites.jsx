@@ -45,7 +45,7 @@ export default function Favourites() {
         <>
             <div className="max-w-[1280px] mx-auto lg:p-6 w-[90%]">
                 <MiniNav />
-                <h1 className="text-3xl font-semibold text-center lg:text-left my-8 lg:text-5xl">{user.first_name} Favourites</h1>
+                <h1 className="text-3xl font-semibold text-center lg:text-left my-8 lg:text-5xl">{user.first_name}&apos;s Favourites</h1>
             </div>
         </>
     );

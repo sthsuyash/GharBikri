@@ -234,22 +234,14 @@ export default function Sell() {
 
     return (
         <>
-            <div className="max-w-[1280px] mx-auto lg:p-6">
-                <style
-                    dangerouslySetInnerHTML={{
-                        __html:
-                            "@import url('https://cdnjs.cloudflare.com/ajax/libs/MaterialDesign-Webfont/5.3.45/css/materialdesignicons.min.css')"
-                    }}
-                />
+            <div className="max-w-[1280px] mx-auto lg:p-6 w-[90%]">
                 <MiniNav />
                 <h1 className="text-3xl font-semibold text-center lg:text-left my-8 lg:text-5xl">List your property</h1>
                 <main className="w-full flex lg:mt-10">
                     <div className="flex-1 flex items-center justify-center">
                         <div className="w-full p-6 max-w-full space-y-8 bg-white text-gray-600 sm:p-0">
-
                             <div className="flex flex-row justify-between">
                                 <form>
-
                                     <div>
                                         {/* form starts */}
                                         <div className="lg:mt-5 space-y-2 mb-5">
