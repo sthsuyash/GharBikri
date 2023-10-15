@@ -1,0 +1,56 @@
+spring:
+  datasource:
+    #    url: ${DB_URL}
+    url: jdbc:postgresql://localhost:5432/gharbikri
+    #    username: ${DB_USERNAME}
+    #    password: ${DB_PASSWORD}
+    username: postgres
+    password: password
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+        default_schema: public
+    database: postgresql
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+
+server:
+  port: 8080
+  servlet:
+    context-path: /api/v2
+#    multipart:
+#      max-file-size: 10MB
+#      max-request-size: 10MB
+#    mail:
+#      host: smtp.gmail.com
+#      port: 587
+#      username:
+#      password:
+#      properties:
+#        mail:
+#        smtp:
+#          auth: true
+#          starttls:
+#          enable: true
+#          required: true
+#    security:
+#        oauth2:
+#            client:
+#            registration:
+#                google:
+#                client-id: 1234567890
+#                client-secret: 1234567890
+#                scope:
+#                    - email
+#                    - profile
+#                    - openid
+#            provider:
+#                google:
+#                authorization-uri: https://accounts.google.com/o/oauth2/v2/auth
+#                token-uri: https://www.googleapis.com/oauth2/v3/token
+#                user-info-uri: https://www.googleapis.com/oauth2/v3/userinfo
+#                user-name-attribute: sub
