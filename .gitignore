@@ -1,3 +1,4 @@
 Houses Dataset/
 **/Dockerfile
 .vercel
+**/node_modules
