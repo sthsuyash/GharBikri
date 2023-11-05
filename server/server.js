@@ -1,1 +1,0 @@
-const src = require('./src')

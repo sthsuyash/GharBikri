@@ -1,30 +1,22 @@
-const express = require('express');
+import express from 'express';
+import cors from 'cors';
+import cookieParser from 'cookie-parser';
+import { SERVER_PORT } from './config/env.js';
+
 const app = express();
-const { SERVER } = require('./constants');
-const cors = require('cors');
 
-// middleware
+// Middleware
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+app.use(cookieParser());
+app.use(cors());
 
-app.use(express.json()) // req.body
-app.use(express.urlencoded({ extended: true })) // req.body
+// Routes
+import routes from './routes/index.js';
+app.use('/api/v2', routes);
 
-app.use(cors({
-    origin: 'http://localhost:5173',
-    credentials: true,
-}));
+const PORT = SERVER_PORT || 5000;
 
-// routes
-const routes = require('./routes');
-app.use('/api', routes);
-
-const startServer = () => {
-    try {
-        app.listen(SERVER.SERVER_PORT, () => {
-            console.log(`Real Estate server listening on port ${SERVER.SERVER_PORT}`);
-        })
-    } catch (e) {
-        console.error(`Error: ${e}`);
-    }
-};
-
-startServer();
+app.listen(PORT, () => {
+    console.log(`[server] Server is running at PORT: ${PORT}`);
+});

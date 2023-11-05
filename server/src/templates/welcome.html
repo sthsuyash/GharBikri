@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Welcome to GharBikri</title>
+    <style>
+      @import url('https://fonts.googleapis.com/css?family=Roboto:400,500,700');
+
+      * {
+        margin: 0;
+        padding: 0;
+        font-family: 'Roboto', Arial, sans-serif;
+      }
+
+      img {
+        display: inline-block;
+      }
+
+      .container {
+        max-width: 500px;
+        margin: 20px auto;
+        border-radius: 4px;
+        border: 1px solid rgba(0, 0, 0, 0.1);
+        min-height: 100px;
+        position: relative;
+      }
+
+      .container::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 3px;
+        background: linear-gradient(to right, #0267c1, #d65108);
+      }
+
+      .logo {
+        display: flex;
+        margin: 30px auto 0;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .logo a {
+        display: block;
+        width: 30px;
+        height: 30px;
+      }
+
+      .logo img {
+        width: 70px;
+      }
+
+      .name {
+        display: block;
+        color: #0267c1;
+        font-weight: 600;
+        font-size: 1.1rem;
+      }
+
+      .hgroup {
+        text-align: center;
+        padding: 30px 30px 5px;
+      }
+
+      .hgroup h1 {
+        font-size: 20px;
+        font-weight: 600;
+        color: #333;
+      }
+
+      .hgroup h2 {
+        font-size: 19px;
+      }
+
+      .hgroup p {
+        font-size: 15px;
+        color: slategrey;
+        margin-top: 15px;
+        text-align: justify;
+        line-height: 25px;
+      }
+
+      .items {
+        padding: 30px;
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .item {
+        margin-bottom: 10px;
+        text-align: center;
+        width: 100%;
+        margin: 0 auto 50px;
+      }
+
+      .item .icon {
+        margin-bottom: 10px;
+      }
+
+      .item .icon img {
+        width: 60px;
+      }
+
+      .item .title {
+        margin-bottom: 5px;
+        font-size: 16px;
+        font-weight: 600;
+      }
+
+      .item .subtitle {
+        font-size: 13px;
+        color: slategrey;
+        padding: 1rem;
+      }
+
+      .button-wrap {
+        text-align: center;
+        padding: 2rem;
+      }
+
+      button .explore {
+        padding: 15px 25px;
+        font: inherit;
+        background: linear-gradient(to right, #0267c1, #0280ef);
+        border-radius: 50px;
+        border: 0;
+        color: #fff;
+        margin: auto;
+        display: inline-block;
+        transition: all 0.2s ease-in-out;
+        cursor: pointer;
+        box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+      }
+
+      button .explore:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 15px 10px -7px rgba(0, 0, 0, 0.1);
+        background: linear-gradient(to right, #0280ef, #0267c1);
+      }
+
+      footer {
+        font-size: 12px;
+        color: slategrey;
+        text-align: center;
+        padding: 30px;
+      }
+
+      .rad {
+        margin: 0 !important;
+        text-align: center !important;
+        font-size: 18px !important;
+      }
+
+      .raised {
+        font-size: 16px;
+        color: #777;
+        display: block;
+        color: steelblue;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="logo">
+        <img
+          src="https://raw.githubusercontent.com/sthsuyash/GharBikri/main/client/src/assets/Images/GharBikri-logos_white.png"
+          alt="gharbikri-logo"
+        />
+      </div>
+      <div class="illustration">
+        <div class="hgroup">
+          <span class="name">Hello, {{email}}</span>
+          <h1>Thank you for registering with us!</h1>
+        </div>
+      </div>
+      <div class="hgroup">
+        <p>
+          At GharBikri, we are committed to providing you with the best
+          experience possible. We are excited to have you on board and look
+          forward to helping you find your dream home. We are here to help you
+          every step of the way.
+        </p>
+        <p>
+          <span class="raised">
+            You are just one step away from activating your account.
+          </span>
+          Please click on the button below to activate your account or copy and
+          paste the link below into your browser.
+          <a href="{{link}}" target="_blank">"{{link}}"</a>
+        </p>
+        <p>
+          If you have any questions, kindly reach out to our team at
+          support@gharbikri.com
+        </p>
+
+        <p>
+          Have an AWESOME day! <br />
+          Brought to you by your friends at GharBikri.
+        </p>
+      </div>
+      <div class="button-wrap">
+        <button class="explore">
+          <a
+            href="{{link}}"
+            target="_blank"
+            style="color: white; text-decoration: none;"
+          >
+            Activate Account
+          </a>
+        </button>
+      </div>
+      <footer>
+        GharBikri © 2023
+        <br />
+        GharBikri Pvt. Ltd.
+        <br />
+        gharbikri.com
+      </footer>
+    </div>
+  </body>
+</html>

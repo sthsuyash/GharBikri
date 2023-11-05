@@ -1,0 +1,86 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id          String       @id @default(uuid())
+  email       String
+  password    String
+  created_at  DateTime     @default(now())
+  updated_at  DateTime     @updatedAt
+  status      String       @default("inactive")
+  UserProfile UserProfile?
+
+  @@unique([email])
+}
+
+model UserProfile {
+  id                   String     @id @default(uuid())
+  first_name           String?
+  last_name            String?
+  image                String     @default("https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png")
+  phone                String?
+  city                 String?
+  state                String?
+  bookedVisits         Visit[]    @relation("BookedByUsers")
+  bookmarkedProperties Property[] @relation("BookmarkedByUsers")
+  property_count       Int        @default(0)
+  properties           Property[] @relation("UserProperties")
+  created_at           DateTime   @default(now())
+  updated_at           DateTime   @updatedAt
+  user                 User       @relation(fields: [id], references: [id])
+
+  @@unique([id])
+}
+
+model Property {
+  id                  String        @id @default(uuid())
+  name                String
+  description         String
+  street_num          Int
+  street_name         String?
+  city                String
+  state               String
+  type                String
+  bed                 Int
+  bath                Int
+  area_sq_ft          Int
+  repair_quality      String
+  year                Int
+  price               Float
+  listingType         String
+  availability_status Boolean
+  images              String[]
+  facilities          String[]
+  created_at          DateTime      @default(now())
+  updated_at          DateTime      @updatedAt
+  views               Int           @default(0)
+  bookmarkedByUsers   UserProfile[] @relation("BookmarkedByUsers")
+  bookedVisits        Visit[]       @relation("PropertyVisitsBookedByUsers")
+  user_id             String
+  user_profile        UserProfile   @relation("UserProperties", fields: [user_id], references: [id])
+
+  @@unique([name, user_id])
+}
+
+model Visit {
+  id           String      @id @default(uuid())
+  startTime    DateTime
+  endTime      DateTime
+  userId       String
+  propertyId   String
+  property     Property    @relation("PropertyVisitsBookedByUsers", fields: [propertyId], references: [id])
+  user_profile UserProfile @relation("BookedByUsers", fields: [userId], references: [id])
+  created_at   DateTime    @default(now())
+  updated_at   DateTime    @updatedAt
+
+  @@unique([startTime, endTime, propertyId])
+}
