@@ -9,9 +9,16 @@ import {
 } from '../config/env.js';
 import jwt from 'jsonwebtoken';
 import fs from 'fs';
+import asyncHandler from 'express-async-handler';
 
-// Function to send an activation email
-export const sendActivationEmail = async (email) => {
+/**
+ * Function to send an activation email to the user
+ * 
+ * @param {String} email
+ * @returns {void}
+ * 
+ */
+export const sendActivationEmail = asyncHandler(async (email) => {
     const transporter = nodemailer.createTransport({
         service: MAILER_SERVICE,
         auth: {
@@ -30,19 +37,24 @@ export const sendActivationEmail = async (email) => {
         subject: 'Welcome to GharBikri',
         html: htmlTemplate
             .replace(`{{email}}`, email)
-            .replace(`{{link}}`, `${DOMAIN}/auth/activate/${token}`)
+            .replace(`{{link}}`, `${DOMAIN}/activate/${token}`)
     };
 
-    transporter.sendMail(mailOptions, (error, info) => {
-        if (error) {
-            console.error('Error sending activation email:', error);
-        } else {
-            console.log('Activation email sent:', info.response);
-        }
-    });
-}
+    try {
+        const info = await transporter.sendMail(mailOptions);
+        console.log(`Activation email sent: ${info.response}`);
+    } catch (error) {
+        console.log(error);
+    }
+});
 
-// Function to create a token for the user
+/**
+ * Function to create a token using the user's email
+ * 
+ * @param {String} email
+ * @returns {String} token
+ * 
+ */
 const createToken = (email) => {
     return jwt.sign({ email }, MAIL_SECRET, { expiresIn: '1d' });
 }

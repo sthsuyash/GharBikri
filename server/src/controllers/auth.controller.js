@@ -140,3 +140,80 @@ export const verifyEmail = asyncHandler(async (req, res) => {
         res.status(500).json({ message: "Internal server error" });
     }
 });
+
+/**
+ * Forgot password
+ * 
+ * @route POST /api/v2/auth/forgot-password/{token}
+ * @group Auth - Operations about authentication
+ * @param {string} token.path.required - Token to reset password
+ * @param {string} password.body.required - New password
+ * @returns {object} 200 - Password reset successfully
+ * @returns {Error}  400 - Password is required, User does not exist, Invalid token
+ * @returns {Error}  500 - Internal server error
+ */
+export const forgotPassword = asyncHandler(async (req, res) => {
+    try {
+        const { token } = req.params;
+        const { password } = req.body;
+
+        if (!password) {
+            return res.status(400).json({ message: "Password is required." });
+        }
+
+        const { email } = jwt.verify(token, MAIL_SECRET);
+
+        const hashedPassword = await bcrypt.hash(password, 10);
+
+        await prisma.user.update({
+            where: { email },
+            data: { password: hashedPassword }
+        });
+
+        res.status(200).json({
+            message: "Password reset successfully."
+        });
+    } catch (error) {
+        console.error("Error resetting password:", error);
+        res.status(500).json({ message: "Internal server error" });
+    }
+});
+
+/**
+ * Resend verification email
+ * 
+ * @route POST /api/v2/auth/resend-verification-email
+ * @group Auth - Operations about authentication
+ * @param {string} email.body.required - Email of user
+ * @returns {object} 200 - Verification email sent successfully
+ * @returns {Error}  400 - Email is required, User does not exist, Email already verified
+ * @returns {Error}  500 - Internal server error
+ */
+export const resendVerificationEmail = asyncHandler(async (req, res) => {
+    try {
+        const { email } = req.body;
+
+        if (!email) {
+            return res.status(400).json({ message: "Email is required." });
+        }
+
+        const user = await prisma.user.findUnique({ where: { email } });
+
+        if (!user) {
+            return res.status(400).json({ message: "User does not exist." });
+        }
+
+        if (user.status === "active") {
+            return res.status(400).json({ message: "Email already verified." });
+        }
+
+        await sendActivationEmail(user.email);
+
+        res.status(200).json({
+            message: "Verification email sent successfully."
+        });
+    } catch (error) {
+        console.error("Error resending verification email:", error);
+        res.status(500).json({ message: "Internal server error" });
+    }
+});

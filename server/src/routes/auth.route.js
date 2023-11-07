@@ -1,5 +1,11 @@
 import express from 'express';
-import { login, register, verifyEmail } from '../controllers/auth.controller.js';
+import {
+    login,
+    register,
+    verifyEmail,
+    forgotPassword,
+    resendVerificationEmail
+} from '../controllers/auth.controller.js';
 
 const authRoutes = express.Router();
 
@@ -9,5 +15,9 @@ authRoutes.post('/register', register);
 authRoutes.post('/login', login);
 // Verify email route
 authRoutes.post('/verify-email/:token', verifyEmail);
+// Forgot password route
+authRoutes.post('/forgot-password/:token', forgotPassword);
+// Resend verification email route
+authRoutes.post('/resend-verification-email', resendVerificationEmail);
 
 export default authRoutes;
