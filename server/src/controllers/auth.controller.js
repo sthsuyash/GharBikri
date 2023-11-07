@@ -5,6 +5,17 @@ import jwt from 'jsonwebtoken';
 import { sendActivationEmail } from '../utils/mailer.js';
 import { MAIL_SECRET } from '../config/env.js';
 
+/**
+ * Register user
+ * 
+ * @route POST /api/v2/auth/register
+ * @group Auth - Operations about authentication
+ * @param {string} email.body.required - Email of user
+ * @param {string} password.body.required - Password of user
+ * @returns {object} 201 - User registered successfully: Please check your email to activate your account
+ * @returns {Error}  400 - Email already exists, Email and Password are required, Invalid credentials
+ * @returns {Error}  500 - Internal server error
+ */
 export const register = asyncHandler(async (req, res) => {
     try {
         const { email, password } = req.body;
@@ -35,7 +46,7 @@ export const register = asyncHandler(async (req, res) => {
         await sendActivationEmail(user.email);
 
         res.status(201).json({
-            message: "Please check your email to activate your account"
+            message: "Please check your email to activate your account."
         });
     } catch (error) {
         console.error("Error creating user:", error);
@@ -43,7 +54,17 @@ export const register = asyncHandler(async (req, res) => {
     }
 });
 
-// Login user
+/**
+ * Login user
+ * 
+ * @route POST /api/v2/auth/login
+ * @group Auth - Operations about authentication
+ * @param {string} email.body.required - Email of user
+ * @param {string} password.body.required - Password of user
+ * @returns {object} 200 - User logged in successfully
+ * @returns {Error}  400 - Email and Password are required, User does not exist, Invalid credentials, Please verify your email to login
+ * @returns {Error}  500 - Internal server error
+ */
 export const login = asyncHandler(async (req, res) => {
     try {
         const { email, password } = req.body;
@@ -91,6 +112,15 @@ export const login = asyncHandler(async (req, res) => {
     }
 });
 
+/**
+ * Verify email
+ * 
+ * @route GET /api/v2/auth/verify-email/{token}
+ * @group Auth - Operations about authentication
+ * @param {string} token.path.required - Token to verify email
+ * @returns {object} 200 - Email verified successfully
+ * @returns {Error}  500 - Internal server error
+ */
 export const verifyEmail = asyncHandler(async (req, res) => {
     try {
         const { token } = req.params;
