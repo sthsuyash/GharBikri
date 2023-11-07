@@ -1,114 +1,196 @@
 import asyncHandler from "express-async-handler";
 import prisma from "../config/prisma.js";
+import { paginate } from "../utils/pagination.js";
+import { API_URL } from "../config/env.js";
 
-export const bookVisit = asyncHandler(async (req, res) => {
+const api_name = `${API_URL}/user`;
+
+/**
+ * Get all visits of the authenticated user
+ * 
+ * @route GET /user/visits/me
+ * @group User - Operations about user
+ * @returns {object} 200 - An array of visits
+ * @returns {Error}  default - Unexpected error
+ * @security JWT
+ * 
+ */
+export const getMyVisits = asyncHandler(async (req, res) => {
     try {
-        // const user_id = req.user.id;
-        const user_id = '3e0d7e94-e5bd-41d0-a72f-3dd7df597913';
-        const { property_id } = req.params;
-        const { start_time, end_time } = req.body;
-
-        // Check if start_time and end_time is provided
-        if (!start_time || !end_time) {
-            return res.status(400).json({ message: "Start and End times are required." });
-        }
-
-        // Check if start_time is before end_time
-        if (start_time >= end_time) {
-            return res.status(400).json({ message: "Start time must be before end time." });
-        }
-
-        // Check if start_time and end_time is in the past
-        if (start_time < Date.now() || end_time < Date.now()) {
-            return res.status(400).json({ message: "Times must be in the future." });
-        }
-
-        // Check if start_time and end_time is in the past
-        if (start_time > end_time) {
-            return res.status(400).json({ message: "Start time must be before end time." });
-        }
-
-        // Check if the user has already booked a visit to this property
-        const existingUserVisit = await prisma.visit.findFirst({
+        // get the authenticated user id
+        const user_id = req.user.id;
+        const page = parseInt(req.query.page) || 1;
+        // condition that only returns visits of the authenticated user
+        const conditions = {
             where: {
-                AND: [
-                    {
-                        user_id
-                    },
-                    {
-                        property_id
-                    }
-                ]
+                user_id
+            },
+            select: {
+                property: true,
+                user_profile: true
             }
-        });
-        if (existingUserVisit) {
-            return res.status(400).json({ message: "You have already booked a visit to this property at this time." });
-        }
-
-        // Check if any user has already booked a visit to this property between start_time and end_time
-        const existingVisit = await prisma.visit.findFirst({
-            where: {
-                AND: [
-                    {
-                        property_id
-                    },
-                    {
-                        OR: [
-                            {
-                                start_time: {
-                                    gte: start_time,
-                                    lt: end_time
-                                }
-                            },
-                            {
-                                end_time: {
-                                    gt: start_time,
-                                    lte: end_time
-                                }
-                            }
-                        ]
-                    }
-                ]
-            }
-        });
-
-        if (existingVisit) {
-            return res.status(400).json({ message: "Visit already booked for this property between start and end times." });
-        }
-
-        // Check if property exists
-        const property = await prisma.property.findUnique({ where: { id: property_id } });
-        if (!property) {
-            return res.status(400).json({ message: "Property does not exist." });
-        }
-
-        // Check if user is booking a visit to their own property
-        if (property.user_id === user_id) {
-            return res.status(400).json({ message: "You cannot book a visit to your own property." });
-        }
-
-        // Create visit if all checks pass
-        const visit = await prisma.visit.create({
-            data: {
-                start_time,
-                end_time,
-                user_profile: {
-                    connect: {
-                        id: user_id
-                    }
-                },
-                property: {
-                    connect: {
-                        id: property_id
-                    }
-                }
-            }
-        });
-
-        res.status(200).json({ message: "Visit booked successfully.", visit });
+        };
+        const visits = await paginate("visit", `${api_name}/visits`, page, conditions);
+        res.status(200).json(visits);
     } catch (error) {
-        console.error("Error booking visit:", error);
-        res.status(500).json({ message: "Internal server error" });
+        res.status(500).json({
+            message: error.message
+        });
     }
 });
 
+/**
+ * Get all bookmarked properties of the authenticated user
+ * 
+ * @route GET /user/bookmark/me
+ * @group User - Operations about user
+ * @returns {object} 200 - An array of bookmarked properties
+ * @returns {Error}  default - Unexpected error
+ * @security JWT
+ * 
+ */
+export const getMyBookmarks = asyncHandler(async (req, res) => {
+    try {
+        // get the authenticated user id
+        const user_id = req.user.id;
+        const page = parseInt(req.query.page) || 1;
+        // condition that only returns bookmarked properties of the authenticated user
+        const conditions = {
+            where: {
+                user_id
+            },
+            select: {
+                property: true
+            }
+        };
+        const bookmarks = await paginate("bookmark", `${api_name}/bookmarks`, page, conditions);
+        res.status(200).json(bookmarks);
+    } catch (error) {
+        res.status(500).json({
+            message: error.message
+        });
+    }
+});
+
+/**
+ * Bookmark a property
+ * 
+ * @route POST /user/bookmark/:property_id
+ * @group User - Operations about user
+ * @param {string} property_id.path.required - Property id
+ * @returns {object} 200 - Bookmark object
+ * @returns {Error}  default - Unexpected error
+ * @security JWT
+ *  
+ */
+export const createBookmark = asyncHandler(async (req, res) => {
+    try {
+        // get the authenticated user id
+        const user_id = req.user.id;
+
+        const { property_id } = req.params;
+
+        // check if the property exists
+        const property = await prisma.property.findUnique({
+            where: {
+                id: property_id
+            }
+        });
+        if (!property) {
+            return res.status(404).json({
+                message: "Property not found"
+            });
+        }
+
+        // check if the property belongs to the authenticated user, if yes then return error
+        if (property.user_id === user_id) {
+            return res.status(400).json({
+                message: "You cannot bookmark your own property"
+            });
+        }
+
+        // check if the property is already bookmarked by the authenticated user
+        const bookmark = await prisma.bookmark.findUnique({
+            where: {
+                property_id_user_id: {
+                    property_id,
+                    user_id
+                }
+            }
+        });
+        if (bookmark) {
+            return res.status(400).json({
+                message: "Property already bookmarked"
+            });
+        }
+
+        // create the bookmark
+        const newBookmark = await prisma.bookmark.create({
+            data: {
+                property_id,
+                user_id
+            }
+        });
+        res.status(200).json({ message: "Property bookmarked", bookmark: newBookmark });
+    } catch (error) {
+        res.status(500).json({
+            message: error.message
+        });
+    }
+});
+
+/**
+ * Delete a bookmark
+ * 
+ * @route DELETE /user/bookmark/:property_id
+ * @group User - Operations about user
+ * @param {string} property_id.path.required - Property id
+ * @returns {object} 200 - Bookmark object
+ * @returns {Error}  default - Unexpected error
+ * @security JWT
+ *
+ */
+export const removeBookmark = asyncHandler(async (req, res) => {
+    try {
+        // get the authenticated user id
+        const user_id = req.user.id;
+        const { property_id } = req.params;
+        // check if the property exists
+        const property = await prisma.property.findUnique({
+            where: {
+                id: property_id
+            }
+        });
+        if (!property) {
+            return res.status(404).json({
+                message: "Property not found"
+            });
+        }
+        // check if the property is already bookmarked by the authenticated user
+        const bookmark = await prisma.bookmark.findUnique({
+            where: {
+                property_id_user_id: {
+                    property_id,
+                    user_id
+                }
+            }
+        });
+        if (!bookmark) {
+            return res.status(400).json({
+                message: "Property not bookmarked"
+            });
+        }
+
+        // delete the bookmark
+        await prisma.bookmark.delete({
+            where: {
+                id: bookmark.id
+            }
+        });
+        res.status(200).json({ message: "Property bookmark removed" });
+    } catch (error) {
+        res.status(500).json({
+            message: error.message
+        });
+    }
+});

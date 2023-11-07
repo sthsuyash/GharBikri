@@ -13,9 +13,9 @@ router.get('/', homeRoutes);
 router.use('/auth', authRoutes);
 
 // User routes
-router.use('/users', userRoutes);
+router.use('/user', userRoutes);
 
 // Property routes
-router.use('/properties', propertyRoutes);
+router.use('/property', propertyRoutes);
 
 export default router;

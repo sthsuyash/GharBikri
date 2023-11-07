@@ -23,26 +23,26 @@ model User {
 }
 
 model UserProfile {
-  id                   String     @id @default(uuid())
-  first_name           String?
-  last_name            String?
-  image                String     @default("https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png")
-  phone                String?
-  city                 String?
-  state                String?
-  bookedVisits         Visit[]    @relation("BookedByUsers")
-  bookmarkedProperties Property[] @relation("BookmarkedByUsers")
-  property_count       Int        @default(0)
-  properties           Property[] @relation("UserProperties")
-  created_at           DateTime   @default(now())
-  updated_at           DateTime   @updatedAt
-  user                 User       @relation(fields: [id], references: [id])
+  id             String     @id @default(uuid())
+  first_name     String?
+  last_name      String?
+  image          String     @default("https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png")
+  phone          String?
+  city           String?
+  state          String?
+  bookedVisits   Visit[]    @relation("BookedByUsers")
+  property_count Int        @default(0)
+  properties     Property[] @relation("UserProperties")
+  created_at     DateTime   @default(now())
+  updated_at     DateTime   @updatedAt
+  user           User       @relation(fields: [id], references: [id])
+  Bookmark       Bookmark[]
 
   @@unique([id])
 }
 
 model Property {
-  id                  String        @id @default(uuid())
+  id                  String      @id @default(uuid())
   name                String
   description         String
   street_num          Int
@@ -60,13 +60,13 @@ model Property {
   availability_status Boolean
   images              String[]
   facilities          String[]
-  created_at          DateTime      @default(now())
-  updated_at          DateTime      @updatedAt
-  views               Int           @default(0)
-  bookmarkedByUsers   UserProfile[] @relation("BookmarkedByUsers")
-  bookedVisits        Visit[]       @relation("PropertyVisitsBookedByUsers")
+  created_at          DateTime    @default(now())
+  updated_at          DateTime    @updatedAt
+  views               Int         @default(0)
+  bookedVisits        Visit[]     @relation("PropertyVisitsBookedByUsers")
   user_id             String
-  user_profile        UserProfile   @relation("UserProperties", fields: [user_id], references: [id], onDelete: Cascade)
+  user_profile        UserProfile @relation("UserProperties", fields: [user_id], references: [id], onDelete: Cascade)
+  Bookmark            Bookmark[]
 
   @@unique([name, user_id])
 }
@@ -83,4 +83,16 @@ model Visit {
   updated_at   DateTime    @updatedAt
 
   @@unique([start_time, end_time, property_id])
+}
+
+model Bookmark {
+  id           String      @id @default(uuid())
+  user_id      String
+  property_id  String
+  property     Property    @relation(fields: [property_id], references: [id])
+  user_profile UserProfile @relation(fields: [user_id], references: [id])
+  created_at   DateTime    @default(now())
+  updated_at   DateTime    @updatedAt
+
+  @@unique([user_id, property_id])
 }

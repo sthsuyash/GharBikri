@@ -68,9 +68,14 @@ CREATE TABLE "Visit" (
 );
 
 -- CreateTable
-CREATE TABLE "_BookmarkedByUsers" (
-    "A" TEXT NOT NULL,
-    "B" TEXT NOT NULL
+CREATE TABLE "Bookmark" (
+    "id" TEXT NOT NULL,
+    "user_id" TEXT NOT NULL,
+    "property_id" TEXT NOT NULL,
+    "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updated_at" TIMESTAMP(3) NOT NULL,
+
+    CONSTRAINT "Bookmark_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateIndex
@@ -86,10 +91,7 @@ CREATE UNIQUE INDEX "Property_name_user_id_key" ON "Property"("name", "user_id")
 CREATE UNIQUE INDEX "Visit_start_time_end_time_property_id_key" ON "Visit"("start_time", "end_time", "property_id");
 
 -- CreateIndex
-CREATE UNIQUE INDEX "_BookmarkedByUsers_AB_unique" ON "_BookmarkedByUsers"("A", "B");
-
--- CreateIndex
-CREATE INDEX "_BookmarkedByUsers_B_index" ON "_BookmarkedByUsers"("B");
+CREATE UNIQUE INDEX "Bookmark_user_id_property_id_key" ON "Bookmark"("user_id", "property_id");
 
 -- AddForeignKey
 ALTER TABLE "UserProfile" ADD CONSTRAINT "UserProfile_id_fkey" FOREIGN KEY ("id") REFERENCES "User"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
@@ -104,7 +106,7 @@ ALTER TABLE "Visit" ADD CONSTRAINT "Visit_property_id_fkey" FOREIGN KEY ("proper
 ALTER TABLE "Visit" ADD CONSTRAINT "Visit_user_id_fkey" FOREIGN KEY ("user_id") REFERENCES "UserProfile"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "_BookmarkedByUsers" ADD CONSTRAINT "_BookmarkedByUsers_A_fkey" FOREIGN KEY ("A") REFERENCES "Property"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE "Bookmark" ADD CONSTRAINT "Bookmark_property_id_fkey" FOREIGN KEY ("property_id") REFERENCES "Property"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "_BookmarkedByUsers" ADD CONSTRAINT "_BookmarkedByUsers_B_fkey" FOREIGN KEY ("B") REFERENCES "UserProfile"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE "Bookmark" ADD CONSTRAINT "Bookmark_user_id_fkey" FOREIGN KEY ("user_id") REFERENCES "UserProfile"("id") ON DELETE RESTRICT ON UPDATE CASCADE;

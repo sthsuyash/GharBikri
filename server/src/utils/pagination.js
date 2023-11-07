@@ -7,25 +7,34 @@ import asyncHandler from "express-async-handler";
  * @param {string} model - Model name
  * @param {string} api_name - API name eg: http://localhost:5000/api/v2/properties
  * @param {number} page - Page number
- * @param {object} conditions - Conditions
+ * @param {object} where - Where condition
+ * @param {number} select - Select condition
  * @returns {object} - Paginated data
  * 
  */
-export const paginate = asyncHandler(async (model, api_name, page, conditions = {}) => {
-    const totalItems = await prisma[model].count({ where: conditions })
-    const take = 9;
-    const skip = page < 1 ? 0 : (page - 1) * take;
+export const paginate = asyncHandler(async (model, api_name, page, conditions = {}, take = 9) => {
+    const { where = {}, select = {}, orderBy = {} } = conditions;
+    const totalItems = await prisma[model].count({ where });
+    const skip = (page - 1) * take;
     const totalPages = Math.ceil(totalItems / take);
 
-    const items = await prisma[model].findMany({
+    const query = {
+        where: {
+            ...where,
+        },
         orderBy: {
             created_at: "desc",
+            ...orderBy,
         },
         skip,
         take,
-        where: conditions
-    });
+    };
 
+    if (Object.keys(select).length > 0) {
+        query.select = select;
+    }
+
+    const items = await prisma[model].findMany(query);
     const items_in_page = items.length;
 
     return {
