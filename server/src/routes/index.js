@@ -1,8 +1,8 @@
 import express from 'express';
-import authRoutes from './authRoutes.js';
-import homeRoutes from '../controllers/homeController.js';
-import userRoutes from './userRoutes.js';
-import propertyRoutes from './propertyRoutes.js';
+import authRoutes from './auth.route.js';
+import homeRoutes from './home.route.js';
+import userRoutes from './user.route.js';
+import propertyRoutes from './property.route.js';
 
 const router = express.Router();
 

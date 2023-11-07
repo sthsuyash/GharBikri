@@ -1,12 +1,7 @@
 import express from 'express';
-import { login, register, verifyEmail } from '../controllers/authController.js';
+import { login, register, verifyEmail } from '../controllers/auth.controller.js';
 
 const authRoutes = express.Router();
-
-// Auth home page
-authRoutes.get('/', (req, res) => {
-    res.send('Auth Page');
-});
 
 // Register route
 authRoutes.post('/register', register);
