@@ -23,3 +23,4 @@ export const MAIL_SECRET = process.env.MAIL_SECRET
 
 /* domain configs */
 export const DOMAIN = process.env.DOMAIN
+export const API_URL = process.env.DOMAIN + '/api/v2'
