@@ -66,21 +66,21 @@ model Property {
   bookmarkedByUsers   UserProfile[] @relation("BookmarkedByUsers")
   bookedVisits        Visit[]       @relation("PropertyVisitsBookedByUsers")
   user_id             String
-  user_profile        UserProfile   @relation("UserProperties", fields: [user_id], references: [id])
+  user_profile        UserProfile   @relation("UserProperties", fields: [user_id], references: [id], onDelete: Cascade)
 
   @@unique([name, user_id])
 }
 
 model Visit {
   id           String      @id @default(uuid())
-  startTime    DateTime
-  endTime      DateTime
-  userId       String
-  propertyId   String
-  property     Property    @relation("PropertyVisitsBookedByUsers", fields: [propertyId], references: [id])
-  user_profile UserProfile @relation("BookedByUsers", fields: [userId], references: [id])
+  start_time   DateTime
+  end_time     DateTime
+  user_id      String
+  property_id  String
+  property     Property    @relation("PropertyVisitsBookedByUsers", fields: [property_id], references: [id])
+  user_profile UserProfile @relation("BookedByUsers", fields: [user_id], references: [id])
   created_at   DateTime    @default(now())
   updated_at   DateTime    @updatedAt
 
-  @@unique([startTime, endTime, propertyId])
+  @@unique([start_time, end_time, property_id])
 }
