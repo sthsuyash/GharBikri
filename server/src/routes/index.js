@@ -1,24 +1,21 @@
-const express = require('express')
-const app = express()
-const authRoutes = require('./authRoute')
-const dashBoardRoutes = require('./dashboardRoute')
-const propertiesRoutes = require('./properties')
+import express from 'express';
+import authRoutes from './auth.route.js';
+import homeRoutes from './home.route.js';
+import userRoutes from './user.route.js';
+import propertyRoutes from './property.route.js';
 
-// check if api is running
-app.get('/', (req, res) => {
-    res.send('Api is running')
-})
+const router = express.Router();
 
-// initialize routes
+// Define route for the home page
+router.get('/', homeRoutes);
 
-// auth routes
-app.use('/auth', authRoutes);
+// Auth routes
+router.use('/auth', authRoutes);
 
-// dashboard route
-app.use('/dashboard', dashBoardRoutes);
+// User routes
+router.use('/user', userRoutes);
 
-// properties routes
-app.use('/properties', propertiesRoutes);
+// Property routes
+router.use('/property', propertyRoutes);
 
-// export app
-module.exports = app;
+export default router;

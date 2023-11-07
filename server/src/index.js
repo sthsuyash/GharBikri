@@ -1,30 +1,32 @@
-const express = require('express');
+import express from 'express';
+import cors from 'cors';
+import cookieParser from 'cookie-parser';
+import swaggerUi from 'swagger-ui-express';
+
+import { SERVER_PORT } from './config/env.js';
+import routes from './routes/index.js';
+
 const app = express();
-const { SERVER } = require('./constants');
-const cors = require('cors');
 
-// middleware
-
-app.use(express.json()) // req.body
-app.use(express.urlencoded({ extended: true })) // req.body
-
+// Middleware
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+app.use(cookieParser());
 app.use(cors({
-    origin: 'http://localhost:5173',
+    allowedHeaders: ['Content-Type', 'Authorization'],
     credentials: true,
+    origin: ['http://localhost:5000', 'http://localhost:5001']
 }));
 
-// routes
-const routes = require('./routes');
-app.use('/api', routes);
+// Routes
+app.use('/api/v2', routes);
 
-const startServer = () => {
-    try {
-        app.listen(SERVER.SERVER_PORT, () => {
-            console.log(`Real Estate server listening on port ${SERVER.SERVER_PORT}`);
-        })
-    } catch (e) {
-        console.error(`Error: ${e}`);
-    }
-};
+// Swagger
+import swaggerDocument from '../docs/swagger.json' assert { type: "json" };
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
-startServer();
+const PORT = SERVER_PORT || 5000;
+
+app.listen(PORT, () => {
+    console.log(`[server] Server is running at PORT: ${PORT}`);
+});
