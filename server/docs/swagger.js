@@ -1,5 +1,4 @@
 import swaggerAutogen from 'swagger-autogen';
-import { DOMAIN } from '../src/config/env.js';
 
 const doc = {
     info: {
@@ -12,7 +11,7 @@ const doc = {
         },
     },
     host: 'localhost:5000', // TODO: Change this to 'gharbikri.com.np' in production
-    basePath: '/',
+    basePath: '/api/v2',
     schemes: ['http'],
     consumes: ['application/json'],
     produces: ['application/json'],

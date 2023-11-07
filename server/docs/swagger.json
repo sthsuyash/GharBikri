@@ -10,7 +10,7 @@
     }
   },
   "host": "localhost:5000",
-  "basePath": "/",
+  "basePath": "/api/v2",
   "tags": [
     {
       "name": "GharBikri CRUD",
@@ -44,16 +44,6 @@
         "responses": {
           "default": {
             "description": ""
-          }
-        }
-      }
-    },
-    "/api/v2/auth/": {
-      "get": {
-        "description": "",
-        "responses": {
-          "200": {
-            "description": "OK"
           }
         }
       }
@@ -158,9 +148,139 @@
     "/api/v2/properties/": {
       "get": {
         "description": "",
+        "parameters": [
+          {
+            "name": "page",
+            "in": "query",
+            "type": "string"
+          }
+        ],
         "responses": {
           "200": {
             "description": "OK"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      },
+      "post": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "example": "any"
+                },
+                "description": {
+                  "example": "any"
+                },
+                "street_num": {
+                  "example": "any"
+                },
+                "street_name": {
+                  "example": "any"
+                },
+                "city": {
+                  "example": "any"
+                },
+                "state": {
+                  "example": "any"
+                },
+                "type": {
+                  "example": "any"
+                },
+                "bed": {
+                  "example": "any"
+                },
+                "bath": {
+                  "example": "any"
+                },
+                "area_sq_ft": {
+                  "example": "any"
+                },
+                "repair_quality": {
+                  "example": "any"
+                },
+                "year": {
+                  "example": "any"
+                },
+                "price": {
+                  "example": "any"
+                },
+                "listingType": {
+                  "example": "any"
+                },
+                "availability_status": {
+                  "example": "any"
+                },
+                "images": {
+                  "example": "any"
+                },
+                "facilities": {
+                  "example": "any"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Created"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/api/v2/properties/me": {
+      "get": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "page",
+            "in": "query",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/api/v2/properties/{id}": {
+      "get": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
           }
         }
       }
