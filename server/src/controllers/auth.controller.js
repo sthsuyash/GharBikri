@@ -96,6 +96,9 @@ export const login = asyncHandler(async (req, res) => {
             return res.status(400).json({ message: "Please verify your email to login." });
         }
 
+        // Generate JWT token
+        const token = jwt.sign({ id: user.id }, process.env.JWT_SECRET, { expiresIn: "1d" });
+
         user = await prisma.user.findUnique({
             where: { email },
             include: {
@@ -103,16 +106,14 @@ export const login = asyncHandler(async (req, res) => {
             }
         });
 
-        const userProfile = user.UserProfile;
-        const isProfileComplete = !Object.values(userProfile).some((value) => value === null);
-
-        res.status(200).json({
-            id: user.id,
-            email: user.email,
-            status: user.status,
-            isProfileComplete: isProfileComplete,
-            message: "User logged in successfully"
-        });
+        res.cookie("access_token", token, { httpOnly: true, expires: new Date(Date.now() + 24 * 60 * 60 * 1000) }).
+            status(200).
+            json({
+                id: user.id,
+                email: user.email,
+                status: user.status,
+                message: "User logged in successfully"
+            });
     } catch (error) {
         console.error("Error logging in user:", error);
         res.status(500).json({ message: "Internal server error" });
