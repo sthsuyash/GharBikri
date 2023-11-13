@@ -165,12 +165,34 @@ export const getPropertyById = asyncHandler(async (req, res) => {
 
     try {
         // Get property by id
+        // also get the user who owns the property
         const property = await prisma.property.findUnique({
             where: { id },
+            include: {
+                user_profile: {
+                    select: {
+                        id: true,
+                        first_name: true,
+                        last_name: true,
+                        email: true,
+                        phone: true,
+                        profile_pic: true,
+                        property_count: true,
+                    }
+                }
+            }
         });
 
         if (!property) {
             return res.status(404).json({ message: "Property not found." });
+        }
+
+        // update the view count of the property in property table if the user is not the owner
+        if (req.user && property.user_id !== req.user.id) {
+            await prisma.property.update({
+                where: { id },
+                data: { view_count: { increment: 1 } }
+            });
         }
 
         res.status(200).json({ property });
@@ -179,6 +201,201 @@ export const getPropertyById = asyncHandler(async (req, res) => {
         res.status(500).json({ message: "Internal server error" });
     }
 
+});
+
+/**
+ * Update property by id if it belongs to the authenticated user
+ * 
+ * @route PUT /api/v2/property/{id}
+ * @group Property - Operations about property
+ * @param {string} id.path.required - Property id
+ * @param {string} name.body - Name of property
+ * @param {string} description.body - Description of property
+ * @param {number} price.body - Price of property
+ * @param {string} street_num.body - Street number of property
+ * @param {string} street_name.body - Street name of property
+ * @param {string} city.body - City of property
+ * @param {string} state.body - State of property
+ * @param {string} type.body - Type of property
+ * @param {number} bed.body - Number of bedrooms in property
+ * @param {number} bath.body - Number of bathrooms in property
+ * @param {number} area_sq_ft.body - Area of property in square feet
+ * @param {string} repair_quality.body - Repair quality of property
+ * @param {number} year.body - Built Year of property
+ * @param {string} listingType.body - Listing type of property
+ * @param {string} availability_status.body - Availability status of property
+ * @param {string} images.body - Images of property
+ * @param {string} facilities.body - Facilities of property
+ * @param {string} location.body - Location of property
+ * @returns {object} 200 - Property updated successfully
+ * @returns {Error}  400 - Property does not exist
+ * @returns {Error}  400 - Property does not belong to you
+ * @returns {Error}  500 - Internal server error
+ * @security JWT
+ * 
+    */
+export const updatePropertyById = asyncHandler(async (req, res) => {
+    // Get property id from req.params
+    const { id } = req.params;
+
+    // Get all fields from req.body
+    const {
+        name,
+        description,
+        street_num,
+        street_name,
+        city,
+        state,
+        type,
+        bed,
+        bath,
+        area_sq_ft,
+        repair_quality,
+        year,
+        price,
+        listingType,
+        availability_status,
+        images,
+        facilities,
+    } = req.body;
+
+    // Check if the property exists
+    const property = await prisma.property.findUnique({
+        where: { id },
+    });
+    if (!property) {
+        return res.status(400).json({ message: "Property does not exist." });
+    }
+
+    // Check if the property belongs to the authenticated user
+    if (property.user_id !== req.user.id) {
+        return res.status(400).json({ message: "Property does not belong to you." });
+    }
+
+    try {
+        // Update property
+        const updatedProperty = await prisma.property.update({
+            where: { id },
+            data: {
+                name,
+                description,
+                street_num,
+                street_name,
+                city,
+                state,
+                type,
+                bed,
+                bath,
+                area_sq_ft,
+                repair_quality,
+                year,
+                price,
+                listingType,
+                availability_status,
+                images,
+                facilities,
+            },
+        });
+
+        res.status(200).json({ message: "Property updated successfully.", updatedProperty });
+    } catch (error) {
+        console.error("Error updating property:", error);
+        res.status(500).json({ message: "Internal server error" });
+    }
+});
+
+/**
+ * Delete property by id if it belongs to the authenticated user
+ *  
+ * @route DELETE /api/v2/property/{id}
+ * @group Property - Operations about property
+ * @param {string} id.path.required - Property id
+ * @returns {object} 200 - Property deleted successfully
+ * @returns {Error}  400 - Property does not exist
+ * @returns {Error}  400 - Property does not belong to you
+ * @returns {Error}  500 - Internal server error
+ * @security JWT
+ *  
+ */
+export const deletePropertyById = asyncHandler(async (req, res) => {
+    // Get property id from req.params
+    const { id } = req.params;
+
+    // Check if the property exists
+    const property = await prisma.property.findUnique({
+        where: { id },
+    });
+    if (!property) {
+        return res.status(400).json({ message: "Property does not exist." });
+    }
+
+    // Check if the property belongs to the authenticated user
+    if (property.user_id !== req.user.id) {
+        return res.status(400).json({ message: "Property does not belong to you." });
+    }
+
+    try {
+        // Delete property
+        await prisma.property.delete({
+            where: { id },
+        });
+
+        await prisma.userProfile.update({
+            where: { id: req.user.id },
+            data: { property_count: { decrement: 1 } }
+        });
+
+        res.status(200).json({ message: "Property deleted successfully." });
+    } catch (error) {
+        console.error("Error deleting property:", error);
+        res.status(500).json({ message: "Internal server error" });
+    }
+});
+
+/**
+ * Toggle availability status of property by id if it belongs to the authenticated user
+ * 
+ * @route PUT /api/v2/property/toggle-availability/{id}
+ * @group Property - Operations about property
+ * @param {string} id.path.required - Property id
+ * @returns {object} 200 - Availability status toggled successfully
+ * @returns {Error}  400 - Property does not exist
+ * @returns {Error}  400 - Property does not belong to you
+ * @returns {Error}  500 - Internal server error
+ * @security JWT
+ * 
+ */
+export const toggleAvailabilityStatus = asyncHandler(async (req, res) => {
+    // Get property id from req.params
+    const { id } = req.params;
+
+    // Check if the property exists
+    const property = await prisma.property.findUnique({
+        where: { id },
+    });
+    if (!property) {
+        return res.status(400).json({ message: "Property does not exist." });
+    }
+
+    // Check if the property belongs to the authenticated user
+    if (property.user_id !== req.user.id) {
+        return res.status(400).json({ message: "Property does not belong to you." });
+    }
+
+    try {
+        // Toggle availability status
+        const updatedProperty = await prisma.property.update({
+            where: { id },
+            data: {
+                availability_status: !property.availability_status,
+            },
+        });
+
+        res.status(200).json({ message: "Availability status toggled successfully.", updatedProperty });
+    } catch (error) {
+        console.error("Error toggling availability status:", error);
+        res.status(500).json({ message: "Internal server error" });
+    }
 });
 
 /**

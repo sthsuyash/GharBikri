@@ -7,7 +7,10 @@ import {
 
     bookVisit,
     cancelVisit,
-    getVisitsOfMyProperties
+    getVisitsOfMyProperties,
+    toggleAvailabilityStatus,
+    updatePropertyById,
+    deletePropertyById
 } from '../controllers/property.controller.js';
 
 const propertyRoutes = express.Router();
@@ -20,6 +23,12 @@ propertyRoutes.post('/', createProperty);
 propertyRoutes.get('/me', getMyProperties);
 // Get property by id
 propertyRoutes.get('/:id', getPropertyById);
+// Toggle property availability status by authenticated user
+propertyRoutes.patch('/:id', toggleAvailabilityStatus);
+// Update property by id
+propertyRoutes.put('/:id', updatePropertyById);
+// Delete property by id
+propertyRoutes.delete('/:id', deletePropertyById);
 
 // Book a visit to a property
 propertyRoutes.post('/book-visit/:property_id', bookVisit);
