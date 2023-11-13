@@ -22,6 +22,7 @@ CREATE TABLE "UserProfile" (
     "property_count" INTEGER NOT NULL DEFAULT 0,
     "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updated_at" TIMESTAMP(3) NOT NULL,
+    "user_id" TEXT NOT NULL,
 
     CONSTRAINT "UserProfile_pkey" PRIMARY KEY ("id")
 );
@@ -82,19 +83,22 @@ CREATE TABLE "Bookmark" (
 CREATE UNIQUE INDEX "User_email_key" ON "User"("email");
 
 -- CreateIndex
+CREATE UNIQUE INDEX "UserProfile_user_id_key" ON "UserProfile"("user_id");
+
+-- CreateIndex
 CREATE UNIQUE INDEX "UserProfile_id_key" ON "UserProfile"("id");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "Property_name_user_id_key" ON "Property"("name", "user_id");
 
 -- CreateIndex
-CREATE UNIQUE INDEX "Visit_start_time_end_time_property_id_key" ON "Visit"("start_time", "end_time", "property_id");
+CREATE UNIQUE INDEX "Visit_start_time_end_time_key" ON "Visit"("start_time", "end_time");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "Bookmark_user_id_property_id_key" ON "Bookmark"("user_id", "property_id");
 
 -- AddForeignKey
-ALTER TABLE "UserProfile" ADD CONSTRAINT "UserProfile_id_fkey" FOREIGN KEY ("id") REFERENCES "User"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "UserProfile" ADD CONSTRAINT "UserProfile_user_id_fkey" FOREIGN KEY ("user_id") REFERENCES "User"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "Property" ADD CONSTRAINT "Property_user_id_fkey" FOREIGN KEY ("user_id") REFERENCES "UserProfile"("id") ON DELETE CASCADE ON UPDATE CASCADE;

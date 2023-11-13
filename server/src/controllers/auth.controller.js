@@ -2,7 +2,10 @@ import asyncHandler from 'express-async-handler';
 import prisma from "../config/prisma.js";
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
-import { sendActivationEmail } from '../utils/mailer.js';
+import {
+    sendActivationEmail,
+    sendForgotPasswordEmail
+} from '../utils/mailer.js';
 import { MAIL_SECRET } from '../config/env.js';
 
 /**
@@ -43,7 +46,11 @@ export const register = asyncHandler(async (req, res) => {
         });
 
         // Send email to user for activation
-        await sendActivationEmail(user.email);
+        const emailSent = await sendActivationEmail(user.email);
+
+        if (!emailSent) {
+            return res.status(500).json({ message: "Internal server error" });
+        }
 
         res.status(201).json({
             message: "Please check your email to activate your account."
@@ -144,7 +151,49 @@ export const verifyEmail = asyncHandler(async (req, res) => {
 /**
  * Forgot password
  * 
- * @route POST /api/v2/auth/forgot-password/{token}
+ * @route POST /api/v2/auth/forgot-password
+ * @group Auth - Operations about authentication
+ * @param {string} email.body.required - Email of user
+ * @returns {object} 200 - Forgot password email sent successfully
+ * @returns {Error}  400 - Email is required, User does not exist
+ * @returns {Error}  500 - Internal server error
+ */
+export const forgotPassword = asyncHandler(async (req, res) => {
+    try {
+        const { email } = req.body;
+
+        if (!email) {
+            return res.status(400).json({ message: "Email is required." });
+        }
+
+        const user = await prisma.user.findUnique({ where: { email } });
+
+        if (!user) {
+            return res.status(400).json({ message: "User does not exist." });
+        }
+
+        // Send email to user for password reset
+        const emailSent = await sendForgotPasswordEmail(user.email);
+
+        if (!emailSent) {
+            return res.status(500).json({ message: "Internal server error" });
+        }
+
+        res.status(200).json({
+            message: "Please check your email to reset your password."
+        });
+    } catch (error) {
+        console.error("Error sending forgot password email:", error);
+        res.status(500).json({
+            message: "Internal server error"
+        });
+    }
+});
+
+/**
+ * Reset password
+ * 
+ * @route POST /api/v2/auth/reset-password/{token}
  * @group Auth - Operations about authentication
  * @param {string} token.path.required - Token to reset password
  * @param {string} password.body.required - New password
@@ -152,7 +201,7 @@ export const verifyEmail = asyncHandler(async (req, res) => {
  * @returns {Error}  400 - Password is required, User does not exist, Invalid token
  * @returns {Error}  500 - Internal server error
  */
-export const forgotPassword = asyncHandler(async (req, res) => {
+export const resetPassword = asyncHandler(async (req, res) => {
     try {
         const { token } = req.params;
         const { password } = req.body;
@@ -170,9 +219,7 @@ export const forgotPassword = asyncHandler(async (req, res) => {
             data: { password: hashedPassword }
         });
 
-        res.status(200).json({
-            message: "Password reset successfully."
-        });
+        res.status(200).json({ message: "Password reset successfully." });
     } catch (error) {
         console.error("Error resetting password:", error);
         res.status(500).json({ message: "Internal server error" });

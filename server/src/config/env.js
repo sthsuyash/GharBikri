@@ -15,7 +15,10 @@ export const SERVER_PORT = process.env.SERVER_PORT
 export const JWT = process.env.JWT_SECRET
 
 /* mailer configs */
-export const MAILER_SERVICE = process.env.MAILER_SERVICE
+// export const MAILER_SERVICE = process.env.MAILER_SERVICE
+export const MAILER_HOST = process.env.MAILER_HOST
+export const MAILER_PORT = process.env.MAILER_PORT
+export const MAILER_SECURE = process.env.MAILER_SECURE
 export const MAILER_USER = process.env.MAILER_USER
 export const MAILER_PASS = process.env.MAILER_PASS
 export const MAILER_FROM = process.env.MAILER_FROM
