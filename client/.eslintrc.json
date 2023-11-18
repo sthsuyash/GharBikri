@@ -1,0 +1,14 @@
+{
+  "extends": "next/core-web-vitals",
+  "rules": {
+    "jsx-quotes": ["error", "prefer-double"],
+    "quotes": [
+      "error",
+      "double",
+      {
+        "avoidEscape": true, // Avoid using backticks when not necessary
+        "allowTemplateLiterals": true
+      }
+    ]
+  }
+}
